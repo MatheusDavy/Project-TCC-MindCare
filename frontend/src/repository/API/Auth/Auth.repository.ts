@@ -1,4 +1,4 @@
-import { Fetch } from 'src/utils'
+import * as Fetch from "../../../utils/fetch/Fetch.service" 
 import { IRepositoryRequirements } from '../../repositories.common'
 import { LoginCredentialsDTO, RegisterUserDTO, ResetPasswordDTO } from './Auth.props'
 
