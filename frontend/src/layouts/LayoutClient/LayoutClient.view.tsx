@@ -1,12 +1,15 @@
-import { LayoutClientProps } from "./LayoutClient.props";
+import { LayoutClientProps } from './LayoutClient.props';
+
+// Context / Providers
+import { AsideComp } from '../../components/Layouts/Navbars/Aside/Aside.comp';
 
 const LayoutClient = ({ children }: LayoutClientProps) => {
     return (
-        <section>
-            <h1>Layout - Client</h1>
+        <div className='container-main-wrapper'>
+            <AsideComp />
             {children}
-        </section>
-    )
-}
+        </div>
+    );
+};
 
 export default LayoutClient;

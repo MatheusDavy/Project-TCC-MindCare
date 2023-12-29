@@ -1,2 +1,2 @@
-export * from './Auth.repository'
-export * from './Auth.props'
+export * from './Auth.repository';
+export * from './Auth.props';

@@ -1,0 +1,21 @@
+{
+    "extends": ["next/core-web-vitals"],
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "no-unused-vars": "error",
+
+        "no-trailing-spaces": "error",
+        "eol-last": ["error", "always"],
+
+        // Ponto e Virgula / Aspas Simples / Identação
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"],
+        "indent": ["error", 4],
+
+        // Espaços entre parâmetros
+        "comma-spacing": ["error", { "before": false, "after": true }],
+
+        // Consistencia de variáveis
+        "prefer-const": "error"
+    }
+}

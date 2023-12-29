@@ -5,11 +5,16 @@ export type RegisterUserDTO = {
 }
 
 export type LoginCredentialsDTO = {
-  username: string
+  email: string
   password: string
 }
 
 export type ResetPasswordDTO = {
   token: string
   password: string
+}
+
+export type LoginOAuth = {
+  name: string
+  email: string
 }

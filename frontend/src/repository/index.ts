@@ -1,2 +1,2 @@
 export * from './API';
-export * from './repositories.hook'
+export * from './repositories.hook';

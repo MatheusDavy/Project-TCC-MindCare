@@ -1,0 +1,6 @@
+@import './custom.css';
+@import './hover.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

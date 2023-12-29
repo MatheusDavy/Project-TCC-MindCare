@@ -1,30 +1,35 @@
-import * as Fetch from "../../../utils/fetch/Fetch.service" 
-import { IRepositoryRequirements } from '../../repositories.common'
-import { LoginCredentialsDTO, RegisterUserDTO, ResetPasswordDTO } from './Auth.props'
+import * as Fetch from '../../../utils/fetch/Fetch.service';
+import { IRepositoryRequirements } from '../../repositories.common';
+import { LoginCredentialsDTO, LoginOAuth, RegisterUserDTO, ResetPasswordDTO } from './Auth.props';
 
 export function AuthRepository ({ baseUrl }: IRepositoryRequirements) {
-  const url = `${baseUrl}/auth`
+    const url = `${baseUrl}/auth`;
 
-  function register (data: RegisterUserDTO) {
-    return Fetch.post({ url: `${url}/register`, data })
-  }
+    function register (data: RegisterUserDTO) {
+        return Fetch.post({ url: `${url}/register`, data });
+    }
 
-  function login (data: LoginCredentialsDTO) {
-    return Fetch.post({ url: `${url}/login`, data })
-  }
+    function login (data: LoginCredentialsDTO) {
+        return Fetch.post({ url: `${url}/login`, data });
+    }
 
-  function forgotPassword (email: string) {
-    return Fetch.post({ url: `${url}/forgot-password`, data: { email } })
-  }
+    function loginOAuth (data: LoginOAuth){
+        return Fetch.post({ url: `${url}/o-auth/login`, data });
+    }
 
-  function resetPassword (data: ResetPasswordDTO) {
-    return Fetch.post({ url: `${url}/reset-password`, data })
-  }
+    function forgetPassword (email: string) {
+        return Fetch.post({ url: `${url}/forget-password`, data: { email } });
+    }
 
-  return {
-    register,
-    login,
-    forgotPassword,
-    resetPassword
-  }
+    function resetPassword (data: ResetPasswordDTO) {
+        return Fetch.patch({ url: `${url}/reset-password`, data });
+    }
+
+    return {
+        register,
+        login,
+        forgetPassword,
+        resetPassword,
+        loginOAuth
+    };
 }
