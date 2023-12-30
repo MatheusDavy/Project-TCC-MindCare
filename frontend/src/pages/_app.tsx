@@ -18,20 +18,34 @@ import { DialogAlertProvider } from '../context/Messages/Message.context';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
+// Internationalizations
+import {NextIntlClientProvider} from 'next-intl';
+import {useRouter} from 'next/router';
+import { LanguageProvider } from '../context/Language';
+
 export default function MyApp({ Component, pageProps}: AppProps) {
-    // const { data, methods } = useLogic();
     const getLayout = Component.getLayout || ((page: ReactNode) => page);
+    const router = useRouter();
 
     return (
         <SessionProvider>
-            <DialogAlertProvider>
-                <ThemeProvider theme={defaulTheme}>
-                    {getLayout(
-                        <Component {...pageProps} />
-                    )}
-                    <GlobalStyle />
-                </ThemeProvider>
-            </DialogAlertProvider>
+            <NextIntlClientProvider
+                locale={router.locale}
+                timeZone='America/Sao_Paulo'
+                messages={pageProps.messages}
+            >
+                <LanguageProvider>
+                    <DialogAlertProvider>
+                        <ThemeProvider theme={defaulTheme}>
+                            {getLayout(
+                                <Component {...pageProps} />
+                            )}
+                            <GlobalStyle />
+                        </ThemeProvider>
+                    </DialogAlertProvider>
+                </LanguageProvider>
+            </NextIntlClientProvider>
         </SessionProvider>
     );
 }
+

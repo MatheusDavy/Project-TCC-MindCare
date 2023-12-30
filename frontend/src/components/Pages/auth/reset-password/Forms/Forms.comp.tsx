@@ -10,16 +10,17 @@ import { useLogic } from './Forms.logic';
 import { InputText } from '../../../../../styles/configs/ui/inputs/TextField';
 
 // Icons
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export function FormsComp() {
     const { data, methods } = useLogic({});
+    const t = useTranslations('ResetPassword');
 
     return (
         <S.Group>
-            <S.Title>Restaurar Senha</S.Title>
+            <S.Title>{t('title')}</S.Title>
             <S.Subtitle>
-                Crie uma nova senha para a sua conta
+                {t('description')}
             </S.Subtitle>
             <S.Forms onSubmit={methods.handleSubmit(methods.onSubmit)}>
                 <S.FormWrapper>
@@ -29,7 +30,7 @@ export function FormsComp() {
                         rules={{ required: true }}
                         render={({ field: { value, onChange, onBlur } }) => (
                             <>
-                                <S.InputLabel>Senha</S.InputLabel>
+                                <S.InputLabel>{t('label-password')}</S.InputLabel>
                                 <InputText
                                     autoFocus
                                     value={value}
@@ -56,7 +57,7 @@ export function FormsComp() {
                         rules={{ required: true }}
                         render={({ field: { value, onChange, onBlur } }) => (
                             <>
-                                <S.InputLabel>Confirmar Senha</S.InputLabel>
+                                <S.InputLabel>{t('label-confirmPassword')}</S.InputLabel>
                                 <InputText
                                     autoFocus
                                     value={value}
@@ -77,12 +78,9 @@ export function FormsComp() {
                     )}
                 </S.FormWrapper>
                 <S.ButtonSubmit type="submit" className="simple_hover">
-                    Enviar
+                    {t('button')}
                 </S.ButtonSubmit>
             </S.Forms>
-            <S.BackToLogin>
-                <Link href={'/auth/register/'}>Voltar</Link>
-            </S.BackToLogin>
         </S.Group>
     );
 }

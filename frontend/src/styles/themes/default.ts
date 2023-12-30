@@ -6,7 +6,10 @@ export const defaulTheme = {
         blue500: '#006CED',
         blue600: '#407bff',
         blue900: '#1B2A33',
+
         green500: '#17C895',
+
+        gray500: '#686868',
 
         defaultText: '#111111',
         defaultText2: '#ffffff'

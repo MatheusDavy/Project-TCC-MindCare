@@ -1,13 +1,17 @@
 import { useLogic } from './OAuth.logic';
 import * as S from './OAuth.style';
 
+// Translate
+import { useTranslations } from 'next-intl';
+
 export function OAuthLogin() {
     const { methods } = useLogic({});
+    const t = useTranslations('OAuth');
 
     return (
         <S.LoginWrapper>
             <S.LoginWrapperButton
-                onClick={(e) => {
+                onClick={e => {
                     e.preventDefault();
                     methods.googleLogin();
                 }}
@@ -37,10 +41,10 @@ export function OAuthLogin() {
                         fill="#EB4335"
                     />
                 </svg>
-                <span>Log in com Google</span>
+                <span>{t('Google')}</span>
             </S.LoginWrapperButton>
             <S.LoginWrapperButton
-                onClick={(e) => {
+                onClick={e => {
                     e.preventDefault();
                     methods.appleLogin();
                 }}
@@ -62,7 +66,7 @@ export function OAuthLogin() {
                         fill="white"
                     />
                 </svg>
-                <span>Log in com Apple</span>
+                <span>{t('Apple')}</span>
             </S.LoginWrapperButton>
         </S.LoginWrapper>
     );

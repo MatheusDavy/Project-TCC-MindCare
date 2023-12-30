@@ -48,10 +48,12 @@ export const useLogic = () => {
 
     useEffect(() => {
         getUserDatas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         getAvatarUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userData]);
 
     return {

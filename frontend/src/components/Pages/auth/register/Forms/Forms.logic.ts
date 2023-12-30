@@ -6,7 +6,7 @@ import { useRepository } from '../../../../../repository';
 import useDialogAlert from '../../../../../hooks/useDialogAlert';
 import { useState } from 'react';
 
-export const useLogig = ({}) => {
+export const useLogig = () => {
     const [isSending, setIsSending] = useState(false);
 
     const { authRepository } = useRepository();

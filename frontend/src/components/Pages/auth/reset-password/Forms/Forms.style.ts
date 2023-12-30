@@ -114,17 +114,3 @@ export const LoginWrapperButton = styled.button`
   }
 `;
 
-
-// Have Already Account
-export const BackToLogin = styled.p`
-  ${({ theme }) => css`
-    font-size: 16px;
-    font-weight: 400;
-    color: ${theme.colors.defaultText};
-    text-align: center;
-    
-    a{
-      color: ${theme.colors.blue600};
-    }
-  `}
-`;

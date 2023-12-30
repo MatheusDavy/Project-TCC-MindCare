@@ -1,4 +1,3 @@
-
 import { FormsComp } from '../../../components/Pages/auth/reset-password/Forms/Forms.comp';
 import * as S from './ResetPassword.style';
 

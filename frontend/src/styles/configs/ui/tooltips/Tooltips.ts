@@ -1,7 +1,7 @@
 import { Tooltip } from '@mui/material';
 import styled from '@emotion/styled';
 
-export const Tooltips = styled(Tooltip)(({ theme }) => ({
+export const Tooltips = styled(Tooltip)(() => ({
     '& .MuiTooltip-tooltip': {
         backgroundColor: 'white',
         color: 'lightgray',

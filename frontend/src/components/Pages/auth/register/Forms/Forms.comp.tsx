@@ -17,18 +17,22 @@ import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import Link from 'next/link';
 import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
 
+// Translate
+import { useTranslations } from 'next-intl';
+
 export function FormsComp() {
-    const { data, methods } = useLogig({});
+    const { data, methods } = useLogig();
     const [showPassword, setShowPassword] = useState(true);
+    const t = useTranslations('Register');
 
     return (
         <S.Group>
-            <S.Title>Cadastrar-se</S.Title>
-            <S.Subtitle>Não deixe de cuidar de sua saúde mental</S.Subtitle>
+            <S.Title>{t('title')}</S.Title>
+            <S.Subtitle>{t('description')}</S.Subtitle>
             <S.Forms onSubmit={methods.handleSubmit(methods.onSubmit)}>
                 <OAuthLogin />
                 <S.Separator>
-                    <span>OU</span>
+                    <span>{t('or')}</span>
                 </S.Separator>
                 <S.FormWrapper>
                     <Controller
@@ -37,7 +41,7 @@ export function FormsComp() {
                         rules={{ required: true }}
                         render={({ field: { value, onChange, onBlur } }) => (
                             <>
-                                <S.InputLabel>Nome</S.InputLabel>
+                                <S.InputLabel>{t('label-name')}</S.InputLabel>
                                 <InputText
                                     autoFocus
                                     value={value}
@@ -91,7 +95,9 @@ export function FormsComp() {
                         rules={{ required: true }}
                         render={({ field: { value, onChange, onBlur } }) => (
                             <>
-                                <S.InputLabel>Senha</S.InputLabel>
+                                <S.InputLabel>
+                                    {t('label-password')}
+                                </S.InputLabel>
                                 <InputText
                                     type={showPassword ? 'password' : 'text'}
                                     autoFocus
@@ -136,11 +142,12 @@ export function FormsComp() {
                     )}
                 </S.FormWrapper>
                 <S.ButtonSubmit type="submit" className="simple_hover">
-                    Cria Conta
+                    {t('button')}
                 </S.ButtonSubmit>
             </S.Forms>
             <S.HaveAccount>
-                Já possui uma conta? <Link href={'/auth/login/'}>Logar-se</Link>
+                {t('link-have-account')}{' '}
+                <Link href={'/auth/login/'}>{t('link-login')}</Link>
             </S.HaveAccount>
         </S.Group>
     );

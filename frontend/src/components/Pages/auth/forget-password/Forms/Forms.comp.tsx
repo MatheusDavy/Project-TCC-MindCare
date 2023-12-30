@@ -11,15 +11,17 @@ import { InputText } from '../../../../../styles/configs/ui/inputs/TextField';
 
 // Icons
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export function FormsComp() {
     const { data, methods } = useLogic({});
+    const t = useTranslations('ForgotPassword');
 
     return (
         <S.Group>
-            <S.Title>Recuperar Senha</S.Title>
+            <S.Title>{t('title')}</S.Title>
             <S.Subtitle>
-                Informe-nos <b>seu email</b> para enviarmos todas as instruções de <b>recuperação de senha!</b>
+                {t('description')}
             </S.Subtitle>
             <S.Forms onSubmit={methods.handleSubmit(methods.onSubmit)}>
                 <S.FormWrapper>
@@ -50,11 +52,11 @@ export function FormsComp() {
                     )}
                 </S.FormWrapper>
                 <S.ButtonSubmit type="submit" className="simple_hover">
-                    Enviar
+                    {t('button')}
                 </S.ButtonSubmit>
             </S.Forms>
             <S.BackToLogin>
-                <Link href={'/auth/register/'}>Voltar</Link>
+                <Link href={'/auth/login/'}>{t('back')}</Link>
             </S.BackToLogin>
         </S.Group>
     );

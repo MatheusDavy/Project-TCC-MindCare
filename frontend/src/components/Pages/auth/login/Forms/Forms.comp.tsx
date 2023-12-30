@@ -19,19 +19,24 @@ import Link from 'next/link';
 // OAuth
 import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
 
+// Translate
+import { useTranslations } from 'next-intl';
 
 export function FormsComp() {
     const { data, methods } = useLogic({});
     const [showPassword, setShowPassword] = useState(true);
+    const t = useTranslations('Login');
 
     return (
         <S.Group>
-            <S.Title>Login</S.Title>
-            <S.Subtitle>Comece a cuidar da sua saúde mental :)</S.Subtitle>
+            <S.Title>{t('title')}</S.Title>
+            <S.Subtitle>{t('description')}</S.Subtitle>
             <S.Forms onSubmit={methods.handleSubmit(methods.onSubmit)}>
                 <OAuthLogin />
                 <S.Separator>
-                    <span className="mb-6 bg-gray-100 border border-gray-300">OU</span>
+                    <span className="mb-6 bg-gray-100 border border-gray-300">
+                        OU
+                    </span>
                 </S.Separator>
                 <S.FormWrapper>
                     <Controller
@@ -53,7 +58,9 @@ export function FormsComp() {
                         )}
                     />
                     {data.errors.email && (
-                        <FormHelperText sx={{ marginLeft: '10px', color: 'error.main' }}>
+                        <FormHelperText
+                            sx={{ marginLeft: '10px', color: 'error.main' }}
+                        >
                             {data.errors.email.message}
                         </FormHelperText>
                     )}
@@ -72,9 +79,9 @@ export function FormsComp() {
                                         justifyContent: 'space-between',
                                     }}
                                 >
-                                    <S.InputLabel>Senha</S.InputLabel>
+                                    <S.InputLabel>{t('label-password')}</S.InputLabel>
                                     <S.ForgotPassword href="/auth/forget-password/">
-                                        <b>Esqueci a senha</b>
+                                        <b>{t('label-forget-password')}</b>
                                     </S.ForgotPassword>
                                 </div>
                                 <InputText
@@ -90,10 +97,20 @@ export function FormsComp() {
                                             <InputAdornment position="end">
                                                 <IconButton
                                                     edge="end"
-                                                    onMouseDown={(e) => e.preventDefault()}
-                                                    onClick={() => setShowPassword(!showPassword)}
+                                                    onMouseDown={e =>
+                                                        e.preventDefault()
+                                                    }
+                                                    onClick={() =>
+                                                        setShowPassword(
+                                                            !showPassword
+                                                        )
+                                                    }
                                                 >
-                                                    {showPassword ? <IconEyeOff /> : <IconEye />}
+                                                    {showPassword ? (
+                                                        <IconEyeOff />
+                                                    ) : (
+                                                        <IconEye />
+                                                    )}
                                                 </IconButton>
                                             </InputAdornment>
                                         ),
@@ -103,19 +120,21 @@ export function FormsComp() {
                         )}
                     />
                     {data.errors.password && (
-                        <FormHelperText sx={{ color: 'error.main', marginLeft: '10px' }}>
+                        <FormHelperText
+                            sx={{ color: 'error.main', marginLeft: '10px' }}
+                        >
                             {data.errors.password.message}
                         </FormHelperText>
                     )}
                 </S.FormWrapper>
                 <S.ButtonSubmit type="submit" className="simple_hover">
-          Logar
+                    {t('button')}
                 </S.ButtonSubmit>
             </S.Forms>
             <S.HaveAccount>
-        Não possui uma conta? <Link href={'/auth/register/'}>Cadastrar-se</Link>
+                {t('link-dont-have-account')}{' '}
+                <Link href={'/auth/register/'}>{t('link-signup')}</Link>
             </S.HaveAccount>
         </S.Group>
     );
 }
-

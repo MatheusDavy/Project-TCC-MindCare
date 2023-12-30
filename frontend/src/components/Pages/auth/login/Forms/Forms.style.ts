@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { styled, css } from 'styled-components';
 
 export const Group = styled.div`
@@ -50,7 +51,7 @@ export const InputLabel = styled.label`
     margin: 0px 0px 5px 10px;
   `}
 `;
-export const ForgotPassword = styled.a`
+export const ForgotPassword = styled(Link)`
   ${({ theme }) => css`
     font-size: 14px;
     font-weight: 400;
