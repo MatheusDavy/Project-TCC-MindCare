@@ -9,10 +9,10 @@ The "Mind Care" project focuses on developing a responsive website to promote me
 - NodeJs: 20.1.1^
 
 ### Database
-* To up out database, we need have Docker installed
-<a href="https://docs.docker.com/desktop/install/mac-install/" target="_blank">- MacOS:</a>
-<a href="https://docs.docker.com/desktop/install/windows-install/" target="_blank">- Windowns:</a>
-<a href="https://docs.docker.com/desktop/install/linux-install/" target="_blank">- Linux:</a>
+* To up out database, we need have Docker installed <br />
+<a href="https://docs.docker.com/desktop/install/mac-install/" target="_blank">- MacOS:</a> <br />
+<a href="https://docs.docker.com/desktop/install/windows-install/" target="_blank">- Windowns:</a> <br />
+<a href="https://docs.docker.com/desktop/install/linux-install/" target="_blank">- Linux:</a> <br />
 
 * In the root folder by terminal run the command in your terminar to up our database
 ```
