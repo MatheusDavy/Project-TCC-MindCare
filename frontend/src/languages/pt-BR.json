@@ -56,7 +56,8 @@
         "minLowercase": "Pelo menos 1 letra minúscula [a-z]",
         "minUppercase": "Pelo menos 1 letra maiúscula [A-Z]",
         "minNumbers": "Pelo menos 1 número [0-9]",
-        "minSymbols": "Pelo menos 1 caractere especial [@-#]"
+        "minSymbols": "Pelo menos 1 caractere especial [@-#]",
+        "equalsPassword": "As senhas devem ser iguais"
     },
 
     "Country":{

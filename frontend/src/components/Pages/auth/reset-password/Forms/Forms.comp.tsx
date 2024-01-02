@@ -15,6 +15,7 @@ import { useTranslations } from 'next-intl';
 export function FormsComp() {
     const { data, methods } = useLogic({});
     const t = useTranslations('ResetPassword');
+    const tYup = useTranslations('Yup');
 
     return (
         <S.Group>
@@ -46,7 +47,7 @@ export function FormsComp() {
                         <FormHelperText
                             sx={{ marginLeft: '10px', color: 'error.main' }}
                         >
-                            {data.errors.password.message}
+                            {tYup(`${data.errors.password.message}`)}
                         </FormHelperText>
                     )}
                 </S.FormWrapper>
@@ -73,7 +74,7 @@ export function FormsComp() {
                         <FormHelperText
                             sx={{ marginLeft: '10px', color: 'error.main' }}
                         >
-                            {data.errors.passwordConfirmation.message}
+                            {tYup(`${data.errors.passwordConfirmation.message}`)}
                         </FormHelperText>
                     )}
                 </S.FormWrapper>

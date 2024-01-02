@@ -16,6 +16,7 @@ import { useTranslations } from 'next-intl';
 export function FormsComp() {
     const { data, methods } = useLogic({});
     const t = useTranslations('ForgotPassword');
+    const tYup = useTranslations('Yup');
 
     return (
         <S.Group>
@@ -47,7 +48,7 @@ export function FormsComp() {
                         <FormHelperText
                             sx={{ marginLeft: '10px', color: 'error.main' }}
                         >
-                            {data.errors.email.message}
+                            {tYup(`${data.errors.email.message}`)}
                         </FormHelperText>
                     )}
                 </S.FormWrapper>

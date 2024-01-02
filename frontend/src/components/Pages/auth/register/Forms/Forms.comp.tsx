@@ -24,6 +24,7 @@ export function FormsComp() {
     const { data, methods } = useLogig();
     const [showPassword, setShowPassword] = useState(true);
     const t = useTranslations('Register');
+    const tYup = useTranslations('Yup');
 
     return (
         <S.Group>
@@ -57,7 +58,7 @@ export function FormsComp() {
                         <FormHelperText
                             sx={{ marginLeft: '10px', color: 'error.main' }}
                         >
-                            {data.errors.name.message}
+                            {tYup(`${data.errors.name.message}`)}
                         </FormHelperText>
                     )}
                 </S.FormWrapper>
@@ -84,7 +85,7 @@ export function FormsComp() {
                         <FormHelperText
                             sx={{ marginLeft: '10px', color: 'error.main' }}
                         >
-                            {data.errors.email.message}
+                            {tYup(`${data.errors.email.message}`)}
                         </FormHelperText>
                     )}
                 </S.FormWrapper>
@@ -137,7 +138,7 @@ export function FormsComp() {
                         <FormHelperText
                             sx={{ color: 'error.main', marginLeft: '10px' }}
                         >
-                            {data.errors.password.message}
+                            {tYup(`${data.errors.password.message}`)}
                         </FormHelperText>
                     )}
                 </S.FormWrapper>
