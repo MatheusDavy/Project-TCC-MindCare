@@ -80,7 +80,9 @@ export function FormsComp() {
                                         justifyContent: 'space-between',
                                     }}
                                 >
-                                    <S.InputLabel>{t('label-password')}</S.InputLabel>
+                                    <S.InputLabel>
+                                        {t('label-password')}
+                                    </S.InputLabel>
                                     <S.ForgotPassword href="/auth/forget-password/">
                                         <b>{t('label-forget-password')}</b>
                                     </S.ForgotPassword>

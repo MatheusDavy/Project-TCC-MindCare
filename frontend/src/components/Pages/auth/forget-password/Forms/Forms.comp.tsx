@@ -21,9 +21,7 @@ export function FormsComp() {
     return (
         <S.Group>
             <S.Title>{t('title')}</S.Title>
-            <S.Subtitle>
-                {t('description')}
-            </S.Subtitle>
+            <S.Subtitle>{t('description')}</S.Subtitle>
             <S.Forms onSubmit={methods.handleSubmit(methods.onSubmit)}>
                 <S.FormWrapper>
                     <Controller

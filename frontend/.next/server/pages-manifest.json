@@ -2,8 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/auth/reset-password": "pages/auth/reset-password.js",
-  "/auth/login": "pages/auth/login.js",
-  "/auth/forget-password": "pages/auth/forget-password.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
+  "/client": "pages/client.js",
+  "/auth/register": "pages/auth/register.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/auth/login": "pages/auth/login.js"
 }
