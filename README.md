@@ -18,6 +18,13 @@ The "Mind Care" project focuses on developing a responsive website to promote me
 ```
 docker compose up -d
 ```
+* If our terminal displays the following messages, it means everything is okay.
+```
+[+] Building 0.0s (0/0)                                        docker:default
+[+] Running 2/2
+ ✔ Network mindcare_net-mindcare       Created                           0.0s 
+ ✔ Container container_mysql-mindcare  Started                           0.1s 
+```
 
 ### Backend
 * Navigate in `backend` folder in the terminal
