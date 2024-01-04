@@ -9,6 +9,7 @@ import * as S from './Alert.style';
 
 // Icons
 import { IconQuestionMark, IconCheck } from '@tabler/icons-react';
+import { useTranslations } from 'next-intl';
 
 export type DialogAlertProps = {
     type: 'error' | 'success';
@@ -19,6 +20,8 @@ export type DialogAlertProps = {
 
 const DialogAlert = ({ type, message, open, onClose }: DialogAlertProps) => {
     const [openDialog, setOpenDialog] = useState<boolean>(open || false);
+    const tError = useTranslations('ErrorMessages');
+    const tSuccess = useTranslations('SuccessMessages');
 
     const handleClose = () => {
         setOpenDialog(false);
@@ -38,12 +41,13 @@ const DialogAlert = ({ type, message, open, onClose }: DialogAlertProps) => {
                 </S.Icon>
 
                 <S.Title $type={type}>
-                    {type === 'error' && 'ERRO'}
-                    {type === 'success' && 'SUCESSO'}
+                    {type === 'error' && <>{tError('error')}</>}
+                    {type === 'success' && <>{tSuccess('success')}</>}
                 </S.Title>
 
                 <S.Message>
-                    <i>{message}</i>
+                    {type === 'error' && <i>{tError(message)}</i>}
+                    {type === 'success' && <i>{tSuccess(message)}</i>}
                 </S.Message>
             </DialogContent>
             <DialogActions style={{ padding: 0 }}>

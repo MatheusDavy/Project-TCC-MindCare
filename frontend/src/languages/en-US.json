@@ -40,7 +40,22 @@
         "Apple": "Login with Apple"
     },
 
-    "Messages": {},
+    "ErrorMessages": {
+        "error": "ERROR",
+        "expired-session": "Session expired, please log in again to continue!",
+        "no-specific-chatbot-error": "Unable to find a specific response!",
+        "email-already-exists": "Email already registered!",
+        "incorrect-user-or-password": "Incorrect username or password!",
+        "email-not-exist-in-system": "Email does not exist in our system!",
+        "reset-password-error": "Unable to change the password for this user, please resend your email for password restoration!"
+    },
+    
+    "SuccessMessages": {
+        "success": "SUCCESS",
+        "user-successfully-registered": "User successfully registered!",
+        "verify-email-to-reset-password": "Check your email to reset your password!",
+        "password-successfully-changed": "Password changed successfully!"
+    },
 
     "Yup": {
         "default": "Invalid field",

@@ -23,7 +23,7 @@ export const useLogic = ({}) => {
             .forgetPassword(data.email)
             .then(() => {
                 dialogAlert.responseSuccess({
-                    message: 'Verifique seu email para restaurar sua senha',
+                    message: 'verify-email-to-reset-password',
                     redirect: '/auth/login',
                 });
             })

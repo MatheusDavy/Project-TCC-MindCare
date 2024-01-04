@@ -35,14 +35,14 @@ export default function MyApp({ Component, pageProps}: AppProps) {
                 messages={pageProps.messages}
             >
                 <LanguageProvider>
-                    <DialogAlertProvider>
-                        <ThemeProvider theme={defaulTheme}>
+                    <ThemeProvider theme={defaulTheme}>
+                        <DialogAlertProvider>
                             {getLayout(
                                 <Component {...pageProps} />
                             )}
                             <GlobalStyle />
-                        </ThemeProvider>
-                    </DialogAlertProvider>
+                        </DialogAlertProvider>
+                    </ThemeProvider>
                 </LanguageProvider>
             </NextIntlClientProvider>
         </SessionProvider>

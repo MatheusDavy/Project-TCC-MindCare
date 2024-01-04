@@ -29,7 +29,7 @@ export const useLogic = ({}) => {
             .resetPassword(payload)
             .then(() => {
                 dialogAlert.responseSuccess({
-                    message: 'Senha alterada com sucesso !',
+                    message: 'password-successfully-changed',
                     redirect: '/auth/login',
                 });
             })

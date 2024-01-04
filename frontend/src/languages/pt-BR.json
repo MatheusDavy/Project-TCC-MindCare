@@ -60,6 +60,23 @@
         "equalsPassword": "As senhas devem ser iguais"
     },
 
+    "ErrorMessages": {
+        "error": "ERRO",
+        "expired-session": "Sessão expirada, faça login novamente para continuar!",
+        "no-specific-chatbot-error": "Não foi possível achar uma resposta específica!",
+        "email-already-exists": "Email já cadastrado!",
+        "incorrect-user-or-password": "Usuário ou Senha incorretos!",
+        "email-not-exist-in-system": "Email não existe em nosso sistema!",
+        "reset-password-error": "Não foi possível alterar a senha desse usuário, envie novamente seu email para a restauração de senha!"
+    },
+
+    "SuccessMessages": {
+        "success": "SUCESSO",
+        "user-successfully-registered":"Usuário cadastrado com sucesso!",
+        "verify-email-to-reset-password": "Verifique seu email para restaurar sua senha!",
+        "password-successfully-changed": "Senha alterada com sucesso!"
+    },
+
     "Country":{
         "English": "Inglês",
         "Portuguese": "Portugues"

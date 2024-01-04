@@ -27,7 +27,7 @@ export const useLogig = () => {
             .register(data)
             .then(() => {
                 dialogAlert.responseSuccess({
-                    message: 'Usuário cadastrado com sucesso',
+                    message: 'user-successfully-registered',
                     redirect: '/auth/login',
                 });
             })
