@@ -15,14 +15,17 @@ import { PasswordService } from "../../Services/password.service";
 import { AppError } from "../../Errors/App.erros";
 import { TokenProvider } from "../../Providers/Token.providers";
 import { sendResetPasswordEmail } from "../../Utils/send-reset-password-email";
+import { ErrorProvider } from "../../Providers/ErrorMessage.provider";
 
 export class AuthService {
   private passwordServices: PasswordService;
   private tokenProvider: TokenProvider;
+  private handlerError: ErrorProvider;
 
   constructor() {
     this.passwordServices = new PasswordService();
     this.tokenProvider = new TokenProvider();
+    this.handlerError = new ErrorProvider();
   }
 
   async createUser({ email, password, name }: UserCreateDTO) {
@@ -33,7 +36,7 @@ export class AuthService {
     });
 
     if (userAlreadyExist) {
-      throw new AppError("Email já cadastrado", 400);
+      return this.handlerError.sendEmailAlreadyExistError();
     }
 
     // Create New User
@@ -58,7 +61,7 @@ export class AuthService {
     });
 
     if (!userAlreadyExist) {
-      throw new AppError("Usuário ou Senha incorretos", 400);
+      return this.handlerError.sendIncorrectUserOrPasswordError();
     }
 
     const verifyPassword = await this.passwordServices.validatePassword(
@@ -76,7 +79,7 @@ export class AuthService {
       return { token, refreshedToken };
     }
 
-    throw new AppError("Usuário ou Senha incorretos", 400);
+    return this.handlerError.sendIncorrectUserOrPasswordError();
   }
 
   async refreshToken(refresToken: string) {
@@ -116,7 +119,7 @@ export class AuthService {
 
     // User Not Exist
     if (!userAlreadyExist) {
-      throw new AppError("Email não existe em nosso sistema", 400);
+      return this.handlerError.sendEmailNotExistInSystem();
     }
 
     const token = await this.tokenProvider.generateToken(userAlreadyExist.id);
@@ -125,7 +128,7 @@ export class AuthService {
       "/auth/reset-password/?userId=" +
       token;
     await sendResetPasswordEmail(email, userAlreadyExist.name, url);
-    return "Email Enviado";
+    return true;
   }
 
   async resetPassword({ password, token }: ResetPasswordDTO) {
@@ -136,10 +139,7 @@ export class AuthService {
       });
 
     if (!dataToken) {
-      throw new AppError(
-        "Não foi possível alterar a senha desse usuário, envie novamente seu email para a restauração de senha!",
-        503
-      );
+      return this.handlerError.sendResetPasswordError();
     }
 
     if (dataToken !== undefined && typeof dataToken.sub === "string") {
@@ -156,14 +156,11 @@ export class AuthService {
         }));
 
       if (!user) {
-        throw new AppError(
-          "Não foi possível alterar a senha desse usuário, por favor verifique seu email e acesse o link corretamente para a alteração de senha!",
-          503
-        );
+        return this.handlerError.sendResetPasswordError();
       }
 
       const hashedPassword = await this.passwordServices.hashPassword(password);
-      return await prisma.user.update({
+      await prisma.user.update({
         where: {
           email: user?.email,
         },
@@ -171,6 +168,8 @@ export class AuthService {
           password: hashedPassword,
         },
       });
+
+      return true;
     }
   }
 }

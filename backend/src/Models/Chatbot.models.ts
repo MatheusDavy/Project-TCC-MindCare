@@ -1,9 +1,14 @@
 import { AppError } from "../Errors/App.erros";
 import { prisma } from "../Prisma/client";
 import * as stringSimilarity from "string-similarity";
+import { ErrorProvider } from "../Providers/ErrorMessage.provider";
 
 export class ChatbotService {
-  constructor() {}
+  private handlerError: ErrorProvider;
+
+  constructor() {
+    this.handlerError = new ErrorProvider();
+  }
 
   async getResponse(question: string) {
     try {
@@ -27,7 +32,7 @@ export class ChatbotService {
 
       return { response: response[0] || null };
     } catch (err) {
-      throw new AppError("Não foi possível achar uma resposta específica", 500)
+      throw this.handlerError.sendNoExpecificResponseChatbotError();
     }
   }
 }

@@ -1,5 +1,6 @@
 import { AppError } from "../Errors/App.erros";
 import { prisma } from "../Prisma/client";
+import { ErrorProvider } from "../Providers/ErrorMessage.provider";
 // Types
 
 // Services
@@ -9,9 +10,11 @@ import { TokenProvider } from "../Providers/Token.providers";
 
 export class UserService {
   private tokenProvider: TokenProvider;
+  private handlerError: ErrorProvider;
 
   constructor() {
     this.tokenProvider = new TokenProvider();
+    this.handlerError = new ErrorProvider();
   }
 
   async getUserAuth(token: string) {
@@ -31,10 +34,7 @@ export class UserService {
       return true;
     }
 
-    throw new AppError(
-      "Sessão expirada, faça login novamente para continuar",
-      401
-    );
+    return this.handlerError.sendExpiredSessionError();
   }
 
   async getUser(token: string) {
@@ -64,9 +64,6 @@ export class UserService {
       };
     }
 
-    throw new AppError(
-      "Sessão expirada, faça login novamente para continuar",
-      401
-    );
+    return this.handlerError.sendExpiredSessionError();
   }
 }
