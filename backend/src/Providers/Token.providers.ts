@@ -7,7 +7,7 @@ export class TokenProvider {
   async generateToken(id: string) {
     const token = sign({}, process.env.SECRET_TOKEN!, {
       subject: id,
-      expiresIn: "5s",
+      expiresIn: "1 day",
     });
 
     return token;
