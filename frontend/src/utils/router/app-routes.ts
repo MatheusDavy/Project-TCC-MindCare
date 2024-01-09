@@ -1,6 +1,6 @@
 export const APP_ROUTES = {
     private: {
-        client: '/client',
+        client: '/dashboard',
         admin: '/admin'
     },
     unauthorized: {

@@ -50,7 +50,7 @@ export function FormsComp() {
                         </FormHelperText>
                     )}
                 </S.FormWrapper>
-                <S.ButtonSubmit type="submit" className="simple_hover">
+                <S.ButtonSubmit loading={data.loading} type="submit" className="simple_hover">
                     {t('button')}
                 </S.ButtonSubmit>
             </S.Forms>

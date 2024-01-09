@@ -15,10 +15,13 @@ export const GlobalStyle = createGlobalStyle`
         transition: 0.4s;
         padding-right: 0px !important;
         background-color: #acaec3;
-        /* background-image: url('/images/background/bg_copy.png'); */
         background-size: 100%;
         background-repeat: no-repeat;
-        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     textarea:focus, input:focus, select:focus {
         box-shadow: 0 0 0 0;
@@ -31,17 +34,6 @@ export const GlobalStyle = createGlobalStyle`
     input[type=number] { 
         -moz-appearance: none;
         appearance: none;
-    }
-
-    /* Specific Settings */
-    .container-main-wrapper{
-        width: 95vw;
-        height: 95vh;
-        border-radius: 40px;
-        margin: auto auto;
-        overflow: hidden;
-        background-color: white;
-        box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.3) !important;
     }
 
     /* Scroll Lenus */

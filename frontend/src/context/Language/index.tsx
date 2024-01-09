@@ -23,7 +23,7 @@ export const LanguageProvider = ({ children }: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const params = router.asPath.split('?')[1];
-    const url = `${pathname}/?${params}`;
+    const url = `${pathname}/?${params || ''}`;
 
     useEffect(() => {
         router.push(url, url, { locale: language });

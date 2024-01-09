@@ -6,8 +6,10 @@ import { useRepository } from '../../../../../repository';
 import useDialogAlert from '../../../../../hooks/useDialogAlert';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import { useState } from 'react';
 
 export const useLogic = ({}) => {
+    const [loading, setLoading] = useState(false);
     const { authRepository } = useRepository();
     const dialogAlert = useDialogAlert();
     const router = useRouter();
@@ -21,17 +23,19 @@ export const useLogic = ({}) => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data: FormData) => {
-        authRepository
+    const onSubmit = async (data: FormData) => {
+        setLoading(true);
+        await authRepository
             .login(data)
             .then(data => {
                 Cookies.set(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY!, data.data.token);
-                router.push('/client');
+                router.push('/dashboard');
             })
             .catch(error => {
                 console.log(error);
                 dialogAlert.responseError(error.response.data);
             });
+        setLoading(false);
     };
 
     return {
@@ -39,6 +43,7 @@ export const useLogic = ({}) => {
             // Forms
             errors,
             control,
+            loading
         },
         methods: {
             // Forms

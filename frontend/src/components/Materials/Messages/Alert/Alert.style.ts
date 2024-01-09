@@ -43,7 +43,7 @@ export const Title = styled.p<Props>`
 `;
 
 export const Message = styled.p`
-  ${({ theme }) => css`
+  ${({ }) => css`
     font-size: 16px;
     font-weight: 300;
     text-align: center;

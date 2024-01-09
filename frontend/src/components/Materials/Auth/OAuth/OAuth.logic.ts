@@ -26,7 +26,7 @@ export const useLogic = ({}) => {
             .loginOAuth(payload)
             .then(data => {
                 Cookies.set(process.env.NEXT_PUBLIC_JWT_TOKEN_KEY!, data.data);
-                router.push('/client');
+                router.push('/dashboard');
             })
             .catch(error => {
                 console.log(error);

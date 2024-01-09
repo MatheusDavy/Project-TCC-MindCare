@@ -7,8 +7,7 @@ import useDialogAlert from '../../../../../hooks/useDialogAlert';
 import { useState } from 'react';
 
 export const useLogig = () => {
-    const [isSending, setIsSending] = useState(false);
-
+    const [loading, setLoading] = useState(false);
     const { authRepository } = useRepository();
     const dialogAlert = useDialogAlert();
     const {
@@ -21,9 +20,9 @@ export const useLogig = () => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data: FormData) => {
-        setIsSending(true);
-        authRepository
+    const onSubmit = async (data: FormData) => {
+        setLoading(true);
+        await authRepository
             .register(data)
             .then(() => {
                 dialogAlert.responseSuccess({
@@ -32,15 +31,15 @@ export const useLogig = () => {
                 });
             })
             .catch(error => {
-                setIsSending(false);
                 dialogAlert.responseError(error.response.data);
             });
+        setLoading(false);
     };
 
     return {
         data: {
             // Forms
-            isSending,
+            loading,
             errors,
             control,
         },

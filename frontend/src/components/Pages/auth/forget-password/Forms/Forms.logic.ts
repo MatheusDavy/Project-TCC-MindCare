@@ -4,8 +4,10 @@ import { schema, defaultValues, FormData } from './Forms.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRepository } from '../../../../../repository';
 import useDialogAlert from '../../../../../hooks/useDialogAlert';
+import { useState } from 'react';
 
 export const useLogic = ({}) => {
+    const [loading, setLoading] = useState(false);
     const { authRepository } = useRepository();
     const dialogAlert = useDialogAlert();
     const {
@@ -18,8 +20,9 @@ export const useLogic = ({}) => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data: FormData) => {
-        authRepository
+    const onSubmit = async (data: FormData) => {
+        setLoading(true);
+        await authRepository
             .forgetPassword(data.email)
             .then(() => {
                 dialogAlert.responseSuccess({
@@ -31,11 +34,13 @@ export const useLogic = ({}) => {
                 console.log(error);
                 dialogAlert.responseError(error.response.data);
             });
+        setLoading(false);
     };
 
     return {
         data: {
             // Forms
+            loading,
             errors,
             control,
         },

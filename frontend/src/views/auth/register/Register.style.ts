@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Section = styled.section`
-  width: 100%;
+  width: 100dvw;
   min-height: 100vh;
   display: flex;
   padding: 20px 0px;

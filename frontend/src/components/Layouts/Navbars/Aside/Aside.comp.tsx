@@ -111,7 +111,7 @@ const MoodComp = () => {
 const LinkComp = () => {
     return (
         <S.LinksWrapper>
-            <S.LinkCard href={'/client/settings'}>
+            <S.LinkCard href={'/dashboard/settings'}>
                 <IconSettings />
                 Configurações
             </S.LinkCard>

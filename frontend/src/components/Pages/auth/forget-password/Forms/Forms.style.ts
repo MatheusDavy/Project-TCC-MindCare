@@ -1,3 +1,4 @@
+import { SimpleButtonComp } from 'src/components/Materials/Buttons/SimpleButton/SimpleButton.comp';
 import { styled, css } from 'styled-components';
 
 export const Group = styled.div`
@@ -60,23 +61,15 @@ export const ForgotPassword = styled.a`
     margin: 0px 0px 5px 10px;
   `}
 `;
-export const ButtonSubmit = styled.button`
+export const ButtonSubmit = styled(SimpleButtonComp)`
   background-color: #407bff;
   color: white;
-  border-radius: 300px;
-  padding: 15px 50px;
-  width: fit-content;
-  height: fit-content;
-  border: 0;
-  cursor: pointer;
-  margin: 0 auto;
-  transition: 0.4s;
-  position: relative;
-  margin-top: 30px;
+  margin: 30px auto 0;
   
   &:disabled {
     transition: 0;
     background-color: gray;
+    pointer-events:none;
 
     &:hover {
       box-shadow: 0 0 0 0;

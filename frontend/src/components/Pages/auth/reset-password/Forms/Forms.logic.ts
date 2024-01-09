@@ -4,8 +4,10 @@ import { schema, defaultValues, FormData } from './Forms.schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRepository } from '../../../../../repository';
 import useDialogAlert from '../../../../../hooks/useDialogAlert';
+import { useState } from 'react';
 
 export const useLogic = ({}) => {
+    const [loading, setLoading] = useState(false);
     const userId = new URLSearchParams(window.location.search).get('userId');
     const { authRepository } = useRepository();
     const dialogAlert = useDialogAlert();
@@ -24,8 +26,8 @@ export const useLogic = ({}) => {
             token: userId!,
             password: data.password,
         };
-
-        return authRepository
+        setLoading(true);
+        await authRepository
             .resetPassword(payload)
             .then(() => {
                 dialogAlert.responseSuccess({
@@ -40,11 +42,13 @@ export const useLogic = ({}) => {
                     redirect: '/auth/login',
                 });
             });
+        setLoading(false);
     };
 
     return {
         data: {
             // Forms
+            loading,
             errors,
             control,
         },
