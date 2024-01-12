@@ -1,34 +1,62 @@
+import { FormHelperText } from '@mui/material';
 import { SimpleButtonComp } from 'src/components/Materials/Buttons/SimpleButton/SimpleButton.comp';
 import { styled, css } from 'styled-components';
 
 export const Group = styled.div`
     width: 100%;
     min-height: 100%;
-    padding: 30px;
+    padding: 30px 30px 30px 100px;
     display: flex;
     flex-direction: column;
     overflow: auto;
 `;
 
-/* ------- Forms -------*/
+/* ------- Forms Edit -------*/
 export const Forms = styled.form`
     display: grid;
-    gap: 10px;
-    width: 70%;
-    margin-inline: auto;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
 `;
 export const FormWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    gap: 5px;
+    position: relative;
 `;
 export const InputLabel = styled.label`
     ${({ theme }) => css`
         font-size: 16px;
-        font-weight: 400;
-        color: ${theme.colors.defaultText};
-        margin: 0px 0px 5px 10px;
+        font-weight: 500;
+        line-height: 1;
+        color: ${theme.colors.textThree};
     `}
 `;
+export const TextError = styled(FormHelperText)`
+    position: absolute;
+    bottom: 0;
+    transform: translateY(calc(100% + 5px));
+`;
+
+/* ------- Data View -------*/
+export const DataViewWrapper = styled(Forms)``;
+export const DataViewGroup = styled(FormWrapper)``;
+export const DataViewLabel = styled.span`
+    ${({ theme }) => css`
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1;
+        color: ${theme.colors.textThree};
+    `}
+`;
+export const DataViewResponse = styled.p`
+    ${({ theme }) => css`
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1;
+        color: ${theme.colors.textOne};
+    `}
+`;
+
 
 /* ------- Buttons -------*/
 type ButtonEditProps = {
@@ -45,7 +73,7 @@ export const ButtonEdit = styled(SimpleButtonComp)<ButtonEditProps>`
     ${({ $cancelButton }) => css`
         color: white;
         background-color: ${$cancelButton ? '#ff6767' : 'gray'};
-        padding: 15px 25px;
+        padding: 10px 20px;
 
         span {
             display: flex;
@@ -57,7 +85,7 @@ export const ButtonEdit = styled(SimpleButtonComp)<ButtonEditProps>`
 export const ButtonSubmit = styled(SimpleButtonComp)`
     color: white;
     background-color: #6ce4b4;
-    padding: 15px 25px;
+    padding: 10px 20px;
 
     span {
         display: flex;

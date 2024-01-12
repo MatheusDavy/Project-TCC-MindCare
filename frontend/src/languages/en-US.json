@@ -47,14 +47,20 @@
         "email-already-exists": "Email already registered!",
         "incorrect-user-or-password": "Incorrect username or password!",
         "email-not-exist-in-system": "Email does not exist in our system!",
-        "reset-password-error": "Unable to change the password for this user, please resend your email for password restoration!"
+        "reset-password-error": "Unable to change the password for this user, please resend your email for password restoration!",
+        "cannot-execute-action": ":("
     },
     
     "SuccessMessages": {
         "success": "SUCCESS",
         "user-successfully-registered": "User successfully registered!",
         "verify-email-to-reset-password": "Check your email to reset your password!",
-        "password-successfully-changed": "Password changed successfully!"
+        "password-successfully-changed": "Password changed successfully!",
+        "user-successfully-updated": "Your data has been successfully updated!"
+    },
+
+    "Navigation": {
+        "learn": "Learn"
     },
 
     "Yup": {
@@ -71,6 +77,21 @@
         "minNumbers": "At least 1 number [0-9]",
         "minSymbols": "At least 1 special character [@-#]",
         "equalsPassword": "The passwords must be equals"
+    },
+
+    "Forms": {
+        "label-password": "Password",
+        "label-forget-password": "Forgot Password",
+        "label-name": "Name",
+        "label-age": "Age",
+        "label-city": "City",
+        "label-country": "State",
+        "label-postal-code": "ZIP Code",
+        "label-document": "Document Number"
+    },
+
+    "Tooltips": {
+        
     },
 
     "Country": {

@@ -44,6 +44,10 @@
         "Error": ""
     },
 
+    "Navigation": {
+        "learn": "Aprender"
+    },
+
     "Yup": {
         "default": "Campo inválido",
         "required": "Este campo é obrigatório",
@@ -60,6 +64,17 @@
         "equalsPassword": "As senhas devem ser iguais"
     },
 
+    "Forms": {
+        "label-password": "Senha",
+        "label-forget-password": "Esqueci a senha",
+        "label-name": "Nome",
+        "label-age": "Idade",
+        "label-city": "Cidade",
+        "label-country": "Estado",
+        "label-postal-code": "CEP",
+        "label-document": "CPF"
+    },
+
     "ErrorMessages": {
         "error": "ERRO",
         "expired-session": "Sessão expirada, faça login novamente para continuar!",
@@ -67,14 +82,16 @@
         "email-already-exists": "Email já cadastrado!",
         "incorrect-user-or-password": "Usuário ou Senha incorretos!",
         "email-not-exist-in-system": "Email não existe em nosso sistema!",
-        "reset-password-error": "Não foi possível alterar a senha desse usuário, envie novamente seu email para a restauração de senha!"
+        "reset-password-error": "Não foi possível alterar a senha desse usuário, envie novamente seu email para a restauração de senha!",
+        "cannot-execute-action": "Não foi possível efetuar está ação :("
     },
 
     "SuccessMessages": {
         "success": "SUCESSO",
         "user-successfully-registered":"Usuário cadastrado com sucesso!",
         "verify-email-to-reset-password": "Verifique seu email para restaurar sua senha!",
-        "password-successfully-changed": "Senha alterada com sucesso!"
+        "password-successfully-changed": "Senha alterada com sucesso!",
+        "user-successfully-updated": "Seus dados foram atualizados com sucesso!"
     },
 
     "Country":{

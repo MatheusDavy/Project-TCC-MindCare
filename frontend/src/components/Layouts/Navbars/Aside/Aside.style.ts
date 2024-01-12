@@ -9,8 +9,7 @@ export const Aside = styled.aside`
     /* opacity: 0.3; */
     height: 100%;
     float: right;
-    background-color: #21222d;
-    background-image: linear-gradient(196deg, #616482 0%, #21222d 20%, #21222d 100%);
+    background-color: #7d6fdc;
 `;
 export const AsideContainer = styled.div`
     max-width: 1280px;
@@ -30,7 +29,7 @@ export const ProfileWrapper = styled.div`
     gap: 20px;
     width: 100%;
     aspect-ratio: 1.05;
-    border: 1px solid gray;
+    border: 1px solid white;
     padding: 20px;
     border-radius: 20px;
     cursor: pointer;
@@ -39,7 +38,7 @@ export const ProfileName = styled.p`
     ${({ theme }) => css`
         font-weight: 700;
         font-size: 26px;
-        color: ${theme.colors.defaultText2};
+        color: ${theme.colors.textTwo};
     `}
 `;
 
@@ -55,7 +54,7 @@ export const MoodTitle = styled.div`
         font-weight: 500;
         text-align: center;
         font-size: 16px;
-        color: ${theme.colors.defaultText2};
+        color: ${theme.colors.textTwo};
     `}
 `;
 export const MoodContentWrapper = styled.div`
@@ -91,7 +90,7 @@ export const LinkCard = styled(Link)`
         font-weight: 400;
         text-align: start;
         font-size: 14px;
-        color: ${theme.colors.defaultText2};
+        color: ${theme.colors.textTwo};
 
         display: grid;
         grid-template-columns: auto 1fr;

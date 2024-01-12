@@ -11,11 +11,11 @@ import * as S from './Aside.style';
 import Avatar from '@mui/material/Avatar';
 
 // Types
-import { UserDataTypes } from './Aside.types';
 
 // Icons
 import { IconSettings, IconLogout2 } from '@tabler/icons-react';
 import { logout } from '../../../../utils/auth/logout';
+import { User } from 'src/types/users/usert.types';
 
 export function AsideComp() {
     const { data } = useLogic();
@@ -23,7 +23,9 @@ export function AsideComp() {
     return (
         <S.Aside>
             <S.AsideContainer>
-                <AvatarUser data={data.userData} />
+                {!data.loadingUserDatas && data.userDatas && (
+                    <AvatarUser data={data.userDatas} />
+                )}
                 <MoodComp />
                 <LinkComp />
             </S.AsideContainer>
@@ -31,12 +33,12 @@ export function AsideComp() {
     );
 }
 
-const AvatarUser: React.FC<{ data: UserDataTypes | null }> = ({ data }) => {
+const AvatarUser: React.FC<{ data: User | null }> = ({ data }) => {
     if (!data) {
         return null;
     }
 
-    const { name, avatar } = data;
+    const { name, utilsInfo } = data;
 
     const getAbbreviations = (name: string): string => {
         try {
@@ -48,22 +50,22 @@ const AvatarUser: React.FC<{ data: UserDataTypes | null }> = ({ data }) => {
 
     const stringAvatar = {
         sx: { bgcolor: 'gray' },
-        children: getAbbreviations(name),
+        children: getAbbreviations(name!),
     };
 
     return (
         <S.ProfileWrapper>
-            {avatar ? (
+            {utilsInfo?.avatar ? (
                 <Avatar
                     alt={name}
-                    src={avatar}
+                    src={data.utilsInfo?.avatar}
                     sx={{ width: 120, height: 120, fontSize: 40 }}
                 />
             ) : (
                 <Avatar {...stringAvatar} sx={{ width: 120, height: 120 }} />
             )}
             <S.ProfileName>
-                {name.split(' ')[0] ?? ''} {name.split(' ')[1] ?? ''}
+                {name!.split(' ')[0] ?? ''} {name!.split(' ')[1] ?? ''}
             </S.ProfileName>
         </S.ProfileWrapper>
     );

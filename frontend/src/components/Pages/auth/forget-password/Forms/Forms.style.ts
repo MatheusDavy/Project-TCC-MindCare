@@ -19,7 +19,7 @@ export const Title = styled.h1`
     font-weight: 900;
     line-height: 1;
     text-align: center;
-    color: ${theme.colors.defaultText};
+    color: ${theme.colors.textOne};
   `}
 `;
 export const Subtitle = styled.p`
@@ -30,7 +30,7 @@ export const Subtitle = styled.p`
     width: 80%;
     margin: 0 auto;
     text-align: center;
-    color: ${theme.colors.defaultText};
+    color: ${theme.colors.textOne};
   `}
 `;
 
@@ -49,7 +49,7 @@ export const InputLabel = styled.label`
   ${({ theme }) => css`
     font-size: 16px;
     font-weight: 400;
-    color: ${theme.colors.defaultText};
+    color: ${theme.colors.textOne};
     margin: 0px 0px 5px 10px;
   `}
 `;
@@ -102,7 +102,7 @@ export const LoginWrapperButton = styled.button`
       font-weight: 500;
       line-height: 1;
       text-align: start;
-      color: ${theme.colors.defaultText};
+      color: ${theme.colors.textOne};
     `}
   }
 `;
@@ -113,7 +113,7 @@ export const BackToLogin = styled.p`
   ${({ theme }) => css`
     font-size: 16px;
     font-weight: 400;
-    color: ${theme.colors.defaultText};
+    color: ${theme.colors.textOne};
     text-align: center;
     
     a{

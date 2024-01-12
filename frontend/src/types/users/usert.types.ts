@@ -1,8 +1,17 @@
 import { UserRole } from './users.role';
 
 export type User = {
-    id: string;
-    role: UserRole;
-    email: string;
-    name: string;
-  };
+    name?: string;
+    email?: string;
+    role?: UserRole;
+    utilsInfo?: {
+        avatar?: string | undefined;
+        cep?: number | undefined;
+        document?: number | undefined;
+        city?: string | undefined;
+        age?: number | undefined;
+        state?: string | undefined;
+    };
+
+    password?: string;
+};

@@ -1,3 +1,4 @@
+import { User } from 'src/types/users/usert.types';
 import httpModule from '../../../utils/fetch/Fetch.service';
 import { IRepositoryRequirements } from '../../repositories.common';
 
@@ -11,8 +12,13 @@ export function UserRepository ({ baseUrl }: IRepositoryRequirements) {
         return Fetch.get({ url: `${url}/` });
     }
 
+    function updateMe (data: User) {
+        return Fetch.patch({ url: `${url}/update-me`, data });
+    }
+
 
     return {
-        getMe
+        getMe,
+        updateMe
     };
 }

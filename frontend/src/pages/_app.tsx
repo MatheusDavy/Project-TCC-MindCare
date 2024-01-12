@@ -21,7 +21,7 @@ import { ReactNode } from 'react';
 // Internationalizations
 import {NextIntlClientProvider} from 'next-intl';
 import {useRouter} from 'next/router';
-import { LanguageProvider } from '../context/Language';
+import { LanguageProvider } from '../context/Language/Language.context';
 
 export default function MyApp({ Component, pageProps}: AppProps) {
     const getLayout = Component.getLayout || ((page: ReactNode) => page);

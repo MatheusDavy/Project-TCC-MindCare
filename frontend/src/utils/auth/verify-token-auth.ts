@@ -1,4 +1,5 @@
 export const verifyTokenAuth = async (token: string | undefined) => {
+
     return await fetch(
         new URL(process.env.NEXT_PUBLIC_API_BASE_URL! + '/users/').href,
         {
@@ -16,7 +17,7 @@ export const verifyTokenAuth = async (token: string | undefined) => {
 
             return true;
         })
-        .catch(() => {
+        .catch(async () => {
             return false;
         });
 };

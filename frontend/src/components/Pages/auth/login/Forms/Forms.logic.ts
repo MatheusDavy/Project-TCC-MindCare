@@ -32,7 +32,6 @@ export const useLogic = ({}) => {
                 router.push('/dashboard');
             })
             .catch(error => {
-                console.log(error);
                 dialogAlert.responseError(error.response.data);
             });
         setLoading(false);

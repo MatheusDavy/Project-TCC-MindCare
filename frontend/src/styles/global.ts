@@ -7,11 +7,10 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        transition: 0.4s;
     }
 
     body{
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
         transition: 0.4s;
         padding-right: 0px !important;
         background-color: #acaec3;
@@ -77,5 +76,9 @@ export const GlobalStyle = createGlobalStyle`
 
     a{
         text-decoration: none;
+    }
+
+    input{
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
 `;

@@ -23,7 +23,7 @@ export const LoginWrapperButton = styled.button`
       font-weight: 500;
       line-height: 1;
       text-align: start;
-      color: ${theme.colors.defaultText};
+      color: ${theme.colors.textOne};
     `}
   }
 `;

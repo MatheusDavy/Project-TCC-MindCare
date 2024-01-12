@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { useLanguageContext } from '../../../../context/Language';
+import { useLanguageContext } from '../../../../context/Language/Language.context';
 
 export const useLogic = () => {
     const { language, setLanguage } = useLanguageContext();

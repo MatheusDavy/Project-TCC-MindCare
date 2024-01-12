@@ -11,8 +11,12 @@ export const defaulTheme = {
 
         gray500: '#686868',
 
-        defaultText: '#111111',
-        defaultText2: '#ffffff'
+        textOne: '#2c3e50',
+        textTwo: '#ffffff',
+        textThree: '#acaec3',
+        textFour: '#7d6fdc',
+
+        background: '#7d6fdc'
     },
 
     ...ThemeChatbot,
