@@ -10,36 +10,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UtilsInfo {
+  id        String      @id @default(uuid())
+  document  String?        @unique
+  cep       Int?
+  city      String?
+  state     String?
+  avatar    String?
+  age       Int?
+  User      User[]
+  UserOAuth UserOAuth[]
+
+  @@map("util_info")
+}
+
 model User {
-  id            String        @id @default(uuid())
-  name          String
-  email         String        @unique
-  password      String
-  avatar        String?
-  refresh_token RefreshToken?
-  role Roles
+  id          String     @id @default(uuid())
+  name        String
+  email       String     @unique
+  password    String
+  utilsInfo   UtilsInfo? @relation(fields: [utilsInfoId], references: [id])
+  role        Roles
+  utilsInfoId String?
 
   @@map("users")
 }
 
 model UserOAuth {
-  id     String  @id @default(uuid())
-  name   String
-  email  String  @unique
-  avatar String?
-  role Roles
+  id          String     @id @default(uuid())
+  name        String
+  email       String     @unique
+  utilsInfo   UtilsInfo? @relation(fields: [utilsInfoId], references: [id])
+  role        Roles
+  utilsInfoId String?
 
   @@map("users_oauth")
-}
-
-model RefreshToken {
-  id        String @id @default(uuid())
-  expiresIn Int
-  userId    String @unique
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@map("refresh_token")
 }
 
 model Chatbot {

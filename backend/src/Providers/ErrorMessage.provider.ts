@@ -24,4 +24,8 @@ export class ErrorProvider {
   async sendResetPasswordError(){
     throw new AppError("reset-password-error", 503)
   }
+
+  async sendCannotExectuActionError(){
+    throw new AppError("cannot-execute-action", 503)
+  }
 }

@@ -12,7 +12,6 @@ import {
 import { PasswordService } from "../../Services/password.service";
 
 // Error
-import { AppError } from "../../Errors/App.erros";
 import { TokenProvider } from "../../Providers/Token.providers";
 import { sendResetPasswordEmail } from "../../Utils/send-reset-password-email";
 import { ErrorProvider } from "../../Providers/ErrorMessage.provider";
@@ -72,18 +71,11 @@ export class AuthService {
     if (verifyPassword) {
       // Gerar Token
       const token = await this.tokenProvider.generateToken(userAlreadyExist.id);
-      const refreshedToken = await this.tokenProvider.generateRefreshedToken(
-        userAlreadyExist.id
-      );
 
-      return { token, refreshedToken };
+      return { token };
     }
 
     return this.handlerError.sendIncorrectUserOrPasswordError();
-  }
-
-  async refreshToken(refresToken: string) {
-    return await this.tokenProvider.refreshedToken(refresToken);
   }
 
   async OAuthLogin({ email, name }: UserCreateOAuth) {
