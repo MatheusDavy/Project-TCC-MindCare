@@ -4,13 +4,14 @@ import yup from '../../../../../utils/forms/yup';
 export const defaultValues: User = {
     name: '',
     email: '',
-    utilsInfo:{
-        age: undefined,
-        cep: undefined,
-        document: undefined,
+    utilsInfo: {
+        avatar: '',
+        age: null,
+        cep: null,
+        document: null,
         city: '',
-        state: ''
-    }
+        state: '',
+    },
 };
 
 export const schema = yup.object().shape({
@@ -19,9 +20,23 @@ export const schema = yup.object().shape({
         .string()
         .email()
         .required(),
-    age: yup.number(),
-    document: yup.string(),
-    city: yup.string(),
-    state: yup.string(),
-    cep: yup.number()
+    utilsInfo: yup.object().shape({
+        age: yup
+            .number()
+            .nullable()
+            .max(140, 'ageInvalid')
+            .transform((_, val) => !Number.isNaN(Number(val)) && val !== '' ? Number(val) : null ),
+        document: yup
+            .string()
+            .length(11, 'lenghtDocument')
+            .nullable()
+            .transform((_, val) => !Number.isNaN(Number(val)) && val !== '' ? val : null ),
+        city: yup.string().notRequired(),
+        state: yup.string().notRequired(),
+        cep: yup
+            .number()
+            .nullable()
+            .transform((_, val) => !Number.isNaN(Number(val)) && val !== '' ? Number(val) : null),
+        avatar: yup.string().notRequired(),
+    }),
 });

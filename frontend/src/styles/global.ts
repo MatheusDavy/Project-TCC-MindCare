@@ -13,7 +13,6 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         transition: 0.4s;
         padding-right: 0px !important;
-        background-color: #acaec3;
         background-size: 100%;
         background-repeat: no-repeat;
         min-height: 100dvh;
@@ -54,7 +53,6 @@ export const GlobalStyle = createGlobalStyle`
 
     /* Reset */
     button{
-        border: 0;
         background-color: transparent;
         cursor: pointer;
         font-family: inherit;

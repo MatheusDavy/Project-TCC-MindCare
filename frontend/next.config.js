@@ -7,7 +7,7 @@ const nextConfig = {
         return [
             {
                 source: '/',
-                destination: '/auth/login',
+                destination: '/auth/',
                 permanent: true,
             },
         ];
@@ -15,7 +15,7 @@ const nextConfig = {
     i18n: {
         locales: ['pt-BR', 'en-US'],
         defaultLocale: 'pt-BR',
-        localeDetection: false,
+        localeDetection: true,
     },
 };
 

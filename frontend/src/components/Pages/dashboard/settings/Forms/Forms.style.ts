@@ -36,6 +36,7 @@ export const TextError = styled(FormHelperText)`
     bottom: 0;
     transform: translateY(calc(100% + 5px));
 `;
+export const Profile = styled.div``;
 
 /* ------- Data View -------*/
 export const DataViewWrapper = styled(Forms)``;
@@ -102,4 +103,10 @@ export const ButtonSubmit = styled(SimpleButtonComp)`
             transform: translateY(0px);
         }
     }
+`;
+
+/* ------- Profile View ---------*/
+export const ProfileWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
 `;

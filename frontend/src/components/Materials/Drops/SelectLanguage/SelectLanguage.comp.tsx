@@ -35,7 +35,6 @@ export function SelectLanguageComp() {
                             width={20}
                             height={20}
                         />
-                        <span>{language?.language}</span>
                     </p>
                 );
             }}

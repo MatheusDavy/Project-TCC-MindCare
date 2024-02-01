@@ -18,6 +18,7 @@ const locale = {
         length: 'length'
     },
     number: {
+        length: 'length',
         max: 'max',
         min: 'min'
     }

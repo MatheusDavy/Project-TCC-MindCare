@@ -29,7 +29,6 @@ export const UserProvider = ({ children }: Props) => {
             setUserDatas(JSON.parse(data));
         }
 
-        await setUserAvatar();
         setLoadinUserDatas(false);
     };
 
@@ -37,43 +36,42 @@ export const UserProvider = ({ children }: Props) => {
         setLoadinUserDatas(true);
         await userRepository
             .getMe()
-            .then(({ data }) => {
-                console.log(data);
+            .then(async ({ data }) => {
+                if (!data.utilsInfo?.avatar) {
+                    data = {
+                        ...data,
+                        utilsInfo: {
+                            ...data.utilsInfo,
+                            avatar: await setUserAvatar(data.name),
+                        },
+                    };
+                }
                 Cookies.set(
                     process.env.NEXT_PUBLIC_USER_DATAS,
                     JSON.stringify(data)
                 );
                 setUserDatas(data);
             })
-            .catch(e => {
-                console.log('error legal: ' + e);
+            .catch(() => {
                 setUserDatas(null);
             });
         setLoadinUserDatas(false);
     };
 
-    const setUserAvatar = async () => {
-        const apiUrl = `https://gender-api.com/get?name=${userDatas?.name}&key=${process.env.NEXT_PUBLIC_GENDER_API_KEY}`;
-
+    const setUserAvatar = async (name: string) => {
+        const apiUrl = `https://gender-api.com/get?name=${name}&key=${process.env.NEXT_PUBLIC_GENDER_API_KEY}`;
         try {
             const resposta = await fetch(apiUrl);
             const dados = await resposta.json();
 
             if (dados.gender) {
-                return setUserDatas(prev => {
-                    const prevDatas = { ...prev };
-
-                    if (prevDatas.utilsInfo) {
-                        prevDatas.utilsInfo.avatar =
-                            dados.gender === 'male'
-                                ? '/images/profiles/profile-man.webp'
-                                : '/images/profiles/profile-woman.webp';
-                    }
-
-                    return prevDatas;
-                });
+                return dados.gender === 'male'
+                    ? '/images/profiles/profile-man.webp'
+                    : '/images/profiles/profile-woman.webp';
             }
-        } catch (erro) {}
+        } catch (erro) {
+            console.log(erro);
+        }
     };
 
     const refreshUserDatas = async () => {
@@ -109,5 +107,10 @@ export const useUserContext = () => {
         refreshUserDatas,
     } = context;
 
-    return { loadingUserDatas, userDatas, verifyCache, refreshUserDatas };
+    return {
+        loadingUserDatas,
+        userDatas,
+        verifyCache,
+        refreshUserDatas,
+    };
 };

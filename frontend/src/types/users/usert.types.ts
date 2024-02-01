@@ -5,12 +5,12 @@ export type User = {
     email?: string;
     role?: UserRole;
     utilsInfo?: {
-        avatar?: string | undefined;
-        cep?: number | undefined;
-        document?: number | undefined;
-        city?: string | undefined;
-        age?: number | undefined;
-        state?: string | undefined;
+        avatar?: string;
+        cep?: number | null;
+        document?: string | null;
+        city?: string;
+        age?: number | null;
+        state?: string;
     };
 
     password?: string;

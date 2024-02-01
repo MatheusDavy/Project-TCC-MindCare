@@ -2,7 +2,7 @@
 
 // Next
 import type { AppProps } from 'next/app';
-import '../styles/tailwind/global.css';
+import '../styles/tailwind/globals.css';
 
 // Logic
 // import useLogic from './_app.logic';

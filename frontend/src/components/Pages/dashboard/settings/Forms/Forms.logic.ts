@@ -23,6 +23,7 @@ export const useLogic = () => {
         handleSubmit,
         formState: { errors },
         setValue,
+        getValues,
     } = useForm({
         defaultValues,
         mode: 'onSubmit',
@@ -31,12 +32,11 @@ export const useLogic = () => {
 
     const onSubmit = async (data: User) => {
         setLoading(true);
-        userRepository.updateMe(data)
+        const payload = flattenObject(data);
+        userRepository
+            .updateMe(payload)
             .then(({ data }) => {
-                console.log(data);
-                dialogAlert.responseSuccess({
-                    message: data,
-                });
+                dialogAlert.responseSuccess({ message: data });
                 refreshUserDatas();
             })
             .catch(error => {
@@ -48,8 +48,8 @@ export const useLogic = () => {
     };
 
     const setUserDatas = () => {
-        if (userDatas){
-            configureUseForm(setValue, flattenObject(userDatas));
+        if (userDatas) {
+            configureUseForm(setValue, userDatas);
         }
     };
 
@@ -58,12 +58,19 @@ export const useLogic = () => {
             const response = await axios.get(
                 `https://viacep.com.br/ws/${code}/json/`
             );
-            const datas = {
-                city: response.data.localidade,
-                state: response.data.uf,
+
+            const datas = getValues();
+
+            const newDatas = {
+                ...datas,
+                utilsInfo: {
+                    ...datas.utilsInfo,
+                    city: response.data.localidade,
+                    state: response.data.uf,
+                },
             };
-            configureUseForm(setValue, datas);
-        } catch (error) {};
+            configureUseForm(setValue, newDatas);
+        } catch (error) {}
     };
 
     useEffect(() => {
@@ -71,7 +78,7 @@ export const useLogic = () => {
     }, [userDatas]);
 
     return {
-        data: { loading, edit, control, errors, loadingUserDatas },
+        data: { loading, edit, control, errors, loadingUserDatas, userDatas },
         methods: {
             setEdit,
             onSubmit,

@@ -12,5 +12,5 @@ export const defaultContextData: LanguagesContextProps = {
     loadingUserDatas: true,
     userDatas: null,
     verifyCache: () => null,
-    refreshUserDatas: () => null
+    refreshUserDatas: () => null,
 };

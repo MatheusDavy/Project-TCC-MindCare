@@ -1,29 +1,37 @@
-import { styled, css } from 'styled-components';
+import tw from 'tailwind-styled-components';
 
-export const LoginWrapper = styled.div`
-  display: grid;
-  gap: 10px;
+export const LoginWrapper = tw.div`
+  mt-3
+  space-y-3
 `;
-export const LoginWrapperButton = styled.button`
-  width: 100%;
-  height: auto;
-  border-radius: 100px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  height: 60px;
-  padding-inline: 10%;
-  border: 1px solid rgba(102, 102, 102, 0.8);
+export const LoginButton = tw.button`
+  relative
+  inline-flex
+  items-center
+  justify-center
+  w-full
+  px-4
+  py-4
+  
+  text-base
+  font-semibold
+  text-gray-700
+  hover:text-black
+  focus:text-black
+  focus:outline-none
 
-  span {
-    ${({ theme }) => css`
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 1;
-      text-align: start;
-      color: ${theme.colors.textOne};
-    `}
-  }
+  transition-all
+  duration-200
+  bg-white
+  hover:bg-gray-100
+  focus:bg-gray-100
+
+  border-2
+  border-gray-200
+  rounded-md
+`;
+export const LoginIcon = tw.div`
+  absolute
+  inset-y-0
+  left-0 p-4
 `;

@@ -1,16 +1,15 @@
 {
     "Login": {
-        "title": "Login",
+        "title": "Welcome Back",
         "description": "Don't forget to take care of your mental health :)",
         "label-password": "Password",
         "label-forget-password": "Forgot Password",
-        "button": "Log In",
-        "link-dont-have-account": "Don't have an account?",
-        "link-signup": "Sign Up"
+        "link-dont-have-account": "Don’t have an account?",
+        "link-signup": "Create a free account"
     },
 
     "Register": {
-        "title": "Sign up",
+        "title": "Hello, It will be nice to have you with us !",
         "description": "Start taking care of your mental health :)",
         "label-name": "Name",
         "label-password": "Password",
@@ -76,7 +75,9 @@
         "minUppercase": "At least 1 uppercase letter [A-Z]",
         "minNumbers": "At least 1 number [0-9]",
         "minSymbols": "At least 1 special character [@-#]",
-        "equalsPassword": "The passwords must be equals"
+        "equalsPassword": "The passwords must be equals",
+        "lenghtDocument": "This must be 11 caracteres",
+        "ageInvalid": "Age invalid"
     },
 
     "Forms": {

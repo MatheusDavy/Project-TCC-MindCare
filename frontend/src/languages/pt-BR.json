@@ -1,6 +1,6 @@
 {
     "Login": {
-        "title": "Login",
+        "title": "Bem-vindo de volta",
         "description": "Não deixe de cuidar de sua saúde mental :)",
         "label-password": "Senha",
         "label-forget-password": "Esqueci a Senha",
@@ -10,14 +10,14 @@
     },
 
     "Register": {
-        "title": "Registrar",
+        "title": "Olá, será legal ter você com a gente !",
         "description": "Comece a cuidar da sua saúde mental :)",
         "label-name": "Nome",
         "label-password": "Senha",
         "button": "Criar Conta",
         "or": "OU",
         "link-have-account": "Já possui uma conta?",
-        "link-login": "Logar"
+        "link-login": "Login"
     },
 
     "ResetPassword": {
@@ -61,7 +61,9 @@
         "minUppercase": "Pelo menos 1 letra maiúscula [A-Z]",
         "minNumbers": "Pelo menos 1 número [0-9]",
         "minSymbols": "Pelo menos 1 caractere especial [@-#]",
-        "equalsPassword": "As senhas devem ser iguais"
+        "equalsPassword": "As senhas devem ser iguais",
+        "lenghtDocument": "Este campo deve conter 11 caracteres",
+        "ageInvalid": "Idade inválida"
     },
 
     "Forms": {

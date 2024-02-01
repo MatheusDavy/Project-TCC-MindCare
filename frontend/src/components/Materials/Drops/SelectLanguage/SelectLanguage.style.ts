@@ -2,15 +2,17 @@ import { MenuItem, Select } from '@mui/material';
 import { styled, css } from 'styled-components';
 
 export const SelectWrapper = styled(Select)`
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 1);
     backdrop-filter: blur(10px);
-    border-radius: 10px;
-    box-shadow: 0 2px 20px -1px rgba(0, 0, 0, 0.1) !important;
-    border: 0 !important;
+    border-radius: 5px;
+    border: 1px solid rgb(229, 231, 235);
+    z-index: 100;
 
     .MuiSelect-select,
     fieldset {
         border: 0 !important;
+        padding: 10px 30px 10px 10px !important;
+        min-height: fit-content;
     }
 `;
 
