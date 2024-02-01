@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
 
     if (!session && !isPublicRoutes) {
         const url = request.nextUrl.clone();
-        url.pathname = '/auth/login';
+        url.pathname = '/auth';
         return NextResponse.redirect(url);
     }
 

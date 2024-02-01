@@ -1,6 +1,28 @@
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
+type WrapperProps = {
+  $view: 'login' | 'register';
+}
+export const Wrapper = tw.div<WrapperProps>`
+${({ $view }) => $view == 'login' ? 'opacity-1 translate-x-0 z-10' : 'opacity-0 translate-x-[100%] z-0'}
+    rounded-xl
+    absolute
+    sm:w-[50%] w-full
+    left-0
+    top-0
+    min-h-full
+    
+    flex items-center justify-center
+    
+    px-4 sm:px-6 lg:px-8
+    py-10 sm:py-16 lg:py-24 
+    
+    transition-all duration-1000
+    
+    bg-white
+`;
+
 /* ----------- TITLE ------------- */
 export const Title = tw.h2`
   text-3xl

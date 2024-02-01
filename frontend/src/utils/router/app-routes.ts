@@ -7,8 +7,7 @@ export const APP_ROUTES = {
         name: 'unauthorized'
     },
     public: {
-        login: '/auth/login',
-        register: '/auth/register',
+        auth: '/auth',
         forget_password: '/auth/forget-password',
         reset_password: '/auth/reset-password'
     }

@@ -25,7 +25,7 @@ export function FormsLogin({ view, changeToRegister }: Props) {
     const t = useTranslations('Login');
 
     return (
-        <div className={`${view === 'login' ? 'opacity-1 translate-x-0 z-1' : 'opacity-0 translate-x-[100%] z-0'} rounded-xl absolute w-[50%] left-0 top-0 h-full z-10 flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24  transition-all duration-1000`}>
+        <S.Wrapper $view={view}>
             <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
                 <S.Title>{t('title')}</S.Title>
                 <S.Subtitle>
@@ -45,7 +45,7 @@ export function FormsLogin({ view, changeToRegister }: Props) {
 
                 <OAuthLogin />
             </div>
-        </div>
+        </S.Wrapper>
     );
 }
 

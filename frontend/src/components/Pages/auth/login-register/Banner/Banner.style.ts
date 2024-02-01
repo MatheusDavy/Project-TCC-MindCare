@@ -20,7 +20,7 @@ export const ImageWrapper = tw.div<ImageWrapperProps>`
 
   bg-gray-50
 
-  absolute
+  fixed
   right-0
   w-[50%]
   ${({ $view }) => $view == 'register' ? 'translate-x-[-100%]' : 'translate-x-0'}
@@ -30,4 +30,6 @@ export const ImageWrapper = tw.div<ImageWrapperProps>`
 
   transition-all
   duration-1000
+
+  sm:block hidden
 `;

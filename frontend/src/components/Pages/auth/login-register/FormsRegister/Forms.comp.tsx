@@ -12,6 +12,7 @@ import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
 
 // Translate
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 type Props = {
     view: 'register' | 'login';
@@ -20,9 +21,16 @@ type Props = {
 
 export function FormsRegister({ view, changeToLogin }: Props) {
     const t = useTranslations('Register');
+    const [hidden, setHidden] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setHidden(false);
+        }, 1000);
+    }, []);
 
     return (
-        <div className={`${view === 'register' ? 'opacity-1 translate-x-0 z-1' : 'opacity-0 translate-x-[-100%] z-0'} rounded-xl absolute w-[50%] right-0 top-0 h-full z-10 flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24  transition-all duration-1000`}>
+        <S.Wrapper $hidden={hidden} $view={view}>
             <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
                 <S.Title>{t('title')}</S.Title>
                 <S.Subtitle>
@@ -42,7 +50,7 @@ export function FormsRegister({ view, changeToLogin }: Props) {
 
                 <OAuthLogin />
             </div>
-        </div>
+        </S.Wrapper>
     );
 }
 

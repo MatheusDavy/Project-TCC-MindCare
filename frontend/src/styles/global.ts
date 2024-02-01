@@ -20,6 +20,7 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        overflow-x: hidden;
     }
     textarea:focus, input:focus, select:focus {
         box-shadow: 0 0 0 0;
