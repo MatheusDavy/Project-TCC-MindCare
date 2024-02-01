@@ -61,12 +61,12 @@ export class UserService {
 
       if (user) {
         const utilsDatas: User = {
-          avatar: datas.avatar,
-          age: datas.age,
-          city: datas.city,
-          state: datas.state,
-          document: datas.document,
-          cep: datas.cep,
+          avatar: datas.avatar ? datas.avatar : null,
+          age: datas.age ? datas.age : null,
+          city: datas.city ? datas.city : null,
+          state: datas.state ? datas.state : null,
+          document: datas.document ? datas.document : null,
+          cep: datas.cep ? datas.cep : null,
         };
 
         const updateData = {
@@ -77,18 +77,27 @@ export class UserService {
             : { create: utilsDatas },
         };
 
-        (await prisma.user.update({
-          where: { id: user.id },
-          data: updateData,
-        })) ||
-        (await prisma.userOAuth.update({
-          where: { id: user.id },
-          data: updateData,
-        }));
+        if (user.role === 'OAUTH_USER'){
+          await prisma.userOAuth.update({
+            where: {
+              id: user.id,
+            },
+            data: updateData,
+          })
+        }
 
+        if (user.role === 'USER'){  
+          await prisma.user.update({
+            where: {
+              id: user.id,
+            },
+            data: updateData,
+          })
+        }
         return this.handlerSuccess.sendUserSuccessfullyUpdated();
       }
     } catch (err) {
+      console.log(err);
       return this.handlerError.sendCannotExectuActionError();
     }
 

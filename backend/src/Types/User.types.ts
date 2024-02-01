@@ -4,11 +4,11 @@ export type User = {
     name?: string;
     email?: string;
     role?: UserRole;
-    avatar?: string | undefined;
-    cep?: number | undefined;
-    document?: number | undefined;
-    city?: string | undefined;
-    age?: number | undefined;
-    state?: string | undefined;
+    avatar?: string | undefined | null;
+    cep?: number | undefined | null;
+    document?: string | undefined | null;
+    city?: string | undefined | null;
+    age?: number | undefined | null;
+    state?: string | undefined | null;
     password?: string;
 };

@@ -95,7 +95,7 @@ export class AuthService {
       data: {
         name,
         email,
-        role: "USER",
+        role: "OAUTH_USER",
       },
     });
 

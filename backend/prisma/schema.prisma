@@ -12,17 +12,17 @@ datasource db {
 
 model UtilsInfo {
   id        String      @id @default(uuid())
-  document  String?        @unique
+  document  String?     @unique
   cep       Int?
   city      String?
   state     String?
-  avatar    String?
+  avatar    String?     @db.LongText
   age       Int?
-  User      User[]
+  User      User[] 
   UserOAuth UserOAuth[]
 
   @@map("util_info")
-}
+} 
 
 model User {
   id          String     @id @default(uuid())
@@ -58,4 +58,5 @@ model Chatbot {
 enum Roles {
   ADMIN
   USER
+  OAUTH_USER
 }
