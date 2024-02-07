@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import HeadMetaTags from '../../../components/Next/HeadMetaTags/HeadMetaTags.view';
-import { ForgotPasswordView } from '../../../views/auth/forget-password/FortgotPassword.view';
 import LayoutAuth from '../../../layouts/LayoutAuth/LayoutAuth.view';
 import { GetStaticPropsContext } from 'next/types';
+import { StructurePage } from 'src/components/Pages/auth/forget-password';
 
 const ForgotPasswordPage = () => {
     return (
@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
                 metaImage={''}
                 title={'Resetar Senha'}
             />
-            <ForgotPasswordView />
+            <StructurePage />
         </>
     );
 };

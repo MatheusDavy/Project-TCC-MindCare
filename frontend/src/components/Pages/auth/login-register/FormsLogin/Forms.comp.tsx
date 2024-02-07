@@ -15,6 +15,8 @@ import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
 
 // Translate
 import { useTranslations } from 'next-intl';
+import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
+import { TwInput } from 'src/styles/configs/inputs/tw-input';
 
 type Props = {
     view: 'register' | 'login';
@@ -23,6 +25,7 @@ type Props = {
 
 export function FormsLogin({ view, changeToRegister }: Props) {
     const t = useTranslations('Login');
+    const { data, methods } = useLogic({});
 
     return (
         <S.Wrapper $view={view}>
@@ -41,19 +44,17 @@ export function FormsLogin({ view, changeToRegister }: Props) {
                     </S.Links>
                 </S.Subtitle>
 
-                <Forms />
+                <Forms data={data} methods={methods} />
 
-                <OAuthLogin />
+                {!data.loading && <OAuthLogin />}
             </div>
         </S.Wrapper>
     );
 }
 
-const Forms = () => {
+const Forms = ({ data, methods }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const { data, methods } = useLogic({});
     const t = useTranslations('Login');
-    console.log(data.errors);
 
     return (
         <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)} method="POST">
@@ -78,7 +79,7 @@ const Forms = () => {
                             </svg>
                         </S.FormInputSVG>
 
-                        <S.FormInput
+                        <TwInput
                             {...methods.register('email')}
                             type="email"
                             placeholder="Enter email to get started"
@@ -111,13 +112,14 @@ const Forms = () => {
                                 />
                             </svg>
                         </S.FormInputSVG>
-                        <S.FormInput
+                        <TwInput
                             {...methods.register('password')}
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Enter your password"
                             $error={data.errors.password ? true : false}
                         />
                         <S.FormShowPassword
+                            type='button'
                             onClick={() => {
                                 setShowPassword(prev => !prev);
                             }}
@@ -128,12 +130,16 @@ const Forms = () => {
                 </div>
 
                 <div className="mt-10">
-                    <button
-                        type="submit"
-                        className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80"
-                    >
-                        Log in
-                    </button>
+                    <S.SubmitButton type="submit" disabled={data.loading}>
+                        {data.loading ? (
+                            <LoadingAnimationIcon
+                                mainColor={'white'}
+                                bgColor={'gray'}
+                            />
+                        ) : (
+                            'Log in'
+                        )}
+                    </S.SubmitButton>
                 </div>
             </S.FormWrapper>
         </S.Form>

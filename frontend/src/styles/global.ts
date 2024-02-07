@@ -11,20 +11,9 @@ export const GlobalStyle = createGlobalStyle`
 
     body{
         font-family: 'Plus Jakarta Sans', sans-serif !important;
-        transition: 0.4s;
-        padding-right: 0px !important;
-        background-size: 100%;
-        background-repeat: no-repeat;
-        min-height: 100dvh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        overflow-x: hidden;
-    }
-    textarea:focus, input:focus, select:focus {
-        box-shadow: 0 0 0 0;
-        outline: 0;
     }
     input[type=number]::-webkit-inner-spin-button { 
         -webkit-appearance: none !important;
@@ -75,9 +64,5 @@ export const GlobalStyle = createGlobalStyle`
 
     a{
         text-decoration: none;
-    }
-
-    input{
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
 `;

@@ -63,14 +63,11 @@ export const Links = tw(Link)`
 `;
 
 /* ----------- FORMS ------------- */
-type InputProps = {
-  $error: boolean
-}
 export const Form = tw.form`
   mt-8
 `;
 export const FormWrapper = tw.div`
-  space-y-5
+  
 `;
 export const FormLabelWrapper = tw.div`
   flex
@@ -97,36 +94,12 @@ export const FormInputSVG = tw.div`
   pl-3
   pointer-events-none
 `;
-export const FormInput = tw.input<InputProps>`
-  block
-  w-full
-  py-4
-  pl-10
-  pr-4
-
-  text-black
-  placeholder-gray-500
-
-  transition-all
-  duration-200
-
-  border
-  ${({ $error }) => $error ? 'border-red-600' : 'border-gray-200'}
-  rounded-md
-  bg-gray-50
-
-  focus:outline-none
-  focus:border-blue-600
-  focus:bg-white
-  caret-blue-600"
-`;
 export const FormInputErro = tw.p`
   absolute
   inset-y-100
-  left-2
+  right-0
   flex
   items-center
-  pr-3
   z-10
   text-sm
   text-red-400

@@ -6,6 +6,6 @@ export const logout = async () => {
     await Cookies.remove(process.env.NEXT_PUBLIC_USER_DATAS);
     signOut({
         redirect: true,
-        callbackUrl: '/auth/login'
+        callbackUrl: '/auth'
     });
 };

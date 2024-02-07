@@ -32,6 +32,6 @@ export const LoginButton = tw.button`
 `;
 export const LoginIcon = tw.div`
   absolute
-  inset-y-0
-  left-0 p-4
+  top-[50%] translate-y-[-50%]
+  left-5
 `;

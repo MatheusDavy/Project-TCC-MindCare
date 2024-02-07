@@ -1,10 +1,10 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import HeadMetaTags from '../../../components/Next/HeadMetaTags/HeadMetaTags.view';
-import { ResetPasswordView } from '../../../views/auth/reset-password/ResetPassword.view';
 import { LoadingContentComp } from '../../../components/Materials/Loaders/LoadingContent/LoadingContent.comp';
 import LayoutAuth from '../../../layouts/LayoutAuth/LayoutAuth.view';
 import { GetStaticPropsContext } from 'next/types';
+import { StructurePage } from 'src/components/Pages/auth/reset-password';
 
 const ResetPasswordPage = () => {
     const router = useRouter();
@@ -30,7 +30,7 @@ const ResetPasswordPage = () => {
                 metaImage={''}
                 title={'Resetar Senha'}
             />
-            {!loading && <ResetPasswordView />}
+            {!loading && <StructurePage />}
             {loading && <LoadingContentComp />}
         </>
     );

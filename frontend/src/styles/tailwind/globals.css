@@ -1,6 +1,8 @@
-@import './custom.css';
-@import './hover.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
+
+@import '../utils/custom.css';
+@import '../utils/hover.css';
+@import '../utils/smooth-scroll.css';

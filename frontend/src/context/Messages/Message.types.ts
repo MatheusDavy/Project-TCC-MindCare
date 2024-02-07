@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 export type DialogDataType = {
-  type: 'error' | 'success'
+  type: 'error' | 'success' | undefined
   message: string;
   redirect?: string;
   open: boolean;
@@ -11,7 +11,7 @@ export type DialogAlertValuesType = {
 };
 
 export const initialData: DialogDataType = {
-    type: 'error',
+    type: undefined,
     message: '',
     redirect: '',
     open: false,

@@ -1,123 +1,108 @@
-import { SimpleButtonComp } from 'src/components/Materials/Buttons/SimpleButton/SimpleButton.comp';
-import { styled, css } from 'styled-components';
+import Link from 'next/link';
+import tw from 'tailwind-styled-components';
 
-export const Group = styled.div`
-  width: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(6px);
-  padding: 50px 50px;
-  border-radius: 20px;
-  min-height: auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+export const Title = tw.h2`
+  text-3xl
+  font-bold
+  leading-tight
+  text-black
+  sm:text-4xl
 `;
-export const Title = styled.h1`
-  ${({ theme }) => css`
-    font-size: 56px;
-    font-weight: 900;
-    line-height: 1;
-    text-align: center;
-    color: ${theme.colors.textOne};
-  `}
+export const Subtitle = tw.p`
+  max-w-xl
+  mx-auto
+  mt-4
+  text-base
+  leading-relaxed
+  text-gray-600
 `;
-export const Subtitle = styled.p`
-  ${({ theme }) => css`
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    color: ${theme.colors.textOne};
-  `}
-`;
-
 /* ------- Forms -------*/
-export const Forms = styled.form`
-  display: grid;
-  gap: 10px;
-  width: 70%;
-  margin-inline: auto;
+export const Form = tw.form`
+  mt-8
+  w-full
+  max-w-[400px]
+  mx-auto
 `;
-export const FormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+export const FormWrapper = tw.div`
+  space-y-10
 `;
-export const InputLabel = styled.label`
-  ${({ theme }) => css`
-    font-size: 16px;
-    font-weight: 400;
-    color: ${theme.colors.textOne};
-    margin: 0px 0px 5px 10px;
-  `}
+export const FormLabelWrapper = tw.div`
+  flex
+  items-center
+  justify-between
 `;
-export const ForgotPassword = styled.a`
-  ${({ theme }) => css`
-    font-size: 14px;
-    font-weight: 400;
-    color: ${theme.colors.blue600};
-    margin: 0px 0px 5px 10px;
-  `}
+export const FormLabel = tw.label`
+  text-base
+  font-medium
+  text-gray-900
 `;
-export const ButtonSubmit = styled(SimpleButtonComp)`
-  background-color: #407bff;
-  color: white;
-  margin: 30px auto 0;
-  
-  &:disabled {
-    transition: 0;
-    background-color: gray;
-    pointer-events:none;
-
-    &:hover {
-      box-shadow: 0 0 0 0;
-      transform: translateY(0px);
-    }
-  }
+export const FormInputWrapper = tw.div`
+  relative
+  mt-2.5
+  text-gray-400
+  focus-within:text-gray-600
 `;
-
-/* -------- OAuth Login --------*/
-export const LoginWrapper = styled.div`
-  display: grid;
-  gap: 10px;
+export const FormInputSVG = tw.div`
+  absolute
+  inset-y-0
+  left-0
+  flex
+  items-center
+  pl-3
+  pointer-events-none
 `;
-export const LoginWrapperButton = styled.button`
-  width: 100%;
-  height: auto;
-  border-radius: 100px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  height: 60px;
-  padding-inline: 10%;
-  border: 1px solid rgba(102, 102, 102, 0.8);
-
-  span {
-    ${({ theme }) => css`
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 1;
-      text-align: start;
-      color: ${theme.colors.textOne};
-    `}
-  }
+export const FormInputErro = tw.p`
+  absolute
+  inset-y-[125%]
+  left-[50%]
+  translate-x-[-50%]
+  flex
+  items-center
+  pr-3
+  z-10
+  text-sm
+  text-red-500
+`;
+export const FormShowPassword = tw.button`
+  absolute
+  inset-y-0
+  right-0
+  flex
+  items-center
+  pr-3
+  z-10
 `;
 
+export const SubmitButton = tw.button`
+  inline-flex items-center justify-center w-full
+  px-4 py-4
+  text-base font-semibold text-white
 
-// Have Already Account
-export const BackToLogin = styled.p`
-  ${({ theme }) => css`
-    font-size: 16px;
-    font-weight: 400;
-    color: ${theme.colors.textOne};
-    text-align: center;
-    
-    a{
-      color: ${theme.colors.blue600};
-    }
-  `}
+  transition-all duration-200
+
+  border border-transparent rounded-md
+
+  bg-gradient-to-r from-fuchsia-600 to-blue-600
+
+  focus:outline-none
+  hover:opacity-80
+  focus:opacity-80
+
+  disabled:opacity-[0.4]
+`;
+
+export const Links = tw(Link)`
+  text-sm font-medium text-blue-600 text-center
+
+  w-fit
+
+  mx-auto
+  mt-5 lg:mt-10
+
+  transition-all
+  duration-200 
+
+  hover:text-blue-700 
+  focus:text-blue-700 
+  hover:underline
 `;

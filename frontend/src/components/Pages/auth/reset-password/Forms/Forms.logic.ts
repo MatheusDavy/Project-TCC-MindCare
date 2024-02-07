@@ -14,6 +14,7 @@ export const useLogic = ({}) => {
     const {
         control,
         handleSubmit,
+        register,
         formState: { errors },
     } = useForm({
         defaultValues,
@@ -56,6 +57,7 @@ export const useLogic = ({}) => {
             // Forms
             onSubmit,
             handleSubmit,
+            register
         },
     };
 };

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 // Styles
 import * as S from './Forms.style';
 
@@ -5,14 +7,14 @@ import * as S from './Forms.style';
 import { useLogic } from './Forms.logic';
 
 // Icons
-import { IconUser } from '@tabler/icons-react';
+import { IconUser, IconEye, IconEyeOff } from '@tabler/icons-react';
 
 // OAuth
 import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
 
 // Translate
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { TwInput } from 'src/styles/configs/inputs/tw-input';
 
 type Props = {
     view: 'register' | 'login';
@@ -56,8 +58,10 @@ export function FormsRegister({ view, changeToLogin }: Props) {
 
 const Forms = ({ changeToLogin }) => {
     const { data, methods } = useLogic({ changeToLogin });
+    const [showPassword, setShowPassword] = useState(false);
+
     const t = useTranslations('Register');
-    console.log(data.errors);
+    const tYup = useTranslations('Yup');
 
     return (
         <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)} method="POST">
@@ -69,16 +73,22 @@ const Forms = ({ changeToLogin }) => {
                             <IconUser />
                         </S.FormInputSVG>
 
-                        <S.FormInput
+                        <TwInput
                             {...methods.register('name')}
                             type="text"
                             placeholder="Henry Cavil"
-                            $error={data.errors.email ? true : false}
+                            $error={data.errors.name ? true : false}
                         />
+
+                        {data.errors.name && (
+                            <S.FormInputErro>
+                                {tYup(data.errors.name.message)}
+                            </S.FormInputErro>
+                        )}
                     </S.FormInputWrapper>
                 </div>
 
-                <div>
+                <div className="mt-5">
                     <S.FormLabel>Email</S.FormLabel>
                     <S.FormInputWrapper>
                         <S.FormInputSVG>
@@ -98,16 +108,22 @@ const Forms = ({ changeToLogin }) => {
                             </svg>
                         </S.FormInputSVG>
 
-                        <S.FormInput
+                        <TwInput
                             {...methods.register('email')}
                             type="email"
-                            placeholder="Enter email to get started"
+                            placeholder="example@gmail.com"
                             $error={data.errors.email ? true : false}
                         />
+
+                        {data.errors.email && (
+                            <S.FormInputErro>
+                                {tYup(data.errors.email.message)}
+                            </S.FormInputErro>
+                        )}
                     </S.FormInputWrapper>
                 </div>
 
-                <div>
+                <div className="mt-5">
                     <S.FormLabelWrapper>
                         <S.FormLabel>{t('label-password')}</S.FormLabel>
                     </S.FormLabelWrapper>
@@ -128,21 +144,34 @@ const Forms = ({ changeToLogin }) => {
                                 />
                             </svg>
                         </S.FormInputSVG>
-                        <S.FormInput
+                        <TwInput
                             {...methods.register('password')}
-                            type={'text'}
-                            placeholder="Enter your password"
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="*********"
                             $error={data.errors.password ? true : false}
                         />
+                        <S.FormShowPassword
+                            type="button"
+                            onClick={() => {
+                                setShowPassword(prev => !prev);
+                            }}
+                        >
+                            {showPassword ? <IconEye /> : <IconEyeOff />}
+                        </S.FormShowPassword>
+                        {data.errors.password && (
+                            <S.FormInputErro>
+                                {tYup(data.errors.password.message)}
+                            </S.FormInputErro>
+                        )}
                     </S.FormInputWrapper>
                 </div>
 
-                <div className="mt-10">
+                <div className="mt-7">
                     <button
                         type="submit"
                         className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80"
                     >
-                        Log in
+                        {t('button')}
                     </button>
                 </div>
             </S.FormWrapper>

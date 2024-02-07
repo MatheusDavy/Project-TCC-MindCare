@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import HeadMetaTags from '../../components/Next/HeadMetaTags/HeadMetaTags.view';
-import LoginView from '../../views/auth/login-register/Login.view';
 import { GetStaticPropsContext } from 'next/types';
 import LayoutAuth from '../../layouts/LayoutAuth/LayoutAuth.view';
+import { Structure } from 'src/components/Pages/auth/login-register';
 
 const AuthPage = () => {
     return (
@@ -13,7 +13,7 @@ const AuthPage = () => {
                 metaImage={''}
                 title={'register'}
             />
-            <LoginView />
+            <Structure />
         </>
     );
 };

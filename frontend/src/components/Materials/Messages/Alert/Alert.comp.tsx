@@ -1,25 +1,21 @@
 import { useEffect, useState } from 'react';
 
-// Material
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-
 // Styles
 import * as S from './Alert.style';
 
 // Icons
-import { IconQuestionMark, IconCheck } from '@tabler/icons-react';
+import { IconCircleX, IconCheck, IconX } from '@tabler/icons-react';
 import { useTranslations } from 'next-intl';
 
 export type DialogAlertProps = {
-    type: 'error' | 'success';
+    type: 'error' | 'success' | undefined;
     message: string;
     open: boolean;
     onClose?: () => void;
 };
 
 const DialogAlert = ({ type, message, open, onClose }: DialogAlertProps) => {
-    const [openDialog, setOpenDialog] = useState<boolean>(open || false);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
     const tError = useTranslations('ErrorMessages');
     const tSuccess = useTranslations('SuccessMessages');
 
@@ -29,33 +25,51 @@ const DialogAlert = ({ type, message, open, onClose }: DialogAlertProps) => {
     };
 
     useEffect(() => {
-        setOpenDialog(open);
+        setTimeout(() => {
+            setOpenDialog(open);
+        }, 100);
     }, [open]);
 
     return (
-        <S.ContainerDialog open={openDialog} onClose={handleClose}>
-            <DialogContent>
-                <S.Icon $type={type}>
-                    {type === 'error' && <IconQuestionMark />}
-                    {type === 'success' && <IconCheck />}
-                </S.Icon>
+        <>
+            {type !== undefined && (
+                <S.Notification
+                    $open={openDialog}
+                    style={{ zIndex: 10000 }}
+                >
+                    <S.Wrapper>
+                        {type === 'error' && (
+                            <IconCircleX className="text-red-500" />
+                        )}
+                        {type === 'success' && (
+                            <IconCheck className="text-green-400" />
+                        )}
 
-                <S.Title $type={type}>
-                    {type === 'error' && <>{tError('error')}</>}
-                    {type === 'success' && <>{tSuccess('success')}</>}
-                </S.Title>
+                        <div className="flex flex-col space-y-2 overflow-hidden">
+                            <p className="text-sm font-bold min-w-[max-content]">
+                                {type === 'error' && <>{tError('error')}</>}
+                                {type === 'success' && (
+                                    <>{tSuccess('success')}</>
+                                )}
+                            </p>
+                            <p className="text-sm text-gray-500 min-w-[max-content]">
+                                {type === 'error' && <i>{tError(message)}</i>}
+                                {type === 'success' && (
+                                    <i>{tSuccess(message)}</i>
+                                )}
+                            </p>
+                        </div>
 
-                <S.Message>
-                    {type === 'error' && <i>{tError(message)}</i>}
-                    {type === 'success' && <i>{tSuccess(message)}</i>}
-                </S.Message>
-            </DialogContent>
-            <DialogActions style={{ padding: 0 }}>
-                <S.CloseButton $type={type} onClick={handleClose}>
-                    OK
-                </S.CloseButton>
-            </DialogActions>
-        </S.ContainerDialog>
+                        <button
+                            className="absolute right-4 top-4 p-1 h-fit w-fit"
+                            onClick={handleClose}
+                        >
+                            <IconX size={'20px'} className="text-gray-500" />
+                        </button>
+                    </S.Wrapper>
+                </S.Notification>
+            )}
+        </>
     );
 };
 

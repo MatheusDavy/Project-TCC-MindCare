@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import HeadMetaTags from '../../../components/Next/HeadMetaTags/HeadMetaTags.view';
 import LayoutDashboard from '../../../layouts/LayoutDashboard/LayoutDashboard.view';
-import { SettingsView } from 'src/views/dashboard/settings/Settings.view';
 import { GetStaticPropsContext } from 'next/types';
 
 const DashboardPage = () => {
@@ -13,7 +12,7 @@ const DashboardPage = () => {
                 metaImage={''}
                 title={'Client'}
             />
-            <SettingsView />
+            settings
         </>
     );
 };
