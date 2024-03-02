@@ -4,6 +4,7 @@ export const ChatContainer = styled.div`
   position: fixed;
   bottom: 30px;
   right: 30px;
+  z-index: 1000;
 `;
 
 export const BtnOpenChatbot = styled.button`

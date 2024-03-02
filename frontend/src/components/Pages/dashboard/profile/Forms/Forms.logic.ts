@@ -54,6 +54,17 @@ export const useLogic = () => {
         }
     };
 
+    const verifyNickname = async (name: string) => {
+        if (userDatas?.nickname == name) return true;
+        return userRepository.verifyNickname(name)
+            .then(({ data }) => {
+                return data;
+            })
+            .catch(()=> {
+                return false;
+            });
+    };
+
     const getUserAddressInfo = async (code: number) => {
         try {
             const response = await axios.get(
@@ -91,7 +102,8 @@ export const useLogic = () => {
             onSubmit,
             handleSubmit,
             getUserAddressInfo,
-            register
+            register,
+            verifyNickname
         },
     };
 };

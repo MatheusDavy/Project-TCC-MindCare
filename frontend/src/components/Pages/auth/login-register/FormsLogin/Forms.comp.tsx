@@ -14,7 +14,6 @@ import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
 
 // Translate
-import { useTranslations } from 'next-intl';
 import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
 import { TwInput } from 'src/styles/configs/inputs/tw-input';
 
@@ -24,15 +23,14 @@ type Props = {
 };
 
 export function FormsLogin({ view, changeToRegister }: Props) {
-    const t = useTranslations('Login');
     const { data, methods } = useLogic({});
 
     return (
         <S.Wrapper $view={view}>
             <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
-                <S.Title>{t('title')}</S.Title>
+                <S.Title>Bem-vindo de volta</S.Title>
                 <S.Subtitle>
-                    {t('link-dont-have-account')}{' '}
+                    Não deixe de cuidar de sua saúde mental :){' '}
                     <S.Links
                         href={'/auth/'}
                         onClick={e => {
@@ -40,7 +38,7 @@ export function FormsLogin({ view, changeToRegister }: Props) {
                             changeToRegister();
                         }}
                     >
-                        {t('link-signup')}
+                       Registrar
                     </S.Links>
                 </S.Subtitle>
 
@@ -54,7 +52,6 @@ export function FormsLogin({ view, changeToRegister }: Props) {
 
 const Forms = ({ data, methods }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const t = useTranslations('Login');
 
     return (
         <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)} method="POST">
@@ -80,6 +77,7 @@ const Forms = ({ data, methods }) => {
                         </S.FormInputSVG>
 
                         <TwInput
+                            id='login-email'
                             {...methods.register('email')}
                             type="email"
                             placeholder="Enter email to get started"
@@ -90,9 +88,9 @@ const Forms = ({ data, methods }) => {
 
                 <div>
                     <S.FormLabelWrapper>
-                        <S.FormLabel>{t('label-password')}</S.FormLabel>
+                        <S.FormLabel>Senha</S.FormLabel>
                         <S.Links href={'/auth/forget-password'}>
-                            {t('label-forget-password')}
+                            Esqueci a Senha
                         </S.Links>
                     </S.FormLabelWrapper>
                     <S.FormInputWrapper>
@@ -113,9 +111,10 @@ const Forms = ({ data, methods }) => {
                             </svg>
                         </S.FormInputSVG>
                         <TwInput
+                            id='login-password'
                             {...methods.register('password')}
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Enter your password"
+                            placeholder="Insira sua senha"
                             $error={data.errors.password ? true : false}
                         />
                         <S.FormShowPassword
@@ -130,14 +129,14 @@ const Forms = ({ data, methods }) => {
                 </div>
 
                 <div className="mt-10">
-                    <S.SubmitButton type="submit" disabled={data.loading}>
+                    <S.SubmitButton id='login-submit' type="submit" disabled={data.loading}>
                         {data.loading ? (
                             <LoadingAnimationIcon
                                 mainColor={'white'}
                                 bgColor={'gray'}
                             />
                         ) : (
-                            'Log in'
+                            'Login'
                         )}
                     </S.SubmitButton>
                 </div>

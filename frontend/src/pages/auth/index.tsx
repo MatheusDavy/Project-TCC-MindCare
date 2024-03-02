@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import HeadMetaTags from '../../components/Next/HeadMetaTags/HeadMetaTags.view';
-import { GetStaticPropsContext } from 'next/types';
 import LayoutAuth from '../../layouts/LayoutAuth/LayoutAuth.view';
 import { Structure } from 'src/components/Pages/auth/login-register';
 
@@ -24,10 +23,3 @@ AuthPage.getLayout = (page: ReactNode) => <LayoutAuth children={page} />;
 
 export default AuthPage;
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-    return {
-        props: {
-            messages: (await import(`../../languages/${locale}.json`)).default,
-        },
-    };
-}

@@ -5,7 +5,6 @@ import * as S from './Alert.style';
 
 // Icons
 import { IconCircleX, IconCheck, IconX } from '@tabler/icons-react';
-import { useTranslations } from 'next-intl';
 
 export type DialogAlertProps = {
     type: 'error' | 'success' | undefined;
@@ -16,8 +15,6 @@ export type DialogAlertProps = {
 
 const DialogAlert = ({ type, message, open, onClose }: DialogAlertProps) => {
     const [openDialog, setOpenDialog] = useState<boolean>(false);
-    const tError = useTranslations('ErrorMessages');
-    const tSuccess = useTranslations('SuccessMessages');
 
     const handleClose = () => {
         setOpenDialog(false);
@@ -47,16 +44,12 @@ const DialogAlert = ({ type, message, open, onClose }: DialogAlertProps) => {
 
                         <div className="flex flex-col space-y-2 overflow-hidden">
                             <p className="text-sm font-bold min-w-[max-content]">
-                                {type === 'error' && <>{tError('error')}</>}
-                                {type === 'success' && (
-                                    <>{tSuccess('success')}</>
-                                )}
+                                {type === 'error' && <>Erro</>}
+                                {type === 'success' && <>Sucesso</>}
                             </p>
                             <p className="text-sm text-gray-500 min-w-[max-content]">
-                                {type === 'error' && <i>{tError(message)}</i>}
-                                {type === 'success' && (
-                                    <i>{tSuccess(message)}</i>
-                                )}
+                                {type === 'error' && <i>{message}</i>}
+                                {type === 'success' && (<i>{message}</i>)}
                             </p>
                         </div>
 

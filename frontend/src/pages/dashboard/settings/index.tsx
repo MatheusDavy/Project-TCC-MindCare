@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import HeadMetaTags from '../../../components/Next/HeadMetaTags/HeadMetaTags.view';
 import LayoutDashboard from '../../../layouts/LayoutDashboard/LayoutDashboard.view';
-import { GetStaticPropsContext } from 'next/types';
 
 const DashboardPage = () => {
     return (
@@ -21,11 +20,3 @@ const DashboardPage = () => {
 DashboardPage.getLayout = (page: ReactNode) => <LayoutDashboard children={page} />;
 
 export default DashboardPage;
-
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-    return {
-        props: {
-            messages: (await import(`../../../languages/${locale}.json`)).default,
-        },
-    };
-}

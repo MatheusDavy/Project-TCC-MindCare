@@ -1,6 +1,12 @@
-export function LoadingAnimationIcon({ mainColor, bgColor }) {
+type Props = {
+    mainColor: string
+    bgColor: string
+    className?: any
+}
+
+export function LoadingAnimationIcon({ mainColor, bgColor, className }: Props) {
     return (
-        <div role="status">
+        <div role="status" className={className}>
             <svg
                 aria-hidden="true"
                 className="w-8 h-8 animate-spin"

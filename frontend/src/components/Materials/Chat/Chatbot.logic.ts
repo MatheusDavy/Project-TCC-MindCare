@@ -1,7 +1,6 @@
 import { useRepository } from '../../../repository';
-import { ChatbotCompProps } from './Chatbot.types';
 
-export const useLogic = (props: ChatbotCompProps) => {
+export const useLogic = () => {
 
     const { chatbotRepository } = useRepository();
 

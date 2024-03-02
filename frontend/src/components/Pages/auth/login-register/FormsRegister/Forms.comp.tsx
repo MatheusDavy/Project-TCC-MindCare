@@ -13,7 +13,6 @@ import { IconUser, IconEye, IconEyeOff } from '@tabler/icons-react';
 import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
 
 // Translate
-import { useTranslations } from 'next-intl';
 import { TwInput } from 'src/styles/configs/inputs/tw-input';
 
 type Props = {
@@ -22,7 +21,6 @@ type Props = {
 };
 
 export function FormsRegister({ view, changeToLogin }: Props) {
-    const t = useTranslations('Register');
     const [hidden, setHidden] = useState(true);
 
     useEffect(() => {
@@ -34,9 +32,9 @@ export function FormsRegister({ view, changeToLogin }: Props) {
     return (
         <S.Wrapper $hidden={hidden} $view={view}>
             <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
-                <S.Title>{t('title')}</S.Title>
+                <S.Title>Olá, será legal ter você com a gente !</S.Title>
                 <S.Subtitle>
-                    {t('link-have-account')}{' '}
+                    Comece a cuidar da sua saúde mental :){' '}
                     <S.Links
                         href={'/auth/'}
                         onClick={e => {
@@ -44,7 +42,7 @@ export function FormsRegister({ view, changeToLogin }: Props) {
                             changeToLogin();
                         }}
                     >
-                        {t('link-login')}
+                        Login
                     </S.Links>
                 </S.Subtitle>
 
@@ -60,20 +58,18 @@ const Forms = ({ changeToLogin }) => {
     const { data, methods } = useLogic({ changeToLogin });
     const [showPassword, setShowPassword] = useState(false);
 
-    const t = useTranslations('Register');
-    const tYup = useTranslations('Yup');
-
     return (
         <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)} method="POST">
             <S.FormWrapper>
                 <div>
-                    <S.FormLabel>{t('label-name')}</S.FormLabel>
+                    <S.FormLabel>Nome</S.FormLabel>
                     <S.FormInputWrapper>
                         <S.FormInputSVG>
                             <IconUser />
                         </S.FormInputSVG>
 
                         <TwInput
+                            id='register-name'
                             {...methods.register('name')}
                             type="text"
                             placeholder="Henry Cavil"
@@ -82,7 +78,7 @@ const Forms = ({ changeToLogin }) => {
 
                         {data.errors.name && (
                             <S.FormInputErro>
-                                {tYup(data.errors.name.message)}
+                                {data.errors.name.message}
                             </S.FormInputErro>
                         )}
                     </S.FormInputWrapper>
@@ -109,6 +105,7 @@ const Forms = ({ changeToLogin }) => {
                         </S.FormInputSVG>
 
                         <TwInput
+                            id='register-email'
                             {...methods.register('email')}
                             type="email"
                             placeholder="example@gmail.com"
@@ -117,7 +114,7 @@ const Forms = ({ changeToLogin }) => {
 
                         {data.errors.email && (
                             <S.FormInputErro>
-                                {tYup(data.errors.email.message)}
+                                {data.errors.email.message}
                             </S.FormInputErro>
                         )}
                     </S.FormInputWrapper>
@@ -125,7 +122,7 @@ const Forms = ({ changeToLogin }) => {
 
                 <div className="mt-5">
                     <S.FormLabelWrapper>
-                        <S.FormLabel>{t('label-password')}</S.FormLabel>
+                        <S.FormLabel>Senha</S.FormLabel>
                     </S.FormLabelWrapper>
                     <S.FormInputWrapper>
                         <S.FormInputSVG>
@@ -145,6 +142,7 @@ const Forms = ({ changeToLogin }) => {
                             </svg>
                         </S.FormInputSVG>
                         <TwInput
+                            id='register-password'
                             {...methods.register('password')}
                             type={showPassword ? 'text' : 'password'}
                             placeholder="*********"
@@ -160,7 +158,7 @@ const Forms = ({ changeToLogin }) => {
                         </S.FormShowPassword>
                         {data.errors.password && (
                             <S.FormInputErro>
-                                {tYup(data.errors.password.message)}
+                                {data.errors.password.message}
                             </S.FormInputErro>
                         )}
                     </S.FormInputWrapper>
@@ -168,10 +166,11 @@ const Forms = ({ changeToLogin }) => {
 
                 <div className="mt-7">
                     <button
+                        id='register-submit'
                         type="submit"
                         className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80"
                     >
-                        {t('button')}
+                        Registrar
                     </button>
                 </div>
             </S.FormWrapper>

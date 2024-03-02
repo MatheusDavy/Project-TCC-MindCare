@@ -3,7 +3,9 @@ import { useCallback } from 'react';
 import {
     AuthRepository,
     UserRepository,
-    ChatbotRepository
+    ChatbotRepository,
+    FriendsRepository,
+    MoviesRepository
 } from './API';
 
 export function useRepository () {
@@ -13,5 +15,7 @@ export function useRepository () {
         authRepository: useCallback(() => AuthRepository({ baseUrl }), [])(),
         userRepository: useCallback(() => UserRepository({ baseUrl }), [])(),
         chatbotRepository: useCallback(() => ChatbotRepository({ baseUrl }), [])(),
+        friendsRepository: useCallback(() => FriendsRepository({ baseUrl }), [])(),
+        moviesRepository: useCallback(() => MoviesRepository({ baseUrl }), [])(),
     };
 }

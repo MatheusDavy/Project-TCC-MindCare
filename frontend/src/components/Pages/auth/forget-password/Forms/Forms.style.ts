@@ -53,6 +53,7 @@ export const FormInputSVG = tw.div`
 `;
 export const FormInputErro = tw.p`
   absolute
+  w-full
   inset-y-[125%]
   left-[50%]
   translate-x-[-50%]

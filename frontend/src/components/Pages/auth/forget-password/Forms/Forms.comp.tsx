@@ -5,30 +5,25 @@ import * as S from './Forms.style';
 import { useLogic } from './Forms.logic';
 
 // Icons
-import { useTranslations } from 'next-intl';
 import { TwInput } from 'src/styles/configs/inputs/tw-input';
 import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
 
 export function FormsComp() {
-    const t = useTranslations('ForgotPassword');
-
     return (
         <>
             <div className="max-w-2xl mx-auto text-center">
-                <S.Title>{t('title')}</S.Title>
-                <S.Subtitle>{t('description')}</S.Subtitle>
+                <S.Title>Recuperar Senha</S.Title>
+                <S.Subtitle>Informe-nos seu email para enviarmos todas as instruções de recuperação de senha!</S.Subtitle>
             </div>
             <Forms />
 
-            <S.Links href={'/auth/login/'}>{t('back')}</S.Links>
+            <S.Links href={'/auth/login/'}>Voltar</S.Links>
         </>
     );
 }
 
 const Forms = () => {
     const { data, methods } = useLogic({});
-    const tYup = useTranslations('Yup');
-    const t = useTranslations('ForgotPassword');
 
     return (
         <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)} method="POST">
@@ -62,7 +57,7 @@ const Forms = () => {
 
                         {data.errors.email && (
                             <S.FormInputErro>
-                                {tYup(data.errors.email.message)}
+                                {data.errors.email.message}
                             </S.FormInputErro>
                         )}
                     </S.FormInputWrapper>
@@ -76,7 +71,7 @@ const Forms = () => {
                                 bgColor={'gray'}
                             />
                         ) : (
-                            <>{t('button')}</>
+                            'Enviar'
                         )}
                     </S.SubmitButton>
                 </div>

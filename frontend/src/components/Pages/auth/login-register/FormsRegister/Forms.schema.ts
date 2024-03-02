@@ -21,10 +21,10 @@ export const schema = yup.object().shape({
     password: yup
         .string()
         .password()
-        .minLowercase(1, 'minLowercase')
-        .minUppercase(1, 'minUppercase')
-        .minNumbers(1, 'minNumbers')
-        .minSymbols(1, 'minSymbols')
+        .minLowercase(1, 'Pelo menos 1 letra minúscula [a-z]')
+        .minUppercase(1, 'Pelo menos 1 letra maiúscula [A-Z]')
+        .minNumbers(1, 'Pelo menos 1 número [0-9]')
+        .minSymbols(1, 'Pelo menos 1 caractere especial [@-#]')
         .min(6)
         .required(),
 });

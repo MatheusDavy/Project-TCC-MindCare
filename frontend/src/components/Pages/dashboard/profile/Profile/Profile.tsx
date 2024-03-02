@@ -7,6 +7,7 @@ import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-ani
 
 type Props = {
     userName: string;
+    nickname: string
     edit: boolean;
     image: string;
     loading: boolean;
@@ -16,6 +17,7 @@ type Props = {
 
 export function Profile({
     userName,
+    nickname,
     edit,
     image,
     loading,
@@ -43,7 +45,10 @@ export function Profile({
                         </S.ButtonEdit>
                     )}
                 </S.ProfileImage>
-                <S.UserName>{userName}</S.UserName>
+                <div className='flex flex-col gap-2'>
+                    <S.UserName>{userName}</S.UserName>
+                    <span className='text-gray-900/30'>{nickname}</span>
+                </div>
             </div>
             <S.ButtonWrapper>
                 {!loading && (

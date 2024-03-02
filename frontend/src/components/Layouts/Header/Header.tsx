@@ -13,6 +13,8 @@ import { logout } from 'src/utils/auth/logout';
 import { Tooltips } from 'src/styles/configs/tooltips/Tooltips';
 import { Notification } from 'src/components/Materials/Messages/Notifications/Notification';
 import { NotificationAction } from 'src/components/Materials/Messages/Notifications/Notification.action';
+import { useUserContext } from 'src/context/User/User.context';
+import Image from 'next/image';
 
 export function Header() {
     return (
@@ -24,10 +26,10 @@ export function Header() {
 }
 
 const Breadcrumb = () => {
-    const { pathname } = useRouter();
+    const router = useRouter();
 
     const getCurrentPage = (): string | null => {
-        var array = pathname.split('/');
+        var array = router.pathname.split('/');
         var removeIndex = array.indexOf('dashboard');
         if (removeIndex !== -1 && removeIndex < array.length - 1) {
             return array[removeIndex + 1];
@@ -45,9 +47,17 @@ const Breadcrumb = () => {
             {currentRouter && (
                 <>
                     <span className="text-sm text-gray-900">/</span>
-                    <span className="text-sm text-gray-900 font-bold capitalize">
+                    <Link href={router.pathname.replace('[id]', '')} className="text-sm text-gray-900 font-bold capitalize">
                         {currentRouter}
-                    </span>
+                    </Link>
+                    {router.query.id && (
+                        <>
+                            <span className="text-sm text-gray-900">/</span>
+                            <span className="text-sm text-gray-900 font-bold capitalize">
+                                {router.query.id}
+                            </span>
+                        </>
+                    )}
                 </>
             )}
         </S.Breadcrumb>
@@ -59,10 +69,11 @@ const Navigation = () => {
         <S.Navigation>
             <NotificationWrapper />
             <Tooltips title={'sair'} placement="bottom" arrow>
-                <button className="text-purple-600" onClick={logout}>
+                <button id='logout' className="text-gray-900 bg-white p-4 rounded-[50%] hover:text-[#0063f2]" onClick={logout}>
                     <IconLogout width={20} height={20} />
                 </button>
             </Tooltips>
+            <Profile />
         </S.Navigation>
     );
 };
@@ -80,7 +91,7 @@ const NotificationWrapper = () => {
                 arrow
             >
                 <button
-                    className="text-purple-600"
+                    className="text-gray-900 bg-white p-4 rounded-[50%] hover:text-[#0063f2]"
                     onClick={() => {
                         setOpen(prev => !prev);
                     }}
@@ -97,10 +108,9 @@ const NotificationWrapper = () => {
             </Tooltips>
 
             <S.NotificationDropdown
-                className={`${
-                    open
-                        ? 'z-50'
-                        : 'z-[-1] hidden'
+                className={`${open
+                    ? 'z-50'
+                    : 'z-[-1] hidden'
                 }`}
                 style={{ transform: 'translateY(calc(20px + 100%)' }}
                 role="menu"
@@ -158,3 +168,22 @@ const NotificationWrapper = () => {
     );
 };
 
+const Profile = () => {
+    const { userDatas } = useUserContext();
+
+    return (
+        <>
+            {userDatas?.utilsInfo?.avatar && (
+                <Link href={'/dashboard/profile'}>
+                    <Image
+                        src={userDatas?.utilsInfo?.avatar}
+                        alt="User"
+                        width={52}
+                        height={52}
+                        className='rounded-[50%]'
+                    />
+                </Link>
+            )}
+        </>
+    );
+};

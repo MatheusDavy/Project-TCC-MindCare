@@ -7,21 +7,17 @@ import { useLogic } from './Forms.logic';
 // Icons
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 
-// Translations
-import { useTranslations } from 'next-intl';
-
 // Components
 import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
 import { TwInput } from 'src/styles/configs/inputs/tw-input';
 
 
 export function FormsComp() {
-    const t = useTranslations('ResetPassword');
 
     return (
         <>
-            <S.Title>{t('title')}</S.Title>
-            <S.Subtitle>{t('description')}</S.Subtitle>
+            <S.Title>Restaurar Senha</S.Title>
+            <S.Subtitle>Crie uma nova senha para a sua conta</S.Subtitle>
             <Forms />
         </>
     );
@@ -29,8 +25,6 @@ export function FormsComp() {
 
 const Forms = () => {
     const { data, methods } = useLogic({});
-    const t = useTranslations('ResetPassword');
-    const tYup = useTranslations('Yup');
 
     return (
         <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)} method="POST">
@@ -38,15 +32,15 @@ const Forms = () => {
                 <InputPassword
                     register={methods.register}
                     error={data.errors.password}
-                    errorMessage={tYup(data.errors.password?.message)}
-                    label={t('label-password')}
+                    errorMessage={data.errors.password?.message}
+                    label={'Senha'}
                 />
 
                 <InputPassword
                     register={methods.register}
                     error={data.errors.passwordConfirmation}
-                    errorMessage={tYup(data.errors.passwordConfirmation?.message)}
-                    label={t('label-confirmPassword')}
+                    errorMessage={data.errors.passwordConfirmation?.message}
+                    label={'Confirmar senha'}
                 />
 
                 <div className="mt-10">
@@ -57,7 +51,7 @@ const Forms = () => {
                                 bgColor={'gray'}
                             />
                         ) : (
-                            <>{t('button')}</>
+                            <>Alterar Senha</>
                         )}
                     </S.SubmitButton>
                 </div>

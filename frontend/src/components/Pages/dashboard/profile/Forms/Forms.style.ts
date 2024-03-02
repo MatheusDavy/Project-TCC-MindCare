@@ -17,7 +17,7 @@ export const Form = tw.form`
   shadow-md
 `;
 export const FormCategoryWrapper = tw.div`
-  grid grid-cols-2 gap-x-10 gap-y-5
+  grid grid-cols-2 gap-x-10 gap-y-8
 `;
 export const FormWrapper = tw.div`
   space-y-5

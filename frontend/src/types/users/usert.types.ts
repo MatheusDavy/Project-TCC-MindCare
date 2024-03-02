@@ -2,6 +2,7 @@ import { UserRole } from './users.role';
 
 export type User = {
     name?: string;
+    nickname?:string
     email?: string;
     role?: UserRole;
     utilsInfo?: {

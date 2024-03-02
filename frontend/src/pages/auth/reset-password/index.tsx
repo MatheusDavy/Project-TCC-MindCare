@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import HeadMetaTags from '../../../components/Next/HeadMetaTags/HeadMetaTags.view';
 import { LoadingContentComp } from '../../../components/Materials/Loaders/LoadingContent/LoadingContent.comp';
 import LayoutAuth from '../../../layouts/LayoutAuth/LayoutAuth.view';
-import { GetStaticPropsContext } from 'next/types';
 import { StructurePage } from 'src/components/Pages/auth/reset-password';
 
 const ResetPasswordPage = () => {
@@ -40,11 +39,3 @@ const ResetPasswordPage = () => {
 ResetPasswordPage.getLayout = (page: ReactNode) => <LayoutAuth children={page} />;
 
 export default ResetPasswordPage;
-
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-    return {
-        props: {
-            messages: (await import(`../../../languages/${locale}.json`)).default,
-        },
-    };
-};

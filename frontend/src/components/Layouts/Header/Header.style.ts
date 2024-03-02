@@ -8,11 +8,6 @@ export const Header = tw.header`
     items-center
     gap-10
     p-4
-    bg-white
-    rounded-2xl
-    sticky
-    top-0
-    shadow-md
     z-50
 `;
 

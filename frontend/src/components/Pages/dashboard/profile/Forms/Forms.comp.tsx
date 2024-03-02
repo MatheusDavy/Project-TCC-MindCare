@@ -3,16 +3,18 @@ import * as S from './Forms.style';
 import { useEffect, useState } from 'react';
 import { SelectProfilePhoto } from '../ModaUpdateProfile/Modal.comp';
 import { Profile } from '../Profile/Profile';
-import { TwInput } from 'src/styles/configs/inputs/tw-input';
 import {
     IconUser,
     IconNumber18Small,
     IconLocation,
     IconBuilding,
     IconFlag,
-    IconId
+    IconId,
+    IconHash
 } from '@tabler/icons-react';
 import { User } from 'src/types/users/usert.types';
+import useDebounce from 'src/utils/use-debounce';
+import { InputForms } from 'src/components/Materials/Inputs/Input-forms';
 
 export function FormsComp() {
     const { data, methods } = useLogic();
@@ -38,6 +40,7 @@ export function FormsComp() {
                 <>
                     <Profile
                         userName={data.userDatas.name!}
+                        nickname={data.userDatas.nickname!}
                         edit={data.edit}
                         image={profileUpdate}
                         loading={data.loading}
@@ -64,174 +67,144 @@ export function FormsComp() {
 }
 
 const Forms = ({ data, methods }) => {
+    const [validNickname, setValidNickname] = useState<boolean | null>(null);
+
+    const debouncedNickname = useDebounce((nickname => methods.verifyNickname(nickname)), 1000);
+
+    const handleInputChange = async (event) => {
+        const { value } = event.target;
+        const result = await debouncedNickname(value);
+
+        return setValidNickname(result);
+    };
+
+    const handleSubmit = (payload) => {
+        if (validNickname !== false){
+            console.log('call');
+            methods.update(payload);
+        };
+    };
+
     return (
         <S.Form
             $as={data.edit ? 'form' : 'div'}
             id="forms-update-user-data"
-            onSubmit={methods.handleSubmit(methods.update)}
+            onSubmit={methods.handleSubmit(handleSubmit)}
         >
             <h6 className="text-2x1 font-bold">USER INFORMATION</h6>
             <S.FormCategoryWrapper>
-                <div>
-                    <S.FormLabel>Name</S.FormLabel>
-                    <S.FormInputWrapper>
-                        <S.FormInputSVG>
-                            <IconUser  width={25} height={25}/>
-                        </S.FormInputSVG>
-
-                        <TwInput
-                            {...methods.register('name')}
-                            type="text"
-                            disabled={data.edit ? false : true}
-                            placeholder="Enter email to get started"
-                            $error={data.errors.name ? true : false}
+                <InputForms
+                    label='Nome'
+                    type="text"
+                    disabled={!data.edit}
+                    placeholder="Digite seu nome"
+                    $error={!!data.errors.name}
+                    icon={<IconUser width={25} height={25} />}
+                    name='name'
+                    methods={methods}
+                />
+                <InputForms
+                    label='Email'
+                    type='email'
+                    disabled={true}
+                    placeholder="contato@gmail.com"
+                    icon={<svg
+                        className="w-5 h-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
                         />
-                    </S.FormInputWrapper>
-                </div>
-                <div>
-                    <S.FormLabel>Email</S.FormLabel>
-                    <S.FormInputWrapper>
-                        <S.FormInputSVG>
-                            <svg
-                                className="w-5 h-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                                />
-                            </svg>
-                        </S.FormInputSVG>
-
-                        <TwInput
-                            {...methods.register('email')}
-                            type="email"
-                            disabled={data.edit ? false : true}
-                            placeholder="Enter email to get started"
-                            $error={data.errors.email ? true : false}
-                        />
-                    </S.FormInputWrapper>
-                </div>
+                    </svg>}
+                    name='email'
+                    methods={methods}
+                />
+                <InputForms
+                    label='Nome de usuário'
+                    type='text'
+                    disabled={!data.edit}
+                    placeholder="Usuario01"
+                    $error={data.errors.nickname || validNickname == false}
+                    onChange={handleInputChange}
+                    icon={<IconHash />}
+                    name='nickname'
+                    methods={methods}
+                    errorMessage={'Nome de usuário indisponível'}
+                />
                 {Boolean(data.userDatas.utilsInfo.age || data.edit) && (
-                    <div>
-                        <S.FormLabel>Age</S.FormLabel>
-                        <S.FormInputWrapper>
-                            <S.FormInputSVG>
-                                <IconNumber18Small width={25} height={30} />
-                            </S.FormInputSVG>
-
-                            <TwInput
-                                {...methods.register('utilsInfo.age')}
-                                type="number"
-                                disabled={data.edit ? false : true}
-                                placeholder="Enter your age"
-                                $error={
-                                    data.errors.utilsInfo?.age ? true : false
-                                }
-                            />
-                        </S.FormInputWrapper>
-                    </div>
+                    <InputForms
+                        label='Age'
+                        type="number"
+                        disabled={!data.edit}
+                        placeholder="Enter your age"
+                        $error={data.errors.utilsInfo?.age}
+                        icon={<IconNumber18Small width={25} height={30} />}
+                        name='utilsInfo.age'
+                        methods={methods}
+                    />
                 )}
                 {Boolean(data.userDatas.utilsInfo.document || data.edit) && (
-                    <div>
-                        <S.FormLabel>Document</S.FormLabel>
-                        <S.FormInputWrapper>
-                            <S.FormInputSVG>
-                                <IconId width={20} height={20}/>
-                            </S.FormInputSVG>
-
-                            <TwInput
-                                {...methods.register('utilsInfo.document')}
-                                type="number"
-                                disabled={data.edit ? false : true}
-                                placeholder="Enter your age"
-                                $error={
-                                    data.errors.utilsInfo?.document
-                                        ? true
-                                        : false
-                                }
-                            />
-                        </S.FormInputWrapper>
-                    </div>
+                    <InputForms
+                        label='Document'
+                        type="number"
+                        disabled={!data.edit}
+                        placeholder="Enter your document number"
+                        $error={data.errors.utilsInfo?.document}
+                        icon={<IconId width={20} height={20} />}
+                        name='utilsInfo.document'
+                        methods={methods}
+                    />
                 )}
             </S.FormCategoryWrapper>
             <hr />
             {Boolean(
                 data.userDatas.utilsInfo.cep ||
-                    data.userDatas.utilsInfo.city ||
-                    data.userDatas.utilsInfo.state ||
-                    data.edit
-            ) && <h6 className="text-2x1 font-bold">ADRESS INFORMATION</h6>}
-            <S.FormCategoryWrapper>
-                {Boolean(data.userDatas.utilsInfo.cep || data.edit) && (
-                    <div>
-                        <S.FormLabel>CEP</S.FormLabel>
-                        <S.FormInputWrapper>
-                            <S.FormInputSVG>
-                                <IconLocation width={20} height={20} />
-                            </S.FormInputSVG>
-
-                            <TwInput
-                                {...methods.register('utilsInfo.cep')}
-                                type="number"
-                                disabled={data.edit ? false : true}
-                                placeholder="Enter your postal code"
-                                onChange={(e) => {
-                                    methods.getUserAddressInfo(e.target.value);
-                                }}
-                                $error={
-                                    data.errors.utilsInfo?.cep ? true : false
-                                }
-                            />
-                        </S.FormInputWrapper>
-                    </div>
-                )}
-                {Boolean(data.userDatas.utilsInfo.city || data.edit) && (
-                    <div>
-                        <S.FormLabel>City</S.FormLabel>
-                        <S.FormInputWrapper>
-                            <S.FormInputSVG>
-                                <IconBuilding width={20} height={20} />
-                            </S.FormInputSVG>
-
-                            <TwInput
-                                {...methods.register('utilsInfo.city')}
-                                type="text"
-                                disabled={data.edit ? false : true}
-                                placeholder="Enter your city"
-                                $error={
-                                    data.errors.utilsInfo?.city ? true : false
-                                }
-                            />
-                        </S.FormInputWrapper>
-                    </div>
-                )}
-                {Boolean(data.userDatas.utilsInfo.state || data.edit) && (
-                    <div>
-                        <S.FormLabel>State</S.FormLabel>
-                        <S.FormInputWrapper>
-                            <S.FormInputSVG>
-                                <IconFlag width={20} height={20} />
-                            </S.FormInputSVG>
-
-                            <TwInput
-                                {...methods.register('utilsInfo.state')}
-                                type="text"
-                                disabled={data.edit ? false : true}
-                                placeholder="Enter your state"
-                                $error={
-                                    data.errors.utilsInfo?.state ? true : false
-                                }
-                            />
-                        </S.FormInputWrapper>
-                    </div>
-                )}
-            </S.FormCategoryWrapper>
+                data.userDatas.utilsInfo.city ||
+                data.userDatas.utilsInfo.state ||
+                data.edit
+            ) && (
+                <>
+                    <InputForms
+                        label='CEP'
+                        type="number"
+                        disabled={!data.edit}
+                        placeholder="Enter your postal code"
+                        $error={data.errors.utilsInfo?.cep}
+                        icon={<IconLocation width={20} height={20} />}
+                        name='utilsInfo.cep'
+                        methods={methods}
+                        onChange={(e) => {
+                            methods.getUserAddressInfo(e.target.value);
+                        }}
+                    />
+                    <InputForms
+                        label='City'
+                        type="text"
+                        disabled={!data.edit}
+                        placeholder="Enter your city"
+                        $error={data.errors.utilsInfo?.city}
+                        icon={<IconBuilding width={20} height={20} />}
+                        name='utilsInfo.city'
+                        methods={methods}
+                    />
+                    <InputForms
+                        label='State'
+                        type="text"
+                        disabled={!data.edit}
+                        placeholder="Enter your state"
+                        $error={data.errors.utilsInfo?.state}
+                        icon={<IconFlag width={20} height={20} />}
+                        name='utilsInfo.state'
+                        methods={methods}
+                    />
+                </>
+            )}
         </S.Form>
     );
 };

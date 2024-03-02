@@ -2,11 +2,9 @@ import { useLogic } from './OAuth.logic';
 import * as S from './OAuth.style';
 
 // Translate
-import { useTranslations } from 'next-intl';
 
 export function OAuthLogin() {
     const { methods } = useLogic({});
-    const t = useTranslations('OAuth');
 
     return (
         <S.LoginWrapper>
@@ -43,7 +41,7 @@ export function OAuthLogin() {
                         />
                     </svg>
                 </S.LoginIcon>
-                <span>{t('Google')}</span>
+                <span>Login com o Google</span>
             </S.LoginButton>
             <S.LoginButton
                 onClick={e => {
@@ -70,7 +68,7 @@ export function OAuthLogin() {
                         />
                     </svg>
                 </S.LoginIcon>
-                <span>{t('Apple')}</span>
+                <span>Login com a Apple</span>
             </S.LoginButton>
         </S.LoginWrapper>
     );

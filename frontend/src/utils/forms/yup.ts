@@ -4,23 +4,19 @@ import YupPassword from 'yup-password';
 
 const locale = {
     mixed: {
-        default: 'default',
-        required: 'required',
-        notType: 'notType',
-        oneOf: 'oneOf',
-        max: 'max',
-        min: 'min'
+        required: 'Este campo precisa ser preenchido',
+        notType: 'Este campo não corresponde ao tipo necessário',
+        max: 'Este campo precisa ser menor ou igual a ${max}',
+        min: 'Este campo precisa ser maior ou igual a ${min}'
     },
     string: {
-        email: 'email',
-        max: 'max',
-        min: 'min',
-        length: 'length'
+        email: 'Insira um e-mail válido',
+        max: 'Este campo precisa ser menor ou igual a ${max}',
+        min: 'Este campo precisa ser maior ou igual a ${min}',
     },
     number: {
-        length: 'length',
-        max: 'max',
-        min: 'min'
+        max: 'Este campo precisa ser menor ou igual a ${max}',
+        min: 'Este campo precisa ser maior ou igual a ${min}',
     }
 };
 

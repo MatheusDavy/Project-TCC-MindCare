@@ -1,5 +1,3 @@
-import { GetStaticPropsContext } from 'next';
-
 const PageError = () => {
     return (
         <div className="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
@@ -8,7 +6,7 @@ const PageError = () => {
                     <div className="absolute">
                         <div className="">
                             <h1 className="my-2 text-gray-800 font-bold text-2xl">
-                                Looks like you've found the doorway to the great
+                                Looks like you`ve found the doorway to the great
                                 nothing
                             </h1>
                             <p className="my-2 text-gray-800">
@@ -34,11 +32,4 @@ const PageError = () => {
 
 export default PageError;
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-    return {
-        props: {
-            messages: (await import(`../languages/${locale}.json`)).default,
-        },
-    };
-}
 

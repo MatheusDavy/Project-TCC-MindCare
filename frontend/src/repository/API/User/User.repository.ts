@@ -16,9 +16,18 @@ export function UserRepository ({ baseUrl }: IRepositoryRequirements) {
         return Fetch.patch({ url: `${url}/update-me`, data });
     }
 
+    function verifyNickname (name: string) {
+        return Fetch.get({ url: `${url}/nickname?search=${name}` });
+    };
+
+    function findManyUsers (search: string) {
+        return Fetch.get({ url: `${url}/find-users?search=${search}`});
+    };
 
     return {
         getMe,
-        updateMe
+        updateMe,
+        verifyNickname,
+        findManyUsers
     };
 }

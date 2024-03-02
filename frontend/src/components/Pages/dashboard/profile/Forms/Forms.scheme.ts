@@ -4,6 +4,7 @@ import yup from '../../../../../utils/forms/yup';
 export const defaultValues: User = {
     name: '',
     email: '',
+    nickname: '',
     utilsInfo: {
         avatar: '',
         age: null,
@@ -16,6 +17,7 @@ export const defaultValues: User = {
 
 export const schema = yup.object().shape({
     name: yup.string().required(),
+    nickname: yup.string().min(5).required(),
     email: yup
         .string()
         .email()
