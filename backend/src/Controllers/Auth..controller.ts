@@ -24,14 +24,6 @@ export class AuthController {
     return res.status(201).json(result);
   }
 
-  async refreshToken(req: Request, res: Response){
-    const { token } = req.body
-
-    const result = await AuthServices.refreshToken(token);
-
-    return res.status(201).json(result);
-  }
-
   async OAuthLogin(req: Request, res: Response){
     const { name, email } = req.body;
     const result = await AuthServices.OAuthLogin({

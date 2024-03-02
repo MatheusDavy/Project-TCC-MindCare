@@ -24,6 +24,28 @@ export class UsersController {
 
     return res.status(201).json(result);
   }
+
+  async verifyNickname(req: Request, res: Response) {
+    const { search } = req.query;
+
+    if (typeof search !== 'string') return res.status(201).json(false);
+
+    const result = await userServices.verifyNickname(search);
+
+    return res.status(201).json(result);
+  }
+
+  async findManyUsers(req: Request, res: Response){
+    const authToken = req.headers.authorization
+    const [, token] = authToken!.split(" ") 
+    const { search } = req.query;
+
+    if (typeof search !== 'string') return res.status(201).json([]);
+
+    const result = await userServices.findManyUsers(search, token);
+
+    return res.status(201).json(result);
+  }
 }
 
     

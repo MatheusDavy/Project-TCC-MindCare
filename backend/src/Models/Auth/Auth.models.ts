@@ -15,16 +15,19 @@ import { PasswordService } from "../../Services/password.service";
 import { TokenProvider } from "../../Providers/Token.providers";
 import { sendResetPasswordEmail } from "../../Utils/send-reset-password-email";
 import { ErrorProvider } from "../../Providers/ErrorMessage.provider";
+import { NicknameSevice } from "../../Services/nickname.service";
 
 export class AuthService {
   private passwordServices: PasswordService;
   private tokenProvider: TokenProvider;
   private handlerError: ErrorProvider;
+  private nicknameService: NicknameSevice
 
   constructor() {
     this.passwordServices = new PasswordService();
     this.tokenProvider = new TokenProvider();
     this.handlerError = new ErrorProvider();
+    this.nicknameService = new NicknameSevice();
   }
 
   async createUser({ email, password, name }: UserCreateDTO) {
@@ -38,11 +41,14 @@ export class AuthService {
       return this.handlerError.sendEmailAlreadyExistError();
     }
 
+    const nickname = await this.nicknameService.generateNickname(name);
+
     // Create New User
     const hashedPassword = await this.passwordServices.hashPassword(password);
     const user = await prisma.user.create({
       data: {
         name,
+        nickname,
         email,
         password: hashedPassword,
         role: "USER",
@@ -90,10 +96,13 @@ export class AuthService {
       return await this.tokenProvider.generateToken(userAlreadyExist.id);
     }
 
+    const nickname = await this.nicknameService.generateNickname(name);
+
     // Create New User
     const userOAuth = await prisma.userOAuth.create({
       data: {
         name,
+        nickname,
         email,
         role: "OAUTH_USER",
       },

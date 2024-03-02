@@ -3,6 +3,7 @@ export type UserRole = 'USER' | 'ADMIN';
 export type User = {
     name?: string;
     email?: string;
+    nickname?:string;
     role?: UserRole;
     avatar?: string | undefined | null;
     cep?: number | undefined | null;

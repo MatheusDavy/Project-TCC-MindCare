@@ -72,27 +72,28 @@ export class UserService {
         const updateData = {
           name: datas.name,
           email: datas.email,
+          nickname: datas.nickname,
           utilsInfo: user.utilsInfoId
             ? { update: utilsDatas }
             : { create: utilsDatas },
         };
 
-        if (user.role === 'OAUTH_USER'){
+        if (user.role === "OAUTH_USER") {
           await prisma.userOAuth.update({
             where: {
               id: user.id,
             },
             data: updateData,
-          })
+          });
         }
 
-        if (user.role === 'USER'){  
+        if (user.role === "USER") {
           await prisma.user.update({
             where: {
               id: user.id,
             },
             data: updateData,
-          })
+          });
         }
         return this.handlerSuccess.sendUserSuccessfullyUpdated();
       }
@@ -102,5 +103,64 @@ export class UserService {
     }
 
     return this.handlerError.sendExpiredSessionError();
+  }
+
+  async verifyNickname(nickname: string) {
+    const hasUser =
+      (await prisma.user.findUnique({
+        where: { nickname },
+      })) ||
+      (await prisma.userOAuth.findUnique({
+        where: { nickname },
+      }));
+
+    if (hasUser) return false;
+
+    return true;
+  }
+
+  async findManyUsers(search: string, token: string) {
+    const dataToken = await this.tokenProvider.getTokenDatas(token);
+    if (dataToken === undefined || typeof dataToken.sub !== "string") {
+      return this.handlerError.sendExpiredSessionError();
+    }
+
+    const selected = {
+        nickname: true,
+        name: true,
+        utilsInfo: {
+          select: {
+            avatar: true
+          }
+        }
+    }
+
+    const users =
+      (await prisma.user.findMany({
+        where: {
+          OR: [
+            { name: { contains: search } },
+            { nickname: { contains: search } },
+          ],
+          AND: [
+            { id: {not: dataToken.sub }}
+          ]
+        },
+        select: selected
+      })) ||
+      (await prisma.userOAuth.findMany({
+        where: {
+          OR: [
+            { name: { contains: search } },
+            { nickname: { contains: search } },
+          ],
+          AND: [
+            { id: {not: dataToken.sub }}
+          ]
+        },
+        select: selected
+      }));
+
+    return users.slice(0, 10);
   }
 }

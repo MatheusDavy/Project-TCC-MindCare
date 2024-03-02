@@ -10,6 +10,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User
+model User {
+  id          String  @id @default(uuid())
+  nickname    String  @unique
+  name        String
+  email       String  @unique
+  password    String
+  utilsInfoId String?
+
+  utilsInfo UtilsInfo?   @relation(fields: [utilsInfoId], references: [id])
+  friends   Friend[]
+  role      Roles
+
+  @@map("users")
+}
+
+model UserOAuth {
+  id          String  @id @default(uuid())
+  nickname    String  @unique
+  name        String
+  email       String  @unique
+  utilsInfoId String?
+
+  utilsInfo UtilsInfo?   @relation(fields: [utilsInfoId], references: [id])
+  friends   Friend[]
+  role      Roles
+
+  @@map("users_oauth")
+}
+
 model UtilsInfo {
   id        String      @id @default(uuid())
   document  String?     @unique
@@ -18,41 +48,53 @@ model UtilsInfo {
   state     String?
   avatar    String?     @db.LongText
   age       Int?
-  User      User[] 
+  User      User[]
   UserOAuth UserOAuth[]
 
   @@map("util_info")
-} 
-
-model User {
-  id          String     @id @default(uuid())
-  name        String
-  email       String     @unique
-  password    String
-  utilsInfo   UtilsInfo? @relation(fields: [utilsInfoId], references: [id])
-  role        Roles
-  utilsInfoId String?
-
-  @@map("users")
 }
 
-model UserOAuth {
-  id          String     @id @default(uuid())
-  name        String
-  email       String     @unique
-  utilsInfo   UtilsInfo? @relation(fields: [utilsInfoId], references: [id])
-  role        Roles
-  utilsInfoId String?
+model Friend {
+  id               String    @id @default(uuid())
+  idRequest        String
+  idRequested      String?
+  idRequestedOAuth String?
+  status      Boolean
+  updatedAt   DateTime
 
-  @@map("users_oauth")
+  user      User?      @relation(fields: [idRequested], references: [id])
+  userOAuth UserOAuth? @relation(fields: [idRequestedOAuth], references: [id])
+
+  @@map("friends")
 }
 
+// Chatbot
 model Chatbot {
   id       String  @id @default(uuid())
   question String  @unique
   responde String?
 
   @@map("chatbot")
+}
+
+model Movies {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  idCategory  String
+
+  moviesCategories MovieCategories @relation(fields: [idCategory], references: [id])
+
+  @@map("movies")
+}
+
+// Movies
+model MovieCategories {
+  id     String   @id @default(uuid())
+  name   String
+  movies Movies[]
+
+  @@map("movies_categories")
 }
 
 enum Roles {
