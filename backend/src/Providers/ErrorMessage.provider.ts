@@ -1,6 +1,10 @@
 import { AppError } from "../Errors/App.erros";
 
 export class ErrorProvider {
+  async sendError (message: string, status: number) {
+    throw new AppError(message, status);
+  };
+
   async sendExpiredSessionError() {
     throw new AppError("expired-session", 401);
   }

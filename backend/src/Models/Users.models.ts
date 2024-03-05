@@ -163,4 +163,32 @@ export class UserService {
 
     return users.slice(0, 10);
   }
+
+  async findUser (search: string) {
+    const selected = {
+        nickname: true,
+        name: true,
+        utilsInfo: {
+          select: {
+            avatar: true,
+            age: true,
+            state: true
+          }
+        }
+    }
+
+    const user =
+      (await prisma.user.findUnique({
+        where: {nickname: search},
+        select: selected
+      })) ||
+      (await prisma.userOAuth.findUnique({
+        where: {nickname: search},
+        select: selected
+      }));
+
+    if (!user) return this.handlerError.sendError('not-found', 404)
+
+    return user;
+  }
 }

@@ -16,6 +16,7 @@ import { TokenProvider } from "../../Providers/Token.providers";
 import { sendResetPasswordEmail } from "../../Utils/send-reset-password-email";
 import { ErrorProvider } from "../../Providers/ErrorMessage.provider";
 import { NicknameSevice } from "../../Services/nickname.service";
+import { getAvatarProfile } from "../../Services/get-avatar-photo";
 
 export class AuthService {
   private passwordServices: PasswordService;
@@ -45,12 +46,18 @@ export class AuthService {
 
     // Create New User
     const hashedPassword = await this.passwordServices.hashPassword(password);
+    const avatar = await getAvatarProfile(name);
     const user = await prisma.user.create({
       data: {
         name,
         nickname,
         email,
         password: hashedPassword,
+        utilsInfo: {
+          create: {
+            avatar: avatar
+          }
+        },
         role: "USER",
       },
     });
@@ -99,11 +106,17 @@ export class AuthService {
     const nickname = await this.nicknameService.generateNickname(name);
 
     // Create New User
+    const avatar = await getAvatarProfile(name);
     const userOAuth = await prisma.userOAuth.create({
       data: {
         name,
         nickname,
         email,
+        utilsInfo: {
+          create: {
+            avatar: avatar
+          }
+        },
         role: "OAUTH_USER",
       },
     });
