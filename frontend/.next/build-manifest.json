@@ -22,10 +22,25 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/users/[nickname]": [
+    "/auth": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/users/[nickname].js"
+      "static/chunks/pages/auth.js"
+    ],
+    "/dashboard": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard.js"
+    ],
+    "/dashboard/profile": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/profile.js"
+    ],
+    "/dashboard/users": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/users.js"
     ]
   },
   "ampFirstPages": []

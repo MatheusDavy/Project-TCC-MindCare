@@ -24,10 +24,15 @@ export function UserRepository ({ baseUrl }: IRepositoryRequirements) {
         return Fetch.get({ url: `${url}/find-users?search=${search}`});
     };
 
+    function findUser (nickname: string) {
+        return Fetch.get({ url: `${url}/find-user?search=${nickname}`});
+    }
+
     return {
         getMe,
         updateMe,
         verifyNickname,
-        findManyUsers
+        findManyUsers,
+        findUser
     };
 }

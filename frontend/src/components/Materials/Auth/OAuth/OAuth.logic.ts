@@ -15,8 +15,6 @@ export const useLogic = ({}) => {
         signIn('google');
     };
 
-    const appleLogin = () => {};
-
     if (session && session.user) {
         const payload = {
             name: session.user.name!,
@@ -38,6 +36,6 @@ export const useLogic = ({}) => {
 
     return {
         data: {},
-        methods: { googleLogin, appleLogin },
+        methods: { googleLogin },
     };
 };

@@ -26,7 +26,7 @@ export function Search() {
                             key={user.nickname}
                             name={user.name}
                             nickname={user.nickname}
-                            avatar={user.utilsInfo.avatar}
+                            avatar={user.utilsInfo?.avatar}
                         />
                     ))}
                 </div>

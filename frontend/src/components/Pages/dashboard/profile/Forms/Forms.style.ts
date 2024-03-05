@@ -68,3 +68,23 @@ export const FormShowPassword = tw.button`
   pr-3
   z-10
 `;
+
+// Profile Actions
+export const ButtonWrapper = tw.div`
+    flex items-center gap-5
+`;
+
+type ButtonActionProps = {
+    $type: 'cancel' | 'edit' | 'submit'
+}
+export const ButtonAction = tw.button<ButtonActionProps>`
+    ${({ $type }) => $type === 'cancel' && 'text-red-500 bg-red-100 border-[1px] border-red-500'}
+    ${({ $type }) => $type === 'edit' && 'text-white bg-[#585ce5] hover:bg-blue-600'}
+    ${({ $type }) => $type === 'submit' && 'text-gray-500 bg-gray-100 border-[1px] border-gray-500 hover:border-green-500 hover:text-green-500'}
+    flex items-center gap-1
+    text-sm font-medium
+    rounded-lg
+    py-3 px-4
+    focus:outline-none
+    transition-all duration-200
+`;

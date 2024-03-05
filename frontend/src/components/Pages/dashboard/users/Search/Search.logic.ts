@@ -5,12 +5,17 @@ import { useRepository } from 'src/repository';
 export const useLogic = () => {
     const [input, setInput] = useState<string>('');
     const { userRepository } = useRepository();
-    const { data: users, isLoading: loadingUsers, refetch } = useQuery('user-search', async () => {
-        console.log(input);
-        return userRepository.findManyUsers(input)
-            .then(({ data }) => data)
-            .catch(() => []);
-    });
+    const { data: users, isLoading: loadingUsers, refetch } = useQuery(
+        'user-search',
+        async () => {
+            if (input) {
+                return userRepository
+                    .findManyUsers(input)
+                    .then(({ data }) => data)
+                    .catch(() => []);
+            }
+        }
+    );
 
     console.log(users);
 
@@ -22,10 +27,10 @@ export const useLogic = () => {
         data: {
             users,
             loadingUsers,
-            input
+            input,
         },
         methods: {
-            setInput
-        }
+            setInput,
+        },
     };
 };

@@ -2,7 +2,7 @@ import { useLogic } from './Forms.logic';
 import * as S from './Forms.style';
 import { useEffect, useState } from 'react';
 import { SelectProfilePhoto } from '../ModaUpdateProfile/Modal.comp';
-import { Profile } from '../Profile/Profile';
+import { Profile } from '../../../../Sections/Profile/Profile';
 import {
     IconUser,
     IconNumber18Small,
@@ -10,11 +10,15 @@ import {
     IconBuilding,
     IconFlag,
     IconId,
-    IconHash
+    IconHash,
+    IconEdit,
+    IconX,
+    IconCheck
 } from '@tabler/icons-react';
 import { User } from 'src/types/users/usert.types';
 import useDebounce from 'src/utils/use-debounce';
 import { InputForms } from 'src/components/Materials/Inputs/Input-forms';
+import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
 
 export function FormsComp() {
     const { data, methods } = useLogic();
@@ -43,11 +47,39 @@ export function FormsComp() {
                         nickname={data.userDatas.nickname!}
                         edit={data.edit}
                         image={profileUpdate}
-                        loading={data.loading}
-                        setEdit={methods.setEdit}
                         openCrop={() => {
                             setProfileSelectModal(true);
                         }}
+                        actions={
+                            <S.ButtonWrapper>
+                                {!data.loading && (
+                                    <S.ButtonAction
+                                        $type={!data.edit ? 'edit' : 'cancel'}
+                                        onClick={() => {
+                                            methods.setEdit(prev => !prev);
+                                        }}
+                                    >
+                                        {!data.edit ? 'Editar' : 'Cancelar'}
+                                        {!data.edit ? (
+                                            <IconEdit width={20} height={20} />
+                                        ) : (
+                                            <IconX width={20} height={20} />
+                                        )}
+                                    </S.ButtonAction>
+                                )}
+                                {data.edit && (
+                                    <S.ButtonAction
+                                        $type="submit"
+                                        form="forms-update-user-data"
+                                        type="submit"
+                                        disabled={data.loading}
+                                    >
+                                        {data.loading ? <LoadingAnimationIcon bgColor={'text-gray-500'} mainColor={'text-white'} /> : 'Salvar'}
+                                        <IconCheck width={20} height={20} />
+                                    </S.ButtonAction>
+                                )}
+                            </S.ButtonWrapper>
+                        }
                     />
 
                     <Forms data={data} methods={{...methods, update}} />

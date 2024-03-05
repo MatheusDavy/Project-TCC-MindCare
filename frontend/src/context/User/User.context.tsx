@@ -37,15 +37,6 @@ export const UserProvider = ({ children }: Props) => {
         await userRepository
             .getMe()
             .then(async ({ data }) => {
-                if (!data.utilsInfo?.avatar) {
-                    data = {
-                        ...data,
-                        utilsInfo: {
-                            ...data.utilsInfo,
-                            avatar: await setUserAvatar(data.name),
-                        },
-                    };
-                }
                 Cookies.set(
                     process.env.NEXT_PUBLIC_USER_DATAS,
                     JSON.stringify(data)
@@ -56,22 +47,6 @@ export const UserProvider = ({ children }: Props) => {
                 setUserDatas(null);
             });
         setLoadinUserDatas(false);
-    };
-
-    const setUserAvatar = async (name: string) => {
-        const apiUrl = `https://gender-api.com/get?name=${name}&key=${process.env.NEXT_PUBLIC_GENDER_API_KEY}`;
-        try {
-            const resposta = await fetch(apiUrl);
-            const dados = await resposta.json();
-
-            if (dados.gender) {
-                return dados.gender === 'male'
-                    ? '/images/profiles/profile-man.webp'
-                    : '/images/profiles/profile-woman.webp';
-            }
-        } catch (erro) {
-            console.log(erro);
-        }
     };
 
     const refreshUserDatas = async () => {
