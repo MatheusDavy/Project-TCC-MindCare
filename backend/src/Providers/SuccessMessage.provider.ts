@@ -1,5 +1,5 @@
 export class SuccessProvider {
   async sendUserSuccessfullyUpdated() {
-    return("user-successfully-updated");
+    return("Seus dados foram atualizados com sucesso!");
   }
 }

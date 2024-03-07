@@ -6,7 +6,7 @@ export class ErrorProvider {
   };
 
   async sendExpiredSessionError() {
-    throw new AppError("expired-session", 401);
+    throw new AppError("Sessão expirada, faça login novamente!", 401);
   }
 
   async sendNoExpecificResponseChatbotError() {
@@ -14,15 +14,15 @@ export class ErrorProvider {
   }
 
   async sendEmailAlreadyExistError() {
-    throw new AppError("email-already-exists", 400);
+    throw new AppError("Email já cadastrado!", 400);
   }
 
   async sendIncorrectUserOrPasswordError() {
-    throw new AppError("incorrect-user-or-password", 400);
+    throw new AppError("Email ou senhas estão incorretos", 400);
   }
 
   async sendEmailNotExistInSystem() {
-    throw new AppError("email-not-exist-in-system", 400);
+    throw new AppError("Email não existe no sistema!", 400);
   }
 
   async sendResetPasswordError(){
@@ -30,6 +30,6 @@ export class ErrorProvider {
   }
 
   async sendCannotExectuActionError(){
-    throw new AppError("cannot-execute-action", 503)
+    throw new AppError("Erro ao executar essa ação, tente novamente mais tarde!", 503)
   }
 }
