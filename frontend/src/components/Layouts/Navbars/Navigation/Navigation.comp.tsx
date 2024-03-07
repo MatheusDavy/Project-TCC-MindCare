@@ -11,7 +11,7 @@ import {
     IconFriends
 } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
-import { Tooltips } from 'src/styles/configs/tooltips/Tooltips';
+import { TooltipUI   } from 'src/styles/configs/tooltips/Tooltips';
 import Image from 'next/image';
 
 export function NavigateComp() {
@@ -65,11 +65,11 @@ export function NavigateComp() {
                 <ul className="flex flex-col gap-5 pl-0 mb-0">
                     {Navigation.map(data => (
                         <li className={`${pathname === data.url ? 'bg-[#0063f2] text-white rounded-[50%]' : 'text-gray-900'} w-fit h-fit p-4`} key={data.url}>
-                            <Tooltips title={data.tooltip} arrow placement='right'>
+                            <TooltipUI   title={data.tooltip} arrow placement='right'>
                                 <S.Links href={data.url}>
                                     {data.icon}
                                 </S.Links>
-                            </Tooltips>
+                            </TooltipUI >
                         </li>
                     ))}
                 </ul>

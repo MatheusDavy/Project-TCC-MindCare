@@ -27,7 +27,7 @@ export const useLogic = ({ changeToLogin }) => {
             .register(data)
             .then(() => {
                 dialogAlert.responseSuccess({
-                    message: 'user-successfully-registered',
+                    message: 'Usuário registrado com sucesso. Faça login para continuar!',
                 });
                 changeToLogin();
             })

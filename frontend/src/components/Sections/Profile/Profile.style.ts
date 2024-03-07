@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
 export const ProfileWrapper = tw.div`
@@ -59,5 +60,26 @@ export const ButtonAction = tw.button<ButtonActionProps>`
     py-3 px-4
     focus:outline-none
     transition-all duration-200
+`;
+export const ButtonChat = tw(Link)`
+    py-3 px-4
+    rounded-md
+    text-white bg-[#0063f2] hover:bg-[#0063f2]/80
+    transition-all
+    durantion-[600]
+`;
+export const ButtonFriend = tw.button`
+    py-3 px-4
+    rounded-md
+    text-white bg-[#0063f2] hover:bg-[#0063f2]/80
+    transition-all
+    durantion-[600]
+`;
+export const ButtonCancelFriend = tw.button`
+    py-3 px-4
+    rounded-md
+    text-white bg-red-500 hover:bg-red-500/80
+    transition-all
+    durantion-[600]
 `;
 

@@ -13,8 +13,14 @@ export function FriendsRepository ({ baseUrl }: IRepositoryRequirements) {
         return Fetch.get({ url: params });
     }
 
+    function cancelFriendRequest (nickname: string) {
+        const newUrl = `${url}/cancel-friend?user=${nickname}`;
+        return Fetch.get({ url: newUrl });
+    }
+
     return {
         getUserFriends,
-        getUsers
+        getUsers,
+        cancelFriendRequest
     };
 }

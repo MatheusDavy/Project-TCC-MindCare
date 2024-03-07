@@ -14,7 +14,7 @@ export function Structure() {
     }, [router.asPath]);
 
     return (
-        <div className="grid grid-cols-[400px_1fr] w-full">
+        <div className="grid grid-cols-[400px_1fr] w-full gap-4">
             <Search />
             {params && (
                 <User nickname={params} />

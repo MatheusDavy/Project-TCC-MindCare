@@ -10,7 +10,7 @@ import {
     IconCheck
 } from '@tabler/icons-react';
 import { logout } from 'src/utils/auth/logout';
-import { Tooltips } from 'src/styles/configs/tooltips/Tooltips';
+import { TooltipUI } from 'src/styles/configs/tooltips/Tooltips';
 import { Notification } from 'src/components/Materials/Messages/Notifications/Notification';
 import { NotificationAction } from 'src/components/Materials/Messages/Notifications/Notification.action';
 import { useUserContext } from 'src/context/User/User.context';
@@ -68,11 +68,11 @@ const Navigation = () => {
     return (
         <S.Navigation>
             <NotificationWrapper />
-            <Tooltips title={'sair'} placement="bottom" arrow>
+            <TooltipUI title={'sair'} placement="bottom" arrow>
                 <button id='logout' className="text-gray-900 bg-white p-4 rounded-[50%] hover:text-[#0063f2]" onClick={logout}>
                     <IconLogout width={20} height={20} />
                 </button>
-            </Tooltips>
+            </TooltipUI>
             <Profile />
         </S.Navigation>
     );
@@ -84,7 +84,7 @@ const NotificationWrapper = () => {
 
     return (
         <div className="relative flex item-center justify-center text-left z-50">
-            <Tooltips
+            <TooltipUI
                 title="Notificação"
                 open={tooltip}
                 placement="bottom"
@@ -105,7 +105,7 @@ const NotificationWrapper = () => {
                 >
                     <IconBellFilled hanging={''} width={20} height={20} />
                 </button>
-            </Tooltips>
+            </TooltipUI>
 
             <S.NotificationDropdown
                 className={`${open

@@ -44,7 +44,12 @@ export default function User({ nickname }: Props) {
         <div className="w-full flex flex-col gap-3">
             <div className='w-full h-[300px] bg-blue-500 rounded-2xl'></div>
             <div className='mt-[-80px] px-10'>
-                <Profile image={results.utilsInfo?.avatar} nickname={results.nickname} userName={results.name}  />
+                <Profile
+                    image={results.utilsInfo?.avatar}
+                    nickname={results.nickname}
+                    userName={results.name}
+                    requestFriendStatus={'friend'}
+                />
             </div>
         </div>
     );

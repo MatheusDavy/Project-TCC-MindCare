@@ -1,8 +1,11 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import * as S from './Profile.style';
 
 // Icons
-import { IconEdit } from '@tabler/icons-react';
+import { IconEdit, IconMessage, IconUserCancel, IconUserPlus } from '@tabler/icons-react';
+import { useRepository } from 'src/repository';
+import { useDialogActionsContext } from 'src/context/Dialog/Dialog.context';
+import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
 
 type Props = {
     userName: string;
@@ -10,6 +13,7 @@ type Props = {
     edit?: boolean;
     image: string;
     actions?: ReactNode;
+    requestFriendStatus?: 'sent' | 'friend' | 'none';
     openCrop?: () => void;
 };
 
@@ -18,8 +22,9 @@ export function Profile({
     nickname,
     edit,
     image,
+    actions,
+    requestFriendStatus,
     openCrop,
-    actions
 }: Props) {
     return (
         <S.ProfileWrapper>
@@ -47,7 +52,72 @@ export function Profile({
                     <span className='text-gray-900/60'>{nickname}</span>
                 </div>
             </div>
+            {requestFriendStatus && <FriendRequestActions nickname={nickname} status={requestFriendStatus} />}
             {actions}
         </S.ProfileWrapper>
     );
 }
+
+type FriendRequestActionsProps = {
+    status: 'sent' | 'friend' | 'none';
+    nickname: string;
+}
+
+const FriendRequestActions = ({status, nickname}: FriendRequestActionsProps) => {
+    const { setData } = useDialogActionsContext();
+    const [loading, setLoading] = useState(false);
+    const { friendsRepository } = useRepository();
+
+    const handleCancelFriendRequest = async () => {
+        setLoading(true);
+        await friendsRepository.cancelFriendRequest(nickname)
+            .then(({ data }) => {
+                console.log(data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        setLoading(false);
+    };
+
+    return (
+        <>
+            {status == 'none' && (
+                <S.ButtonChat href={`/chat/${nickname}`}>
+                    <IconUserPlus />
+                </S.ButtonChat>
+            )}
+            {status == 'friend' && (
+                <div className='flex align-center gap-3'>
+                    <S.ButtonCancelFriend onClick={() => {
+                        setData({
+                            message: 'Deseja realmente remover essa pessoa da sua lista de amigos?',
+                            open: true,
+                            action: handleCancelFriendRequest,
+                            type: 'yes-or-no'
+                        });
+                    }}>
+                        {loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconUserCancel />}
+                    </S.ButtonCancelFriend>
+                    <S.ButtonChat href={`/chat/${nickname}`}>
+                        <IconMessage />
+                    </S.ButtonChat>
+                </div>
+            )}
+            {status == 'sent' && (
+                <S.ButtonCancelFriend onClick={() => {
+                    setData({
+                        message: 'Deseja realmente desfazer o pedido de amizade?',
+                        open: true,
+                        action: handleCancelFriendRequest,
+                        type: 'yes-or-no'
+                    });
+                }}>
+                    {loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconUserCancel />}
+                </S.ButtonCancelFriend>
+            )}
+        </>
+    );
+};
+
+

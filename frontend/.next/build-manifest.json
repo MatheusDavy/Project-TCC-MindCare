@@ -27,16 +27,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/auth.js"
     ],
-    "/dashboard": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard.js"
-    ],
-    "/dashboard/profile": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard/profile.js"
-    ],
     "/dashboard/users": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
