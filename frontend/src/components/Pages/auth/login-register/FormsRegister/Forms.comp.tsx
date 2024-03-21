@@ -9,9 +9,6 @@ import { useLogic } from './Forms.logic';
 // Icons
 import { IconUser, IconEye, IconEyeOff } from '@tabler/icons-react';
 
-// OAuth
-import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
-
 // Translate
 import { TwInput } from 'src/styles/configs/inputs/tw-input';
 
@@ -48,7 +45,6 @@ export function FormsRegister({ view, changeToLogin }: Props) {
 
                 <Forms changeToLogin={changeToLogin} />
 
-                <OAuthLogin />
             </div>
         </S.Wrapper>
     );

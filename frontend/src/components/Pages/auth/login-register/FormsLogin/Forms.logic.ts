@@ -5,8 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRepository } from '../../../../../repository';
 import useDialogAlert from '../../../../../hooks/useDialogAlert';
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
+import { setCookie } from 'nookies';
 import { useState } from 'react';
+import { env } from 'src/env';
 
 export const useLogic = ({}) => {
     const [loading, setLoading] = useState(false);
@@ -24,15 +25,22 @@ export const useLogic = ({}) => {
         resolver: yupResolver(schema),
     });
 
+    console.log(env.NEXT_PUBLIC_JWT_TOKEN_KEY);
+
     const onSubmit = async (data: FormData) => {
         setLoading(true);
         await authRepository
             .login(data)
-            .then(data => {
-                Cookies.set(
-                    process.env.NEXT_PUBLIC_JWT_TOKEN_KEY!,
-                    data.data.token
+            .then(async (data) => {
+                await setCookie(
+                    null,
+                    env.NEXT_PUBLIC_JWT_TOKEN_KEY,
+                    data.data.token,
+                    {
+                        maxAge: 60 * 60 * 1, // 1 hour
+                    }
                 );
+
                 router.push('/dashboard');
             })
             .catch(error => {

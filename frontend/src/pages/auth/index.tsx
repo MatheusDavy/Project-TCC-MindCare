@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import HeadMetaTags from '../../components/Next/HeadMetaTags/HeadMetaTags.view';
+import HeadMetaTags from '../../components/Next/HeadMetaTags.view';
 import LayoutAuth from '../../layouts/LayoutAuth/LayoutAuth.view';
 import { Structure } from 'src/components/Pages/auth/login-register';
 

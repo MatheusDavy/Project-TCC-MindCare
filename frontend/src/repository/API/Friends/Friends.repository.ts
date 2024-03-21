@@ -2,25 +2,31 @@ import * as Fetch from '../../../utils/fetch/Fetch.service';
 import { IRepositoryRequirements } from '../../repositories.common';
 
 export function FriendsRepository ({ baseUrl }: IRepositoryRequirements) {
-    const url = `${baseUrl}/friends`;
+    baseUrl = `${baseUrl}/friends`;
 
     function getUserFriends () {
-        return Fetch.get({ url: url });
-    }
-
-    function getUsers (text: string) {
-        const params = url + `/search?user=${text}`;
-        return Fetch.get({ url: params });
+        return Fetch.get({ url: baseUrl });
     }
 
     function cancelFriendRequest (nickname: string) {
-        const newUrl = `${url}/cancel-friend?user=${nickname}`;
-        return Fetch.get({ url: newUrl });
+        const url = baseUrl + '/cancel-friend-request';
+        return Fetch.post({ url, data: {nickname} });
     }
+
+    function cancelFriend(nickname: string){
+        const url = baseUrl + '/cancel-friend';
+        return Fetch.post({ url, data: {nickname} });
+    }
+
+    function addFriend (nickname: string){
+        const url =  baseUrl + '/add-friend';
+        return Fetch.post({ url, data: {nickname} });
+    };
 
     return {
         getUserFriends,
-        getUsers,
-        cancelFriendRequest
+        cancelFriendRequest,
+        cancelFriend,
+        addFriend
     };
 }

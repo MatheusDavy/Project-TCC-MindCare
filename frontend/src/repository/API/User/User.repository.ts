@@ -2,30 +2,33 @@ import { User } from 'src/types/users/usert.types';
 import httpModule from '../../../utils/fetch/Fetch.service';
 import { IRepositoryRequirements } from '../../repositories.common';
 
-
-export function UserRepository ({ baseUrl }: IRepositoryRequirements) {
+export function UserRepository({ baseUrl }: IRepositoryRequirements) {
     const Fetch = httpModule;
 
-    const url = `${baseUrl}/users`;
+    baseUrl = `${baseUrl}/users`;
 
-    function getMe () {
-        return Fetch.get({ url: `${url}/` });
+    function getMe() {
+        return Fetch.get({ url: baseUrl });
     }
 
-    function updateMe (data: User) {
-        return Fetch.patch({ url: `${url}/update-me`, data });
+    function updateMe(data: User) {
+        const url = baseUrl + '/update-me';
+        return Fetch.patch({ url, data: data });
     }
 
-    function verifyNickname (name: string) {
-        return Fetch.get({ url: `${url}/nickname?search=${name}` });
-    };
+    function verifyNickname(nickname: string) {
+        const url = baseUrl + '/nickname';
+        return Fetch.post({ url, data: { nickname } });
+    }
 
-    function findManyUsers (search: string) {
-        return Fetch.get({ url: `${url}/find-users?search=${search}`});
-    };
+    function findManyUsers(search: string) {
+        const url = baseUrl + '/find-users';
+        return Fetch.post({ url, data: { search } });
+    }
 
-    function findUser (nickname: string) {
-        return Fetch.get({ url: `${url}/find-user?search=${nickname}`});
+    function findUser(nickname: string) {
+        const url = baseUrl + '/find-user';
+        return Fetch.post({ url, data: { nickname } });
     }
 
     return {
@@ -33,6 +36,6 @@ export function UserRepository ({ baseUrl }: IRepositoryRequirements) {
         updateMe,
         verifyNickname,
         findManyUsers,
-        findUser
+        findUser,
     };
 }

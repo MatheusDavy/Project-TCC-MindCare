@@ -17,7 +17,7 @@ export function Structure() {
         <div className="grid grid-cols-[400px_1fr] w-full gap-4">
             <Search />
             {params && (
-                <User nickname={params} />
+                <User nickname={params}  />
             )}
         </div>
     );

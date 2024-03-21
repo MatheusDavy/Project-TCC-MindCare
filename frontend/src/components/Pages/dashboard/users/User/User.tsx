@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRepository } from 'src/repository';
 import LoadingUser from '../UserLoading/Loading';
 import { Profile } from '../../../../Sections/Profile/Profile';
+import { useQuery } from 'react-query';
 
 type Props = {
     nickname: string
 }
 
 export default function User({ nickname }: Props) {
-    const [results, setResults] = useState<any | 'not-found'>();
     const { userRepository } = useRepository();
+    const { data: results, isLoading: loadingUsers, refetch } = useQuery(
+        'user-datas',
+        async () => {
+            try {
+                const { data } = await userRepository.findUser(nickname);
+                return data;
+            } catch (error) {
+                return null;
+            }
+        }
+    );
 
     useEffect(() => {
-        setResults('');
-        const fetch = () => {
-            userRepository.findUser(nickname)
-                .then(({ data }) => {
-                    setTimeout(() => {
-                        setResults(data);
-                    }, 3000);
-                })
-                .catch(() => {
-                    setResults('not-found');
-                });
-        };
-
-        fetch();
+        refetch();
     }, [nickname]);
 
-    if (results == 'not-found'){
+    console.log(results);
+
+    if (!results){
         return (
             <div>
                 Desculpe, mas ocorreu um erro ao exibir os dados desse usuário
@@ -36,7 +36,7 @@ export default function User({ nickname }: Props) {
         );
     }
 
-    if (!results) {
+    if (loadingUsers) {
         return <LoadingUser />;
     }
 
@@ -48,7 +48,8 @@ export default function User({ nickname }: Props) {
                     image={results.utilsInfo?.avatar}
                     nickname={results.nickname}
                     userName={results.name}
-                    requestFriendStatus={'friend'}
+                    requestFriendStatus={results.status}
+                    refetch={refetch}
                 />
             </div>
         </div>

@@ -6,9 +6,11 @@ import {
     useState,
 } from 'react';
 import { defaultContextData } from './User.types';
-import Cookies from 'js-cookie';
+import { destroyCookie, parseCookies } from 'nookies';
 import { useRepository } from 'src/repository';
 import { User } from 'src/types/users/usert.types';
+import { env } from 'src/env';
+import { useRouter } from 'next/router';
 
 const UserContext = createContext(defaultContextData);
 
@@ -20,51 +22,39 @@ export const UserProvider = ({ children }: Props) => {
     const [userDatas, setUserDatas] = useState<User | null>(null);
     const [loadingUserDatas, setLoadinUserDatas] = useState(true);
     const { userRepository } = useRepository();
+    const router = useRouter();
 
-    const verifyCache = async () => {
-        const data = await Cookies.get(process.env.NEXT_PUBLIC_USER_DATAS);
-        if (!data) {
-            await getUserInfo();
-        } else {
-            setUserDatas(JSON.parse(data));
-        }
-
-        setLoadinUserDatas(false);
-    };
-
-    const getUserInfo = async () => {
+    const refreshUserDatas = async () => {
         setLoadinUserDatas(true);
         await userRepository
             .getMe()
             .then(async ({ data }) => {
-                Cookies.set(
-                    process.env.NEXT_PUBLIC_USER_DATAS,
-                    JSON.stringify(data)
-                );
                 setUserDatas(data);
             })
             .catch(() => {
-                setUserDatas(null);
+                destroyCookie(null, env.NEXT_PUBLIC_JWT_TOKEN_KEY);
+                router.push('/auth');
             });
         setLoadinUserDatas(false);
     };
 
-    const refreshUserDatas = async () => {
-        await Cookies.remove(process.env.NEXT_PUBLIC_USER_DATAS);
-        verifyCache();
-    };
-
     useEffect(() => {
-        verifyCache();
+        const cookies = parseCookies();
+        const token = cookies[env.NEXT_PUBLIC_JWT_TOKEN_KEY];
+
+        console.log(token);
+
+        if (token) {
+            refreshUserDatas();
+        }
     }, []);
 
     return (
         <UserContext.Provider
             value={{
+                refreshUserDatas,
                 loadingUserDatas,
                 userDatas,
-                verifyCache,
-                refreshUserDatas,
             }}
         >
             {children}
@@ -76,16 +66,14 @@ export const useUserContext = () => {
     const context = useContext(UserContext);
 
     const {
+        refreshUserDatas,
         loadingUserDatas,
         userDatas,
-        verifyCache,
-        refreshUserDatas,
     } = context;
 
     return {
+        refreshUserDatas,
         loadingUserDatas,
         userDatas,
-        verifyCache,
-        refreshUserDatas,
     };
 };

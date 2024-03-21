@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 
 export const Main = tw.section`
-    w-full h-[-webkit-fill-available] min-h-[100vh]
+    w-full h-[100vh] overflow-auto
     flex
     flex-col
     bg-[#f6f6f6]
@@ -14,9 +14,9 @@ export const Content = tw.main`
     relative
     flex flex-col
     h-full
-    w-full max-h-screen
+    w-full
     transition-all duration-200 ease-in-out
-    pr-10 pl-80
+    pr-10 xl:pl-80 md:pl-10
     py-4
     overflow-auto
 `;

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import HeadMetaTags from '../../../components/Next/HeadMetaTags/HeadMetaTags.view';
+import HeadMetaTags from '../../../components/Next/HeadMetaTags.view';
 import LayoutAuth from '../../../layouts/LayoutAuth/LayoutAuth.view';
 import { StructurePage } from 'src/components/Pages/auth/forget-password';
 

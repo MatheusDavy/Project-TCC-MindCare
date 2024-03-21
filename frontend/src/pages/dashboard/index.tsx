@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import HeadMetaTags from '../../components/Next/HeadMetaTags/HeadMetaTags.view';
+import HeadMetaTags from '../../components/Next/HeadMetaTags.view';
 import LayoutDashboard from '../../layouts/LayoutDashboard/LayoutDashboard.view';
 import { Structure } from 'src/components/Pages/dashboard/home';
 

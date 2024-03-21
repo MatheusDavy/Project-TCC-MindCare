@@ -10,9 +10,6 @@ import { useLogic } from './Forms.logic';
 // Icons
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 
-// OAuth
-import { OAuthLogin } from '../../../../Materials/Auth/OAuth/OAuth.comp';
-
 // Translate
 import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
 import { TwInput } from 'src/styles/configs/inputs/tw-input';
@@ -43,8 +40,6 @@ export function FormsLogin({ view, changeToRegister }: Props) {
                 </S.Subtitle>
 
                 <Forms data={data} methods={methods} />
-
-                {!data.loading && <OAuthLogin />}
             </div>
         </S.Wrapper>
     );

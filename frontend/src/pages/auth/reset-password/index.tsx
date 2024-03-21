@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import HeadMetaTags from '../../../components/Next/HeadMetaTags/HeadMetaTags.view';
+import HeadMetaTags from '../../../components/Next/HeadMetaTags.view';
 import { LoadingContentComp } from '../../../components/Materials/Loaders/LoadingContent/LoadingContent.comp';
 import LayoutAuth from '../../../layouts/LayoutAuth/LayoutAuth.view';
 import { StructurePage } from 'src/components/Pages/auth/reset-password';

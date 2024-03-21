@@ -1,11 +1,13 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import * as S from './Profile.style';
 
 // Icons
-import { IconEdit, IconMessage, IconUserCancel, IconUserPlus } from '@tabler/icons-react';
-import { useRepository } from 'src/repository';
+import { IconCheck, IconEdit, IconMessage, IconUserCancel, IconUserPlus, IconX } from '@tabler/icons-react';
 import { useDialogActionsContext } from 'src/context/Dialog/Dialog.context';
 import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
+import { FriendType } from 'src/types/friend-types';
+import { useLogic } from './Profile.logic';
+import { TooltipUI } from 'src/styles/configs/tooltips/Tooltips';
 
 type Props = {
     userName: string;
@@ -13,8 +15,9 @@ type Props = {
     edit?: boolean;
     image: string;
     actions?: ReactNode;
-    requestFriendStatus?: 'sent' | 'friend' | 'none';
+    requestFriendStatus?: FriendType;
     openCrop?: () => void;
+    refetch?: any
 };
 
 export function Profile({
@@ -25,6 +28,7 @@ export function Profile({
     actions,
     requestFriendStatus,
     openCrop,
+    refetch,
 }: Props) {
     return (
         <S.ProfileWrapper>
@@ -52,69 +56,90 @@ export function Profile({
                     <span className='text-gray-900/60'>{nickname}</span>
                 </div>
             </div>
-            {requestFriendStatus && <FriendRequestActions nickname={nickname} status={requestFriendStatus} />}
+            {requestFriendStatus && <FriendRequestActions nickname={nickname} status={requestFriendStatus} refetch={refetch} />}
             {actions}
         </S.ProfileWrapper>
     );
 }
 
 type FriendRequestActionsProps = {
-    status: 'sent' | 'friend' | 'none';
+    status: FriendType;
     nickname: string;
+    refetch: any
 }
 
-const FriendRequestActions = ({status, nickname}: FriendRequestActionsProps) => {
+const FriendRequestActions = ({ status, nickname, refetch }: FriendRequestActionsProps) => {
+    const { data, methods } = useLogic({ nickname, refetch });
     const { setData } = useDialogActionsContext();
-    const [loading, setLoading] = useState(false);
-    const { friendsRepository } = useRepository();
 
-    const handleCancelFriendRequest = async () => {
-        setLoading(true);
-        await friendsRepository.cancelFriendRequest(nickname)
-            .then(({ data }) => {
-                console.log(data);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        setLoading(false);
-    };
+    if (status == 'RECUSED') return <></>;
 
     return (
         <>
-            {status == 'none' && (
-                <S.ButtonChat href={`/chat/${nickname}`}>
-                    <IconUserPlus />
-                </S.ButtonChat>
+            {status == 'NONE' && (
+                <S.ButtonAction
+                    $type='submit'
+                    onClick={() => {
+                        methods.handleAddFriend();
+                    }}
+                >
+                    {data.loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconUserPlus />}
+                </S.ButtonAction>
             )}
-            {status == 'friend' && (
+            {status == 'FRIEND' && (
                 <div className='flex align-center gap-3'>
-                    <S.ButtonCancelFriend onClick={() => {
+                    <S.ButtonAction $type='cancel' onClick={() => {
                         setData({
                             message: 'Deseja realmente remover essa pessoa da sua lista de amigos?',
                             open: true,
-                            action: handleCancelFriendRequest,
+                            action: methods.handleCancelFriend,
                             type: 'yes-or-no'
                         });
                     }}>
-                        {loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconUserCancel />}
-                    </S.ButtonCancelFriend>
+                        {data.loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconUserCancel />}
+                    </S.ButtonAction>
                     <S.ButtonChat href={`/chat/${nickname}`}>
                         <IconMessage />
                     </S.ButtonChat>
                 </div>
             )}
-            {status == 'sent' && (
-                <S.ButtonCancelFriend onClick={() => {
+            {status == 'SENT' && (
+                <S.ButtonAction $type='cancel' onClick={() => {
                     setData({
-                        message: 'Deseja realmente desfazer o pedido de amizade?',
+                        message: 'Deseja realmente cancelar a solicitação de amizade?',
                         open: true,
-                        action: handleCancelFriendRequest,
+                        action: methods.handleCancelFriendRequest,
                         type: 'yes-or-no'
                     });
                 }}>
-                    {loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconUserCancel />}
-                </S.ButtonCancelFriend>
+                    {data.loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconUserCancel />}
+                </S.ButtonAction>
+            )}
+            {status == 'PENDING' && (
+
+                <TooltipUI
+                    title={<p className='text-center'>Este usuário deseja <br /> ser seu amigo</p>}
+                    placement='top'
+                    open={true}
+                >
+                    <div className='flex align-center gap-3'>
+                        <S.ButtonAction $type='cancel' onClick={() => {
+                            setData({
+                                message: 'Se você recusar o pedido de amizade, você não poderá enviar/receber solicitações dessa pessoa durante 10 dias',
+                                open: true,
+                                action: methods.handleCancelFriend,
+                                type: 'yes-or-no'
+                            });
+                        }}>
+                            {data.loading ? <LoadingAnimationIcon bgColor='white' mainColor='gray' /> : <IconX />}
+                        </S.ButtonAction>
+                        <S.ButtonAction
+                            $type='submit'
+                        >
+                            <IconCheck />
+                        </S.ButtonAction>
+                    </div>
+                </TooltipUI>
             )}
         </>
     );

@@ -51,9 +51,9 @@ type ButtonActionProps = {
     $type: 'cancel' | 'edit' | 'submit'
 }
 export const ButtonAction = tw.button<ButtonActionProps>`
-    ${({ $type }) => $type === 'cancel' && 'text-red-500 bg-red-100 border-[1px] border-red-500'}
+    ${({ $type }) => $type === 'cancel' && 'text-white bg-red-500 hover:bg-red-500/80'}
     ${({ $type }) => $type === 'edit' && 'text-white bg-[#585ce5] hover:bg-blue-600'}
-    ${({ $type }) => $type === 'submit' && 'text-gray-500 bg-gray-100 border-[1px] border-gray-500 hover:border-green-500 hover:text-green-500'}
+    ${({ $type }) => $type === 'submit' && 'text-white bg-[#0063f2] hover:bg-[#0063f2]/80'}
     flex items-center gap-1
     text-sm font-medium
     rounded-lg
@@ -68,7 +68,7 @@ export const ButtonChat = tw(Link)`
     transition-all
     durantion-[600]
 `;
-export const ButtonFriend = tw.button`
+export const ButtonRequest = tw.button`
     py-3 px-4
     rounded-md
     text-white bg-[#0063f2] hover:bg-[#0063f2]/80
@@ -76,10 +76,6 @@ export const ButtonFriend = tw.button`
     durantion-[600]
 `;
 export const ButtonCancelFriend = tw.button`
-    py-3 px-4
-    rounded-md
     text-white bg-red-500 hover:bg-red-500/80
-    transition-all
-    durantion-[600]
 `;
 

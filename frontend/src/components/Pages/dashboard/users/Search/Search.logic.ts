@@ -17,8 +17,6 @@ export const useLogic = () => {
         }
     );
 
-    console.log(users);
-
     useEffect(() => {
         refetch();
     }, [input]);
