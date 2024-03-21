@@ -1,11 +1,13 @@
 import "express-async-errors";
+import "./Services/websocket"
 import express, { Request, Response, NextFunction } from "express";
-import precess from "process";
 import { routes } from "./Routes";
 import { AppError } from "./Errors/App.erros";
 import { env } from "./env";
 
-const app = express();
+// Server
+import { serverHttp, app } from "./https";
+
 const port = env.APPLICATION_PORT;
 
 app.use((req, res, next) => {
@@ -36,4 +38,4 @@ app.use(
   }
 );
 
-app.listen(port, () => console.log(`Server is running`));
+serverHttp.listen(port, () => (`Server is running`));

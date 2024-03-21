@@ -1,9 +1,9 @@
 import { AppError } from "../Errors/App.erros";
 
 export class ErrorProvider {
-  async sendError (message: string, status: number) {
+  async sendError(message: string, status: number) {
     throw new AppError(message, status);
-  };
+  }
 
   async sendExpiredSessionError() {
     throw new AppError("Sessão expirada, faça login novamente!", 401);
@@ -25,11 +25,35 @@ export class ErrorProvider {
     throw new AppError("Email não existe no sistema!", 400);
   }
 
-  async sendResetPasswordError(){
-    throw new AppError("reset-password-error", 503)
+  async sendResetPasswordError() {
+    throw new AppError("reset-password-error", 503);
   }
 
-  async sendCannotExectuActionError(){
-    throw new AppError("Erro ao executar essa ação, tente novamente mais tarde!", 503)
+  async sendCannotExectuActionError() {
+    throw new AppError(
+      "Erro ao executar essa ação, tente novamente mais tarde!",
+      503
+    );
+  }
+
+  async addFriendNotPossible(nickname: string) {
+    throw new AppError(
+      `Usuário foi encontrar o usuário "${nickname}", tente novamente mais tarde`,
+      404
+    );
+  }
+
+  async cancelFriendRequestNotPossible(nickname: string) {
+    throw new AppError(
+      `Não foi possível cancelar a solicitação para o usuário "${nickname}", tente novamente mais tarde`,
+      404
+    );
+  }
+
+  async cancelFriendNotPossible() {
+    throw new AppError(
+      `Não foi possível cancelar recusar o pedido de amizade, tente novamente mais tarde!`,
+      404
+    );
   }
 }

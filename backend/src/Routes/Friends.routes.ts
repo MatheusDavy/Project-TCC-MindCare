@@ -9,6 +9,8 @@ const Friend = new FriendsController()
 const FriendsRoutes = Router()
 
 FriendsRoutes.get("/", AuthMiddleware.ensureAuthenticated, Friend.getUserFriends)
-FriendsRoutes.get("/search", AuthMiddleware.ensureAuthenticated, Friend.getUsers)
+FriendsRoutes.post("/add-friend", AuthMiddleware.ensureAuthenticated, Friend.addFriend)
+FriendsRoutes.post("/cancel-friend-request", AuthMiddleware.ensureAuthenticated, Friend.cancelFriendRequest)
+FriendsRoutes.post("/cancel-friend", AuthMiddleware.ensureAuthenticated, Friend.cancelFriend)
 
 export { FriendsRoutes }

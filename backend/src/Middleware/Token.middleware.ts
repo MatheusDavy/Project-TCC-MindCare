@@ -7,10 +7,7 @@ export function ensureAuthenticated (request: Request, response: Response, next:
     const authToken = request.headers.authorization
 
     if(!authToken){
-        throw new AppError(
-            'Token is Missing',
-            401
-        )
+        throw new AppError('Token is Missing', 401, 'UNAUTHORIZED')
     }
     
     const [, token] = authToken.split(" ")
@@ -19,9 +16,6 @@ export function ensureAuthenticated (request: Request, response: Response, next:
         verify(token, env.SECRET_TOKEN!);
         return next();
     } catch (err){
-        throw new AppError(
-            'Token Inválido',
-            401
-        )
+        throw new AppError('Token Inválido',401,'UNAUTHORIZED')
     }
 }

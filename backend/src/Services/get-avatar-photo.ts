@@ -10,6 +10,6 @@ export const getAvatarProfile = async (name: string) => {
                 : '/images/profiles/profile-woman.webp';
         }
     } catch (erro) {
-        console.log(erro);
+        (erro);
     }
 };

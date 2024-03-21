@@ -4,7 +4,6 @@ import { prisma } from "../../Prisma/client";
 import {
   UserCreateDTO,
   UserLoginDTO,
-  UserCreateOAuth,
   ResetPasswordDTO,
 } from "./Auth.types";
 
@@ -31,7 +30,7 @@ export class AuthService {
     this.nicknameService = new NicknameSevice();
   }
 
-  async createUser({ email, password, name }: UserCreateDTO) {
+  async register({ email, password, name }: UserCreateDTO) {
     const userAlreadyExist = await prisma.user.findUnique({
       where: {
         email,
@@ -65,7 +64,7 @@ export class AuthService {
     return await this.tokenProvider.generateToken(user.id);
   }
 
-  async loginUser({ email, password }: UserLoginDTO) {
+  async login({ email, password }: UserLoginDTO) {
     const userAlreadyExist = await prisma.user.findFirst({
       where: {
         email,
@@ -88,40 +87,9 @@ export class AuthService {
       return { token };
     }
 
+    await this.tokenProvider.generateRefreshToken(userAlreadyExist.id);
+
     return this.handlerError.sendIncorrectUserOrPasswordError();
-  }
-
-  async OAuthLogin({ email, name }: UserCreateOAuth) {
-    const userAlreadyExist = await prisma.userOAuth.findUnique({
-      where: {
-        email,
-      },
-    });
-
-    // User Already Exist
-    if (userAlreadyExist) {
-      return await this.tokenProvider.generateToken(userAlreadyExist.id);
-    }
-
-    const nickname = await this.nicknameService.generateNickname(name);
-
-    // Create New User
-    const avatar = await getAvatarProfile(name);
-    const userOAuth = await prisma.userOAuth.create({
-      data: {
-        name,
-        nickname,
-        email,
-        utilsInfo: {
-          create: {
-            avatar: avatar
-          }
-        },
-        role: "OAUTH_USER",
-      },
-    });
-
-    return await this.tokenProvider.generateToken(userOAuth.id);
   }
 
   async forgetPassword(email: string) {
@@ -157,17 +125,11 @@ export class AuthService {
     }
 
     if (dataToken !== undefined && typeof dataToken.sub === "string") {
-      const user =
-        (await prisma.user.findFirst({
+      const user = await prisma.user.findFirst({
           where: {
             id: dataToken.sub,
           },
-        })) ||
-        (await prisma.userOAuth.findFirst({
-          where: {
-            id: dataToken.sub,
-          },
-        }));
+        });
 
       if (!user) {
         return this.handlerError.sendResetPasswordError();

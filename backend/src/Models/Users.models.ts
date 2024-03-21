@@ -8,16 +8,19 @@ import { SuccessProvider } from "../Providers/SuccessMessage.provider";
 // Error
 import { TokenProvider } from "../Providers/Token.providers";
 import { User } from "../Types/User.types";
+import { FriendsService } from "./Friends.models";
 
 export class UserService {
   private tokenProvider: TokenProvider;
   private handlerError: ErrorProvider;
   private handlerSuccess: SuccessProvider;
+  private friendService: FriendsService;
 
   constructor() {
     this.tokenProvider = new TokenProvider();
     this.handlerError = new ErrorProvider();
     this.handlerSuccess = new SuccessProvider();
+    this.friendService = new FriendsService();
   }
 
   async getUser(token: string) {
@@ -28,15 +31,10 @@ export class UserService {
       });
 
     if (dataToken !== undefined && typeof dataToken.sub === "string") {
-      const user =
-        (await prisma.user.findFirst({
-          where: { id: dataToken.sub },
-          include: { utilsInfo: true },
-        })) ||
-        (await prisma.userOAuth.findFirst({
-          where: { id: dataToken.sub },
-          include: { utilsInfo: true },
-        }));
+      const user = await prisma.user.findFirst({
+        where: { id: dataToken.sub },
+        include: { utilsInfo: true },
+      });
 
       return { ...user, password: "", id: "" };
     }
@@ -51,13 +49,12 @@ export class UserService {
         return this.handlerError.sendExpiredSessionError();
       }
 
-      const user =
-        (await prisma.user.findUnique({
-          where: { id: dataToken.sub },
-        })) ||
-        (await prisma.userOAuth.findUnique({
-          where: { id: dataToken.sub },
-        }));
+      const user = await prisma.user.findUnique({
+        where: { id: dataToken.sub },
+        include: {
+          utilsInfo: true
+        }
+      });
 
       if (user) {
         const utilsDatas: User = {
@@ -73,32 +70,21 @@ export class UserService {
           name: datas.name,
           email: datas.email,
           nickname: datas.nickname,
-          utilsInfo: user.utilsInfoId
+          utilsInfo: user.utilsInfo
             ? { update: utilsDatas }
             : { create: utilsDatas },
         };
 
-        if (user.role === "OAUTH_USER") {
-          await prisma.userOAuth.update({
-            where: {
-              id: user.id,
-            },
-            data: updateData,
-          });
-        }
-
-        if (user.role === "USER") {
-          await prisma.user.update({
-            where: {
-              id: user.id,
-            },
-            data: updateData,
-          });
-        }
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: updateData,
+        });
         return this.handlerSuccess.sendUserSuccessfullyUpdated();
       }
     } catch (err) {
-      console.log(err);
+      (err);
       return this.handlerError.sendCannotExectuActionError();
     }
 
@@ -106,13 +92,9 @@ export class UserService {
   }
 
   async verifyNickname(nickname: string) {
-    const hasUser =
-      (await prisma.user.findUnique({
-        where: { nickname },
-      })) ||
-      (await prisma.userOAuth.findUnique({
-        where: { nickname },
-      }));
+    const hasUser = await prisma.user.findUnique({
+      where: { nickname },
+    });
 
     if (hasUser) return false;
 
@@ -126,69 +108,55 @@ export class UserService {
     }
 
     const selected = {
-        nickname: true,
-        name: true,
-        utilsInfo: {
-          select: {
-            avatar: true
-          }
-        }
-    }
+      nickname: true,
+      name: true,
+      utilsInfo: {
+        select: {
+          avatar: true,
+        },
+      },
+    };
 
-    const users =
-      (await prisma.user.findMany({
-        where: {
-          OR: [
-            { name: { contains: search } },
-            { nickname: { contains: search } },
-          ],
-          AND: [
-            { id: {not: dataToken.sub }}
-          ]
-        },
-        select: selected
-      })) ||
-      (await prisma.userOAuth.findMany({
-        where: {
-          OR: [
-            { name: { contains: search } },
-            { nickname: { contains: search } },
-          ],
-          AND: [
-            { id: {not: dataToken.sub }}
-          ]
-        },
-        select: selected
-      }));
+    const users = await prisma.user.findMany({
+      where: {
+        OR: [
+          { name: { contains: search } },
+          { nickname: { contains: search } },
+        ],
+        AND: [{ id: { not: dataToken.sub } }],
+      },
+      select: selected,
+    });
 
     return users.slice(0, 10);
   }
 
-  async findUser (search: string) {
+  async findUser(search: string, token: string) {
     const selected = {
-        nickname: true,
-        name: true,
-        utilsInfo: {
-          select: {
-            avatar: true,
-            age: true,
-            state: true
-          }
-        }
-    }
+      id: true,
+      nickname: true,
+      name: true,
+      utilsInfo: {
+        select: {
+          avatar: true,
+        },
+      },
+    };
 
-    const user =
-      (await prisma.user.findUnique({
-        where: {nickname: search},
-        select: selected
-      })) ||
-      (await prisma.userOAuth.findUnique({
-        where: {nickname: search},
-        select: selected
-      }));
+    const user = await prisma.user.findUnique({
+      where: { nickname: search },
+      select: selected,
+    });
 
-    if (!user) return this.handlerError.sendError('not-found', 404)
+    // If User Not Exist
+    if (!user) return this.handlerError.sendError("not-found", 404);
 
-    return user;
+    const { id, ...datas } = user;
+    
+    const friendData = await this.friendService.verifyUserFriend(user.id, token);
+
+    ({ ...datas, ...friendData });
+
+    return { ...datas, ...friendData };
   }
 }

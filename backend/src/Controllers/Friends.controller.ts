@@ -1,32 +1,48 @@
 import { Request, Response } from "express";
 import { FriendsService } from '../Models/Friends.models';
+import { TokenProvider } from "../Providers/Token.providers";
 
-// Services
 const friendsServices = new FriendsService();
 
 export class FriendsController {
-
+  private TokenProvider: TokenProvider
   constructor() {
+    this.TokenProvider = new TokenProvider()
   }
+  // Privates
 
   async getUserFriends(req: Request, res: Response) {
-    const authToken = req.headers.authorization
-    const [, token] = authToken!.split(" ") 
-
-    const result = await friendsServices.getUserFriends(token);
+    const authToken = req.headers.authorization;
+    const [, token] = authToken!.split(" ")
+    const result = await friendsServices.getUserFriends(token!);
 
     return res.status(201).json(result);
   }
 
-  async getUsers(req: Request, res: Response) {
-    const search = req.query.user
+  async addFriend(req: Request, res: Response) {
+    const { nickname } = req.body;
+    const authToken = req.headers.authorization;
+    const [, token] = authToken!.split(" ")
+    const result = await friendsServices.addFriend(token!, nickname);
 
-    if (typeof search !== 'string') return res.status(201).json([]);
+    return res.status(201).json(result);
+  }
 
-    const result = await friendsServices.getUsers(search);
+  async cancelFriendRequest(req: Request, res: Response) {
+    const { nickname } = req.body;
+    const authToken = req.headers.authorization;
+    const [, token] = authToken!.split(" ")
+    const result = await friendsServices.cancelFriendRequest(token!, nickname);
+
+    return res.status(201).json(result);
+  }
+
+  async cancelFriend(req: Request, res: Response) {
+    const { nickname } = req.body;
+    const authToken = req.headers.authorization;
+    const [, token] = authToken!.split(" ")
+    const result = await friendsServices.cancelFriend(token!, nickname);
 
     return res.status(201).json(result);
   }
 }
-
-    

@@ -19,8 +19,8 @@ export const sendResetPasswordEmail = async (email: string, name: string, url: s
     html: htmlEmailTemplate(name, url),
   });
 
-  console.log("Message sent: %s", info.messageId);
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  ("Message sent: %s", info.messageId);
+  ("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 };
 
 const htmlEmailTemplate = (name: string, url: string) => `

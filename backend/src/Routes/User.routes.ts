@@ -10,8 +10,8 @@ const UserRoutes = Router()
 
 UserRoutes.get("/", AuthMiddleware.ensureAuthenticated, UserController.getUser)
 UserRoutes.patch("/update-me", AuthMiddleware.ensureAuthenticated, UserController.updateUser)
-UserRoutes.get("/nickname", AuthMiddleware.ensureAuthenticated, UserController.verifyNickname)
-UserRoutes.get("/find-users", AuthMiddleware.ensureAuthenticated, UserController.findManyUsers)
-UserRoutes.get("/find-user", AuthMiddleware.ensureAuthenticated, UserController.findUser)
+UserRoutes.post("/nickname", UserController.verifyNickname)
+UserRoutes.post("/find-users", AuthMiddleware.ensureAuthenticated, UserController.findManyUsers)
+UserRoutes.post("/find-user", UserController.findUser)
 
 export { UserRoutes }
