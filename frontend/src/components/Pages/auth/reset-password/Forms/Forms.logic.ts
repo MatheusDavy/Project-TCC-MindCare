@@ -5,10 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRepository } from '../../../../../repository';
 import useDialogAlert from '../../../../../hooks/useDialogAlert';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export const useLogic = ({}) => {
-    const [loading, setLoading] = useState(false);
     const userId = new URLSearchParams(window.location.search).get('userId');
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const { authRepository } = useRepository();
     const dialogAlert = useDialogAlert();
     const {
@@ -30,20 +32,23 @@ export const useLogic = ({}) => {
         setLoading(true);
         await authRepository
             .resetPassword(payload)
-            .then(() => {
+            .then((e: any) => {
                 dialogAlert.responseSuccess({
-                    message: 'password-successfully-changed',
-                    redirect: '/auth/login',
+                    message: e.data.message,
+                    redirect: '/auth/',
                 });
             })
             .catch(error => {
-                console.log(error);
                 dialogAlert.responseError({
                     ...error.response.data,
-                    redirect: '/auth/login',
+                    redirect: '/auth/',
                 });
             });
         setLoading(false);
+
+        setTimeout(() => {
+            router.push('/auth/');
+        }, 3000);
     };
 
     return {

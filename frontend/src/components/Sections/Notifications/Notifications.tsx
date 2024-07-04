@@ -1,16 +1,16 @@
 import {
     IconBellFilled,
-    IconCheck,
     IconMessageCircleHeart,
-    IconX,
 } from '@tabler/icons-react';
 import { useState } from 'react';
 import { TooltipUI } from 'src/styles/configs/tooltips/Tooltips';
 import * as S from './Notifications.style';
 import { Notification } from 'src/components/Materials/Messages/Notifications/Notification';
-import { NotificationAction } from 'src/components/Materials/Messages/Notifications/Notification.action';
+import { useLogic } from './Notifications.logic';
+import { LoadingAnimationIcon } from 'src/components/Materials/Icons/loading-animated';
 
 export function Notifications() {
+    const { data } = useLogic();
     const [open, setOpen] = useState<boolean>(false);
     const [tooltip, setTooltip] = useState(false);
 
@@ -46,52 +46,22 @@ export function Notifications() {
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
             >
-                <Notification.Root>
-                    <Notification.Icon
-                        icon={IconMessageCircleHeart}
-                        image={
-                            'https://media.istockphoto.com/id/1300512215/photo/headshot-portrait-of-smiling-ethnic-businessman-in-office.jpg?s=612x612&w=0&k=20&c=QjebAlXBgee05B3rcLDAtOaMtmdLjtZ5Yg9IJoiy-VY='
-                        }
-                    />
-                    <Notification.Messages
-                        title="Nova Mensagem"
-                        message="Hey, davys. How are ..."
-                        description="one minute ago"
-                    />
-                </Notification.Root>
-
-                <Notification.Root>
-                    <Notification.Icon
-                        icon={IconMessageCircleHeart}
-                        image={
-                            'https://media.istockphoto.com/id/1300512215/photo/headshot-portrait-of-smiling-ethnic-businessman-in-office.jpg?s=612x612&w=0&k=20&c=QjebAlXBgee05B3rcLDAtOaMtmdLjtZ5Yg9IJoiy-VY='
-                        }
-                    />
-                    <Notification.Messages
-                        title="Nova Mensagem"
-                        message="Hey, davys. How are ..."
-                        description="one minute ago"
-                    />
-                </Notification.Root>
-
-                <Notification.Root>
-                    <Notification.Icon
-                        icon={IconMessageCircleHeart}
-                        image={
-                            'https://media.istockphoto.com/id/1300512215/photo/headshot-portrait-of-smiling-ethnic-businessman-in-office.jpg?s=612x612&w=0&k=20&c=QjebAlXBgee05B3rcLDAtOaMtmdLjtZ5Yg9IJoiy-VY='
-                        }
-                    />
-                    <div>
-                        <Notification.Messages
-                            title="Pedido de Amizade"
-                            message="Robert gostaria de ser seu amigo"
+                <p className="flex items-center p-3 font-bold">
+                    Notificações
+                </p>
+                {data.loadingNotifications && <LoadingAnimationIcon className="mx-auto mt-[30vh]" bgColor={'gray'} mainColor={'blue'} />}
+                {(data.notifications) && data.notifications.map((data, index) => (
+                    <Notification.Root key={index}>
+                        <Notification.Icon
+                            icon={IconMessageCircleHeart}
+                            image={data.avatar}
                         />
-                        <Notification.Actions>
-                            <NotificationAction icon={IconX} />
-                            <NotificationAction icon={IconCheck} />
-                        </Notification.Actions>
-                    </div>
-                </Notification.Root>
+                        <Notification.Messages
+                            title={data.title}
+                            message={data.description}
+                        />
+                    </Notification.Root>
+                ))}
             </S.NotificationDropdown>
         </div>
     );

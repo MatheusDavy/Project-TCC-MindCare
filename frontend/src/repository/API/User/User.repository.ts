@@ -31,11 +31,17 @@ export function UserRepository({ baseUrl }: IRepositoryRequirements) {
         return Fetch.post({ url, data: { nickname } });
     }
 
+    function getNotifications(){
+        const url = baseUrl + '/notifications';
+        return Fetch.get({ url });
+    };
+
     return {
         getMe,
         updateMe,
         verifyNickname,
         findManyUsers,
         findUser,
+        getNotifications
     };
 }

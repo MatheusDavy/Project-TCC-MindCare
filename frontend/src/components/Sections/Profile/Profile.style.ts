@@ -4,11 +4,11 @@ import tw from 'tailwind-styled-components';
 export const ProfileWrapper = tw.div`
     relative
     flex items-center justify-between
-    min-w-0
+    min-w-0 h-auto
     py-4
     pl-4
     pr-8
-    overflow-hidden break-words
+    break-words
     bg-white bg-clip-border
     border-0 rounded-2xl
     shadow-md
@@ -42,7 +42,6 @@ export const UserName = tw.h5`
     text-xl font-bold
     text-gray-500
 `;
-
 export const ButtonWrapper = tw.div`
     flex items-center gap-5
 `;
@@ -78,4 +77,3 @@ export const ButtonRequest = tw.button`
 export const ButtonCancelFriend = tw.button`
     text-white bg-red-500 hover:bg-red-500/80
 `;
-

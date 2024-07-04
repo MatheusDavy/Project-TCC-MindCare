@@ -42,8 +42,6 @@ export const UserProvider = ({ children }: Props) => {
         const cookies = parseCookies();
         const token = cookies[env.NEXT_PUBLIC_JWT_TOKEN_KEY];
 
-        console.log(token);
-
         if (token) {
             refreshUserDatas();
         }

@@ -22,5 +22,5 @@ export const schema = yup.object({
         .required(),
     passwordConfirmation: yup
         .string()
-        .oneOf([yup.ref('password'), undefined], 'equalsPassword'),
+        .oneOf([yup.ref('password'), undefined], 'As senhas devem ser iguais'),
 });

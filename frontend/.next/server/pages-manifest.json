@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/dashboard/chat": "pages/dashboard/chat.js",
-  "/dashboard/users": "pages/dashboard/users.js",
-  "/dashboard/profile": "pages/dashboard/profile.js"
+  "/dashboard/aprender/[id]": "pages/dashboard/aprender/[id].js",
+  "/dashboard/perfil": "pages/dashboard/perfil.js",
+  "/dashboard/aprender": "pages/dashboard/aprender.js",
+  "/auth": "pages/auth.js"
 }

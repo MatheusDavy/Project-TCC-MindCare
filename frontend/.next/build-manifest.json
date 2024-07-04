@@ -22,15 +22,25 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/chat": [
+    "/auth": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/chat.js"
+      "static/chunks/pages/auth.js"
     ],
-    "/dashboard/users": [
+    "/dashboard/aprender": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/users.js"
+      "static/chunks/pages/dashboard/aprender.js"
+    ],
+    "/dashboard/aprender/[id]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/aprender/[id].js"
+    ],
+    "/dashboard/perfil": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/perfil.js"
     ]
   },
   "ampFirstPages": []

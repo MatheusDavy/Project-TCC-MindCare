@@ -1,23 +1,25 @@
 import { prisma } from "../Prisma/client";
+
+// Providers
 import { ErrorProvider } from "../Providers/ErrorMessage.provider";
 import { SuccessProvider } from "../Providers/SuccessMessage.provider";
-// Types
-
-// Services
-
-// Error
 import { TokenProvider } from "../Providers/Token.providers";
-import { calcDifferenceBetweenDate } from "../Utils/calc-diference-between-date";
+
+// Utils
+import { calcDifferenceBetweenDate } from "../Services/calc-diference-between-date";
+import { NotificationsServices } from "./Notifications.models";
 
 export class FriendsService {
   private tokenProvider: TokenProvider;
   private handlerError: ErrorProvider;
   private handlerSuccess: SuccessProvider;
+  private notificationServices: NotificationsServices;
 
   constructor() {
     this.tokenProvider = new TokenProvider();
     this.handlerError = new ErrorProvider();
     this.handlerSuccess = new SuccessProvider();
+    this.notificationServices = new NotificationsServices();
   }
 
   async getUserFriends(token: string) {
@@ -32,10 +34,38 @@ export class FriendsService {
 
     if (!user) return this.handlerError.sendCannotExectuActionError();
 
-    const friends = await prisma.friend.findMany({
+    const findRequests = await prisma.friend.findMany({
       where: {
-        status: 'FRIEND',
-        idRequested: user.id,
+        status: "FRIEND",
+        OR: [{ from: user.id }, { to: user.id }],
+      },
+      select: {
+        to: true,
+        from: true,
+      },
+    });
+
+    const filteredFriends = findRequests
+      .filter((friend) => friend.to !== user.id || friend.from !== user.id)
+      .map((friend) => (friend.to !== user.id ? friend.to : friend.from))
+      .filter((value, index, self) => {
+        return self.indexOf(value) === index;
+      });
+
+    const friends = await prisma.user.findMany({
+      where: {
+        id: {
+          in: filteredFriends,
+        },
+      },
+      select: {
+        name: true,
+        nickname: true,
+        utilsInfo: {
+          select: {
+            avatar: true,
+          },
+        },
       },
     });
 
@@ -48,9 +78,9 @@ export class FriendsService {
       return this.handlerError.sendExpiredSessionError();
     }
 
-    const userFriend = await prisma.user.findUnique({
+    const userFriend = await prisma.user.findFirst({
       where: { nickname },
-      select: { id: true },
+      select: { id: true, nickname: true },
     });
 
     if (!userFriend) {
@@ -59,8 +89,8 @@ export class FriendsService {
 
     const existUserRequest = await prisma.friend.findFirst({
       where: {
-        idRequested: userFriend.id,
-        idRequest: dataToken.sub,
+        from: dataToken.sub,
+        to: userFriend.id,
       },
       select: { status: true },
     });
@@ -69,10 +99,15 @@ export class FriendsService {
       await prisma.friend.create({
         data: {
           status: "SENT",
-          idRequested: userFriend.id,
-          idRequest: dataToken.sub,
+          from: dataToken.sub,
+          to: userFriend.id,
         },
       });
+
+      await this.notificationServices.createNotificationFriendRequest(
+        dataToken.sub,
+        userFriend.id
+      );
 
       return this.handlerSuccess.addFriendRequest();
     }
@@ -80,30 +115,39 @@ export class FriendsService {
     if (existUserRequest.status == "NONE") {
       await prisma.friend.updateMany({
         where: {
-          idRequested: userFriend.id,
-          idRequest: dataToken.sub,
+          from: dataToken.sub,
+          to: userFriend.id,
         },
         data: {
           status: "SENT",
         },
       });
 
+      await this.notificationServices.createNotificationFriendRequest(
+        dataToken.sub,
+        userFriend.id
+      );
+
       return this.handlerSuccess.addFriendRequest();
     }
   }
 
-  async verifyUserFriend(userRequested: string, token: string): Promise<{ status: string } | any> {
+  async verifyUserFriend(
+    fromId: string,
+    token: string
+  ): Promise<{ status: string } | any> {
     const dataToken = await this.tokenProvider.getTokenDatas(token);
     if (dataToken === undefined || typeof dataToken.sub !== "string") {
       return this.handlerError.sendExpiredSessionError();
     }
+    
     let status: string = "NONE";
 
     // If user has a pending friend request
     const friendRequestPending = await prisma.friend.findFirst({
       where: {
-        idRequested: dataToken.sub,
-        idRequest: userRequested,
+        from: fromId,
+        to: dataToken.sub,
       },
       select: {
         status: true,
@@ -115,20 +159,21 @@ export class FriendsService {
       return { status: "PENDING" };
     }
 
-    if (friendRequestPending?.status == 'RECUSED'){
+    if (friendRequestPending?.status == "RECUSED") {
       return { status: "RECUSED" };
     }
 
     const friendsDatas = await prisma.friend.findFirst({
       where: {
-        idRequested: userRequested,
-        idRequest: dataToken.sub,
+        from: dataToken.sub,
+        to: fromId,
       },
       select: {
         status: true,
         recusedAt: true,
       },
     });
+
 
     if (friendsDatas?.status) {
       status = friendsDatas.status;
@@ -168,13 +213,59 @@ export class FriendsService {
       },
       where: {
         AND: {
-          idRequest: dataToken.sub,
-          idRequested: userRequested.id,
+          to: userRequested.id,
+          from: dataToken.sub,
         },
       },
     });
 
     return this.handlerSuccess.cancelFriendRequest();
+  }
+
+  async getFriendRequests(token: string) {
+    const dataToken = await this.tokenProvider.getTokenDatas(token);
+    if (dataToken === undefined || typeof dataToken.sub !== "string") {
+      return this.handlerError.sendExpiredSessionError();
+    }
+
+    const resultsId = await prisma.friend.findMany({
+      where: {
+        AND: [
+          {
+            to: dataToken.sub,
+            status: "SENT",
+          },
+        ],
+      },
+      select: {
+        from: true
+      }
+    });
+
+    if (resultsId.length == 0){
+      return [];
+    }
+
+    const refactor = resultsId.map((result) => result.from)
+
+    const friends = await prisma.user.findMany({
+      where: {
+        id: {
+          in: refactor,
+        },
+      },
+      select: {
+        name: true,
+        nickname: true,
+        utilsInfo: {
+          select: {
+            avatar: true,
+          },
+        },
+      },
+    });
+
+    return friends;
   }
 
   async cancelFriend(token: string, nickname: string) {
@@ -196,13 +287,45 @@ export class FriendsService {
     await prisma.friend.updateMany({
       data: {
         status: "RECUSED",
+        recusedAt: new Date(),
       },
       where: {
-        idRequest: userRequested.id,
-        idRequested: dataToken.sub,
+        to: dataToken.sub,
+        from: userRequested.id,
       },
     });
 
+    console.log('recused')
+
     return this.handlerSuccess.cancelFriend();
+  }
+
+  async acceptFriend(token: string, nickname: string) {
+    const dataToken = await this.tokenProvider.getTokenDatas(token);
+    if (dataToken === undefined || typeof dataToken.sub !== "string") {
+      return this.handlerError.sendExpiredSessionError();
+    }
+
+    const userFriend = await prisma.user.findUnique({
+      where: { nickname },
+      select: { id: true, nickname: true },
+    });
+
+    if (!userFriend) {
+      return this.handlerError.acceptFriendNotPossible(nickname);
+    }
+
+    await prisma.friend.updateMany({
+      where: {
+        to: dataToken.sub,
+        from: userFriend.id,
+        status: "SENT",
+      },
+      data: {
+        status: "FRIEND",
+      },
+    });
+
+    return this.handlerSuccess.acceptFriend();
   }
 }

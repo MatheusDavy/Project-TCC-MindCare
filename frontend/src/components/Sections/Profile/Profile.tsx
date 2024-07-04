@@ -116,7 +116,6 @@ const FriendRequestActions = ({ status, nickname, refetch }: FriendRequestAction
                 </S.ButtonAction>
             )}
             {status == 'PENDING' && (
-
                 <TooltipUI
                     title={<p className='text-center'>Este usuário deseja <br /> ser seu amigo</p>}
                     placement='top'
@@ -135,6 +134,7 @@ const FriendRequestActions = ({ status, nickname, refetch }: FriendRequestAction
                         </S.ButtonAction>
                         <S.ButtonAction
                             $type='submit'
+                            onClick={methods.handleAcceptFriendRequest}
                         >
                             <IconCheck />
                         </S.ButtonAction>

@@ -45,4 +45,23 @@ export class FriendsController {
 
     return res.status(201).json(result);
   }
+
+  async acceptFriend(req: Request, res: Response) {
+    const { nickname } = req.body;
+    const authToken = req.headers.authorization;
+    const [, token] = authToken!.split(" ")
+
+    const result = await friendsServices.acceptFriend(token!, nickname);
+
+    return res.status(201).json(result);
+  }
+
+  async getFriendRequests(req: Request, res: Response){
+    const authToken = req.headers.authorization;
+    const [, token] = authToken!.split(" ");
+
+    const result = await friendsServices.getFriendRequests(token!);
+
+    return res.status(201).json(result);
+  }
 }

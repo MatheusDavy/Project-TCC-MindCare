@@ -43,6 +43,13 @@ export class ErrorProvider {
     );
   }
 
+  async acceptFriendNotPossible(nickname: string) {
+    throw new AppError(
+      `Erro ao aceitar a solicitação de amizado do usuário "${nickname}", tente novamente mais tarde`,
+      404
+    );
+  }
+
   async cancelFriendRequestNotPossible(nickname: string) {
     throw new AppError(
       `Não foi possível cancelar a solicitação para o usuário "${nickname}", tente novamente mais tarde`,

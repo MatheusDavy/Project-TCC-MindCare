@@ -38,12 +38,4 @@ export class UsersController {
     return res.status(201).json(result);
   }
 
-  async findUser(req: Request, res: Response) {
-    const authToken = req.headers.authorization;
-    const [, token] = authToken!.split(" ")
-    const { nickname } = req.body;
-    const result = await userServices.findUser(nickname, token!);
-
-    return res.status(201).json(result);
-  }
 }

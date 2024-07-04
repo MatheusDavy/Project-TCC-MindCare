@@ -27,13 +27,14 @@ const Forms = () => {
     const { data, methods } = useLogic({});
 
     return (
-        <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)} method="POST">
+        <S.Form onSubmit={methods.handleSubmit(methods.onSubmit)}>
             <S.FormWrapper>
                 <InputPassword
                     register={methods.register}
                     error={data.errors.password}
                     errorMessage={data.errors.password?.message}
                     label={'Senha'}
+                    name={'password'}
                 />
 
                 <InputPassword
@@ -41,6 +42,7 @@ const Forms = () => {
                     error={data.errors.passwordConfirmation}
                     errorMessage={data.errors.passwordConfirmation?.message}
                     label={'Confirmar senha'}
+                    name={'passwordConfirmation'}
                 />
 
                 <div className="mt-10">
@@ -60,7 +62,7 @@ const Forms = () => {
     );
 };
 
-const InputPassword = ({ register, label, error, errorMessage }) => {
+const InputPassword = ({ register, label, error, errorMessage, name }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -85,7 +87,7 @@ const InputPassword = ({ register, label, error, errorMessage }) => {
                 </S.FormInputSVG>
 
                 <TwInput
-                    {...register('password')}
+                    {...register(name)}
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter email to get started"
                     $error={error}

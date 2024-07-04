@@ -5,7 +5,8 @@ import {
     UserRepository,
     ChatbotRepository,
     FriendsRepository,
-    MoviesRepository
+    LearnRepository,
+    ChatRepository
 } from './API';
 
 export function useRepository () {
@@ -16,6 +17,7 @@ export function useRepository () {
         userRepository: useCallback(() => UserRepository({ baseUrl }), [])(),
         chatbotRepository: useCallback(() => ChatbotRepository({ baseUrl }), [])(),
         friendsRepository: useCallback(() => FriendsRepository({ baseUrl }), [])(),
-        moviesRepository: useCallback(() => MoviesRepository({ baseUrl }), [])(),
+        chatRepository: useCallback(() => ChatRepository({ baseUrl }), [])(),
+        learnRepository: useCallback(() => LearnRepository({ baseUrl }), [])(),
     };
 }

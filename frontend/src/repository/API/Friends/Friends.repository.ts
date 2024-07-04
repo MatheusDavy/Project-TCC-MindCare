@@ -23,10 +23,22 @@ export function FriendsRepository ({ baseUrl }: IRepositoryRequirements) {
         return Fetch.post({ url, data: {nickname} });
     };
 
+    function acceptFriendRequest (nickname: string) {
+        const url =  baseUrl + '/accept-friend';
+        return Fetch.post({ url, data: {nickname} });
+    };
+
+    function getFriendsRequests (){
+        const url =  baseUrl + '/friend-requests';
+        return Fetch.get({ url });
+    }
+
     return {
         getUserFriends,
         cancelFriendRequest,
         cancelFriend,
-        addFriend
+        addFriend,
+        acceptFriendRequest,
+        getFriendsRequests
     };
 }

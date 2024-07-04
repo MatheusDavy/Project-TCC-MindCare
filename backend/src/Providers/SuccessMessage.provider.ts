@@ -11,6 +11,10 @@ export class SuccessProvider {
     return("Sua solicitação de amizade foi cancelada com sucesso!");
   }
 
+  async acceptFriend(){
+    return("Agora vocês são amigos!");
+  }
+
   async cancelFriend(){
     return("Amizade cancelada!");
   }

@@ -12,7 +12,7 @@ import { PasswordService } from "../../Services/password.service";
 
 // Error
 import { TokenProvider } from "../../Providers/Token.providers";
-import { sendResetPasswordEmail } from "../../Utils/send-reset-password-email";
+import { sendResetPasswordEmail } from "../../Services/send-reset-password-email";
 import { ErrorProvider } from "../../Providers/ErrorMessage.provider";
 import { NicknameSevice } from "../../Services/nickname.service";
 import { getAvatarProfile } from "../../Services/get-avatar-photo";
@@ -87,8 +87,6 @@ export class AuthService {
       return { token };
     }
 
-    await this.tokenProvider.generateRefreshToken(userAlreadyExist.id);
-
     return this.handlerError.sendIncorrectUserOrPasswordError();
   }
 
@@ -107,7 +105,7 @@ export class AuthService {
     const token = await this.tokenProvider.generateToken(userAlreadyExist.id);
     const url =
       process.env.FRONT_APPLICATION_DOMAIN +
-      "/auth/reset-password/?userId=" +
+      "/auth/resetar-senha/?userId=" +
       token;
     await sendResetPasswordEmail(email, userAlreadyExist.name, url);
     return true;

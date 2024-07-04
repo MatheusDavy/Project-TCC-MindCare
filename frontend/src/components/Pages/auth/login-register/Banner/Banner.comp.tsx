@@ -10,11 +10,10 @@ export function Banner({ view }: Props) {
             <div className="absolute inset-0">
                 <img
                     className="object-cover object-top w-full h-full"
-                    src="https://cdn.rareblocks.xyz/collection/celebration/images/signin/4/girl-thinking.jpg"
+                    src="/images/background/bg_auth.png"
                     alt="background"
                 />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
         </S.ImageWrapper>
     );
 }

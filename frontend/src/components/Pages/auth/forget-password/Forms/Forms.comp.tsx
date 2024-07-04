@@ -17,7 +17,7 @@ export function FormsComp() {
             </div>
             <Forms />
 
-            <S.Links href={'/auth/login/'}>Voltar</S.Links>
+            <S.Links href={'/auth/'}>Voltar</S.Links>
         </>
     );
 }

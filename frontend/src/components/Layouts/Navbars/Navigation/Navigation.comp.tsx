@@ -3,11 +3,8 @@ import * as S from './Navigation.style';
 
 // Icons
 import {
-    IconLayoutCollage,
     IconUserFilled,
-    IconSettings,
     IconBrain,
-    IconMessages,
     IconFriends
 } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
@@ -19,34 +16,19 @@ export function NavigateComp() {
 
     const Navigation = [
         {
-            tooltip: 'Dashboard',
-            url: '/dashboard',
-            icon: <IconLayoutCollage width={25} height={25} />,
-        },
-        {
             tooltip: 'Learning',
-            url: '/dashboard/learn',
+            url: '/dashboard/aprender',
             icon: <IconBrain width={25} height={25}  />
         },
         {
-            tooltip: 'Chat',
-            url: '/dashboard/chat',
-            icon: <IconMessages width={25} height={25} />
-        },
-        {
             tooltip: 'Perfil',
-            url: '/dashboard/profile',
+            url: '/dashboard/perfil',
             icon: <IconUserFilled width={25} height={25}/>
         },
         {
-            tooltip: 'Perfil',
-            url: '/dashboard/users/',
+            tooltip: 'Usuários',
+            url: '/dashboard/usuarios',
             icon: <IconFriends width={25} height={25}/>
-        },
-        {
-            tooltip: 'Configurações',
-            url: '/dashboard/settings',
-            icon: <IconSettings width={25} height={25} />
         },
     ];
 

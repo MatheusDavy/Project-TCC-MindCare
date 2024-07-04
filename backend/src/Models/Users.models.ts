@@ -108,6 +108,7 @@ export class UserService {
     }
 
     const selected = {
+      id: true,
       nickname: true,
       name: true,
       utilsInfo: {
@@ -128,35 +129,11 @@ export class UserService {
       select: selected,
     });
 
-    return users.slice(0, 10);
-  }
+    const usersWithFriendData = await Promise.all(users.map(async (user) => {
+      const friendData = await this.friendService.verifyUserFriend(user.id, token);
+      return { ...user, friendData };
+  }));
 
-  async findUser(search: string, token: string) {
-    const selected = {
-      id: true,
-      nickname: true,
-      name: true,
-      utilsInfo: {
-        select: {
-          avatar: true,
-        },
-      },
-    };
-
-    const user = await prisma.user.findUnique({
-      where: { nickname: search },
-      select: selected,
-    });
-
-    // If User Not Exist
-    if (!user) return this.handlerError.sendError("not-found", 404);
-
-    const { id, ...datas } = user;
-    
-    const friendData = await this.friendService.verifyUserFriend(user.id, token);
-
-    ({ ...datas, ...friendData });
-
-    return { ...datas, ...friendData };
+  return usersWithFriendData;
   }
 }

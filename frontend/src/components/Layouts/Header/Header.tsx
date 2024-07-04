@@ -35,7 +35,7 @@ const Breadcrumb = () => {
 
     return (
         <S.Breadcrumb>
-            <Link href={'/dashboard'} className="text-sm text-gray-900 opacity-80">
+            <Link href={'/dashboard/aprender'} className="text-sm text-gray-900 opacity-80">
                 Dashboard
             </Link>
             {currentRouter && (
@@ -78,7 +78,7 @@ const Profile = () => {
     return (
         <>
             {userDatas?.utilsInfo?.avatar && (
-                <Link href={'/dashboard/profile'}>
+                <Link href={'/dashboard/perfil'}>
                     <Image
                         src={userDatas?.utilsInfo?.avatar}
                         alt="User"

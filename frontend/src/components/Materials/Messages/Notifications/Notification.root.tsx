@@ -8,11 +8,6 @@ type Props = {
 export function NotificationRoot({ children }: Props) {
     return (
         <NotificationWrapper id="toast-notification" role="alert">
-            <div className="flex items-center mb-3">
-                <NotificationNew>
-                    New notification
-                </NotificationNew>
-            </div>
             <div className="flex items-center">
                 {children}
             </div>
@@ -30,10 +25,5 @@ const NotificationWrapper = tw.div`
     shadow
 `;
 
-const NotificationNew = tw.span`
-    mb-1
-    text-sm font-semibold
-    text-gray-900
-`;
 
 

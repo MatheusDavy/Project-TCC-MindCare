@@ -12,9 +12,7 @@ export const Navigation = tw.aside`
     z-50
     shadow-md
 `;
-
 export const Logo = tw(Link)`
-    
 `;
 export const LinksWrapper = tw.div`
     mt-10

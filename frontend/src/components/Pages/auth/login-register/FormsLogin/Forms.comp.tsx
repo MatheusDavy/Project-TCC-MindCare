@@ -84,7 +84,7 @@ const Forms = ({ data, methods }) => {
                 <div>
                     <S.FormLabelWrapper>
                         <S.FormLabel>Senha</S.FormLabel>
-                        <S.Links href={'/auth/forget-password'}>
+                        <S.Links href={'/auth/esqueci-senha'}>
                             Esqueci a Senha
                         </S.Links>
                     </S.FormLabelWrapper>

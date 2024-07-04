@@ -31,8 +31,8 @@ export const useLogic = ({}) => {
         setLoading(true);
         await authRepository
             .login(data)
-            .then(async (data) => {
-                await setCookie(
+            .then((data) => {
+                setCookie(
                     null,
                     env.NEXT_PUBLIC_JWT_TOKEN_KEY,
                     data.data.token,
@@ -41,7 +41,7 @@ export const useLogic = ({}) => {
                     }
                 );
 
-                router.push('/dashboard');
+                router.push('/dashboard/aprender');
             })
             .catch(error => {
                 dialogAlert.responseError(error.response.data);

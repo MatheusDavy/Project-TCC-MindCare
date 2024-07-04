@@ -28,7 +28,7 @@ export const useLogic = ({}) => {
             .then(() => {
                 dialogAlert.responseSuccess({
                     message: 'verify-email-to-reset-password',
-                    redirect: '/auth/login',
+                    redirect: '/auth/',
                 });
             })
             .catch(error => {

@@ -1,4 +1,3 @@
-import { AppError } from "../Errors/App.erros";
 import { prisma } from "../Prisma/client";
 import * as stringSimilarity from "string-similarity";
 import { ErrorProvider } from "../Providers/ErrorMessage.provider";

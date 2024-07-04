@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useDialogAlert from 'src/hooks/useDialogAlert';
 import { useRepository } from 'src/repository';
 
-export const useLogic = ({ nickname, refetch }) => {
+export const useLogic = ({ nickname, refetch, }) => {
     const dialogAlert = useDialogAlert();
     const [loading, setLoading] = useState(false);
     const { friendsRepository } = useRepository();
@@ -55,6 +55,22 @@ export const useLogic = ({ nickname, refetch }) => {
         refetch();
     };
 
+    const handleAcceptFriendRequest = async () => {
+        setLoading(true);
+        await friendsRepository
+            .acceptFriendRequest(nickname)
+            .then(({ data }) => {
+                dialogAlert.responseSuccess({
+                    message: data.message,
+                });
+            })
+            .catch(error => {
+                dialogAlert.responseError(error.response.data);
+            });
+        setLoading(false);
+        refetch();
+    };
+
     return {
         data: {
             loading,
@@ -63,6 +79,7 @@ export const useLogic = ({ nickname, refetch }) => {
             handleCancelFriendRequest,
             handleAddFriend,
             handleCancelFriend,
+            handleAcceptFriendRequest
         },
     };
 };

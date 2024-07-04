@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if (session && isPublicRoutes) {
-        return NextResponse.redirect(new URL('/dashboard', request.url));
+        return NextResponse.redirect(new URL('/dashboard/aprender', request.url));
     }
 
     return NextResponse.next();
@@ -24,9 +24,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/(pt-BR|pt-BR)/:path*', // i18n
         '/auth/:path*',
-        '/dashboard/',
         '/dashboard/:path*',
     ],
 };
