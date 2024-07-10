@@ -33,7 +33,7 @@ export class VideoServices {
       return this.handlerError.sendExpiredSessionError();
     }
 
-    const existingVideo = await prisma.videos.findUnique({
+    const existingVideo = await prisma.videos.findMany({
       where: {
         id_video: idVideo,
         userId: dataToken.sub,
@@ -44,7 +44,7 @@ export class VideoServices {
       throw new Error("Vídeo não encontrado para o usuário atual");
     }
 
-    const deleteResult = await prisma.videos.delete({
+    const deleteResult = await prisma.videos.deleteMany({
       where: {
         id_video: idVideo,
         userId: dataToken.sub,

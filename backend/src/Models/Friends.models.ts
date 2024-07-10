@@ -163,6 +163,10 @@ export class FriendsService {
       return { status: "RECUSED" };
     }
 
+    if (friendRequestPending?.status == "FRIEND") {
+      return { status: "FRIEND" };
+    }
+
     const friendsDatas = await prisma.friend.findFirst({
       where: {
         from: dataToken.sub,
@@ -173,7 +177,6 @@ export class FriendsService {
         recusedAt: true,
       },
     });
-
 
     if (friendsDatas?.status) {
       status = friendsDatas.status;
