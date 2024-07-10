@@ -41,6 +41,7 @@ export const ButtonCustom: React.FC<ButtonProps> = props => {
                 focus:outline-none
                 transition-all duration-200
                 relative
+                h-fit
                 ${className}
             `}
             type={type}

@@ -77,7 +77,6 @@ export function FriendTables() {
                             >
                                 <IconCheck />
                             </S.ButtonAction>
-
                         </div>
                     </div>
                 ))}

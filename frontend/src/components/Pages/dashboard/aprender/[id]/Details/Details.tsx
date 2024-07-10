@@ -34,7 +34,7 @@ export function Details() {
             <br />
             <div className='flex align-center justify-between flex-wrap'>
                 <ActionsGroup />
-                <Friends friends={data.friends} />
+                <Friends />
             </div>
             <br />
             <br />
@@ -60,25 +60,38 @@ const Loading = () => {
     );
 };
 
-const Friends = ({ friends }) => {
+const Friends = () => {
+    const router = useRouter();
+    const { learnRepository } = useRepository();
+
+    const { data: friends, isLoading } = useQuery(
+        `friends-who-watched-video-${router.query.id}`,
+        async () => {
+            const response = await learnRepository.getFriendsWhoWatched(router.query.id as 'string' | 'number');
+            return response.data;
+        }
+    );
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    if (friends.length == 0) return;
+
     return (
-        <div>
-            {Array.isArray(friends) && (
-                <>
-                    <p>Amigos que assistiram</p>
-                    <AvatarGroup max={3}>
-                        {friends.map((friend: any) => (
-                            <TooltipUI
-                                key={friend.nickname}
-                                title={friend.nickname}
-                                placement='top'
-                            >
-                                <Avatar alt={friend.nickname} src={friend.utilsInfo.avatar} />
-                            </TooltipUI>
-                        ))}
-                    </AvatarGroup>
-                </>
-            )}
+        <div className='flex flex-col items-center justify-center gap-2'>
+            <p className='text-sm'>Amigos que assistiram</p>
+            <AvatarGroup max={4}>
+                {friends.map((friend: any) => (
+                    <TooltipUI
+                        key={friend.nickname}
+                        title={friend.nickname}
+                        placement='top'
+                    >
+                        <Avatar alt={friend.nickname} src={friend.utilsInfo.avatar} />
+                    </TooltipUI>
+                ))}
+            </AvatarGroup>
         </div>
     );
 };
