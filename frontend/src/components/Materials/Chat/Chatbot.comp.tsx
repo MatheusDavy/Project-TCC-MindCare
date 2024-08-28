@@ -1,5 +1,6 @@
+/* eslint-disable react/display-name */
 // Next
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 // Styles
 import * as S from './Chatbot.style';
@@ -99,7 +100,7 @@ export function ChatbotComp(props: ChatbotCompProps) {
     );
 }
 
-const Response = (props: any) => {
+const Response = memo((props: any) => {
     const { methods } = useLogic({});
     const [loading, setLoading] = useState(true);
     const [result, setResult] = useState<string>('');
@@ -145,13 +146,13 @@ const Response = (props: any) => {
     };
 
     return (
-        <Typography fontSize={'0.6rem'} color={hasError ? 'red' : '#7b7b7b'}>
+        <Typography fontSize={'0.8rem'} color={hasError ? 'red' : '#7b7b7b'}>
             {loading ? <Loading /> : result}
         </Typography>
     );
-};
+});
 
-const Options = (props: any) => {
+const Options = memo((props: any) => {
     const [remove, setRemove] = useState<boolean>(false);
     const [userResponse, setUserReponse] = useState<'yes' | 'no' | 'none'>(
         'none'
@@ -192,4 +193,4 @@ const Options = (props: any) => {
             </button>
         </Box>
     );
-};
+});

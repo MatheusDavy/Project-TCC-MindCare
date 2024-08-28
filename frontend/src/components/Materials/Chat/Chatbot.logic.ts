@@ -1,6 +1,6 @@
 import { useRepository } from '../../../repository';
 
-export const useLogic = () => {
+export const useLogic = (p0: {}) => {
 
     const { chatbotRepository } = useRepository();
 
@@ -8,9 +8,8 @@ export const useLogic = () => {
         return new Promise((resolve, reject) => {
             chatbotRepository
                 .getResponse(value)
-                .then((response: any) => {
-                    console.log(response);
-                    // resolve(response.data.response);
+                .then((data: any) => {
+                    resolve(data.data.response.response);
                 })
                 .catch((error: any) => {
                     console.log(error);
