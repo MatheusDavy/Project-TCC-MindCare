@@ -54,8 +54,7 @@ model RefreshToken {
 // Chatbot
 model Chatbot {
   id       String  @id @default(uuid())
-  question String  @unique
-  responde String?
+  response String?
 
   @@map("chatbot")
 }

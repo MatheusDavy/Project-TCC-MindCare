@@ -15,7 +15,7 @@ export class ChatbotService {
       let questionWithMaxRating = "";
 
       const allQuestions = await prisma.chatbot.findMany();
-      const questions = allQuestions.map((item) => item.question);
+      const questions = allQuestions.map((item) => item.response);
 
       const result = stringSimilarity.findBestMatch(question, questions);
       result.ratings.forEach((rating: any) => {
@@ -26,7 +26,7 @@ export class ChatbotService {
       });
 
       const response = allQuestions.filter(
-        (item) => item.question === questionWithMaxRating
+        (item) => item.response === questionWithMaxRating
       );
 
       return { response: response[0] || null };
