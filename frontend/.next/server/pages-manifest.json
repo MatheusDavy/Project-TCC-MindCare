@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/dashboard/aprender": "pages/dashboard/aprender.js"
+  "/dashboard/aprender": "pages/dashboard/aprender.js",
+  "/dashboard/usuarios/pedidos-amizade": "pages/dashboard/usuarios/pedidos-amizade.js",
+  "/dashboard/usuarios": "pages/dashboard/usuarios.js"
 }

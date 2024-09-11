@@ -33,12 +33,17 @@ export function FriendsRepository ({ baseUrl }: IRepositoryRequirements) {
         return Fetch.get({ url });
     }
 
+    function getFriends () {
+        return Fetch.get({ url: baseUrl });
+    }
+
     return {
         getUserFriends,
         cancelFriendRequest,
         cancelFriend,
         addFriend,
         acceptFriendRequest,
-        getFriendsRequests
+        getFriendsRequests,
+        getFriends
     };
 }

@@ -1,4 +1,4 @@
-import { Details } from './Details/Details';
+import { Details } from './Details';
 
 export function Structure () {
     return (

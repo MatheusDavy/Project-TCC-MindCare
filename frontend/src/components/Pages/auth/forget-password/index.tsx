@@ -1,4 +1,4 @@
-import { FormsComp } from './Forms/Forms.comp';
+import { FormsComp } from './Forms';
 
 export function StructurePage() {
     return (

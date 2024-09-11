@@ -22,10 +22,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/aprender": [
+    "/dashboard/usuarios": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/aprender.js"
+      "static/chunks/pages/dashboard/usuarios.js"
+    ],
+    "/dashboard/usuarios/pedidos-amizade": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/dashboard/usuarios/pedidos-amizade.js"
     ]
   },
   "ampFirstPages": []
