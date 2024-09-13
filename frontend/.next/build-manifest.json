@@ -22,15 +22,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/dashboard/usuarios": [
+    "/auth": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/usuarios.js"
+      "static/chunks/pages/auth.js"
     ],
-    "/dashboard/usuarios/pedidos-amizade": [
+    "/dashboard/perfil": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/dashboard/usuarios/pedidos-amizade.js"
+      "static/chunks/pages/dashboard/perfil.js"
     ]
   },
   "ampFirstPages": []

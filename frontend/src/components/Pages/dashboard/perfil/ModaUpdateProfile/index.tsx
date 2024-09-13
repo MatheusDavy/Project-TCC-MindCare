@@ -120,9 +120,9 @@ export function SelectProfilePhoto({ closeModal, updateProfile }: Props) {
                                 </svg>
                                 <p className="mb-2 text-sm text-white">
                                     <span className="font-semibold">
-                                        Click to upload
+                                        Clique   ou arraste
                                     </span>{' '}
-                                    or drag and drop
+                                    para adicionar uma imagem
                                 </p>
                                 <p className="text-xs text-white">
                                     SVG, PNG, JPG or GIF (MIN. 150x160px)

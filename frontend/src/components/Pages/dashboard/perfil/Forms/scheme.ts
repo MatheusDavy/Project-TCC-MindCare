@@ -1,19 +1,4 @@
-import { User } from 'src/types/users/usert.types';
 import yup from '../../../../../utils/forms/yup';
-
-export const defaultValues: User = {
-    name: '',
-    email: '',
-    nickname: '',
-    utilsInfo: {
-        avatar: '',
-        age: null,
-        cep: null,
-        document: null,
-        city: '',
-        state: '',
-    },
-};
 
 export const schema = yup.object().shape({
     name: yup.string().required(),

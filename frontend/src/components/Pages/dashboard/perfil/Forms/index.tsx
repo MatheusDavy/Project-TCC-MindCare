@@ -9,7 +9,6 @@ import {
     IconLocation,
     IconBuilding,
     IconFlag,
-    IconId,
     IconHash,
     IconEdit,
     IconX
@@ -122,7 +121,7 @@ const Forms = ({ data, methods }) => {
             id="forms-update-user-data"
             onSubmit={methods.handleSubmit(handleSubmit)}
         >
-            <h6 className="text-2x1 font-bold">USER INFORMATION</h6>
+            <h6 className="text-2x1 font-bold">INFORMAÇÕES DO USUÁRIO</h6>
             <S.FormCategoryWrapper>
                 <InputForms
                     label='Nome'
@@ -170,25 +169,13 @@ const Forms = ({ data, methods }) => {
                 />
                 {Boolean(data.userDatas.utilsInfo.age || data.edit) && (
                     <InputForms
-                        label='Age'
+                        label='Idade'
                         type="number"
                         disabled={!data.edit}
-                        placeholder="Enter your age"
+                        placeholder="Informe sua Idade"
                         $error={data.errors.utilsInfo?.age}
                         icon={<IconNumber18Small width={25} height={30} />}
                         name='utilsInfo.age'
-                        methods={methods}
-                    />
-                )}
-                {Boolean(data.userDatas.utilsInfo.document || data.edit) && (
-                    <InputForms
-                        label='Document'
-                        type="number"
-                        disabled={!data.edit}
-                        placeholder="Enter your document number"
-                        $error={data.errors.utilsInfo?.document}
-                        icon={<IconId width={20} height={20} />}
-                        name='utilsInfo.document'
                         methods={methods}
                     />
                 )}
@@ -205,30 +192,31 @@ const Forms = ({ data, methods }) => {
                         label='CEP'
                         type="number"
                         disabled={!data.edit}
-                        placeholder="Enter your postal code"
+                        placeholder="0000-000"
                         $error={data.errors.utilsInfo?.cep}
                         icon={<IconLocation width={20} height={20} />}
                         name='utilsInfo.cep'
                         methods={methods}
                         onChange={(e) => {
                             methods.getUserAddressInfo(e.target.value);
+                            methods.setValue('utilsInfo.cep', e.target.value);
                         }}
                     />
                     <InputForms
-                        label='City'
+                        label='Cidade'
                         type="text"
                         disabled={!data.edit}
-                        placeholder="Enter your city"
+                        placeholder=""
                         $error={data.errors.utilsInfo?.city}
                         icon={<IconBuilding width={20} height={20} />}
                         name='utilsInfo.city'
                         methods={methods}
                     />
                     <InputForms
-                        label='State'
+                        label='Estado'
                         type="text"
                         disabled={!data.edit}
-                        placeholder="Enter your state"
+                        placeholder=""
                         $error={data.errors.utilsInfo?.state}
                         icon={<IconFlag width={20} height={20} />}
                         name='utilsInfo.state'

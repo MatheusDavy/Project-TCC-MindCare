@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { schema, defaultValues } from './scheme';
+import { schema  } from './scheme';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { configureUseForm } from 'src/utils/forms/configure-use-form';
@@ -26,7 +26,6 @@ export const useLogic = () => {
         register,
         getValues,
     } = useForm({
-        defaultValues,
         mode: 'onSubmit',
         resolver: yupResolver(schema),
     });
@@ -81,6 +80,7 @@ export const useLogic = () => {
                     state: response.data.uf,
                 },
             };
+
             configureUseForm(setValue, newDatas);
         } catch (error) {}
     };
@@ -99,6 +99,7 @@ export const useLogic = () => {
         data: { loading, edit, control, errors, loadingUserDatas, userDatas },
         methods: {
             setEdit,
+            setValue,
             onSubmit,
             handleSubmit,
             getUserAddressInfo,
