@@ -14,4 +14,12 @@ export class ChatbotController {
 
         return res.status(200).json(result);
     }
+
+    async createQuestion(req: Request, res: Response){
+        const { question } = req.body;
+
+        const result = await chatbotServices.createQuestion(question);
+
+        return res.status(200).json(result);
+    }
 }

@@ -8,8 +8,6 @@ import { env } from "./env";
 // Server
 import { serverHttp, app } from "./https";
 
-// Crons
-import CreateChatbotQuestions from "./Scripts/create-chatbot-questions";
 
 const port = env.APPLICATION_PORT;
 
@@ -44,5 +42,4 @@ app.use(
 serverHttp
   .listen(port, () => {
     console.log((`Server is running 🚀`));
-    CreateChatbotQuestions();
   })

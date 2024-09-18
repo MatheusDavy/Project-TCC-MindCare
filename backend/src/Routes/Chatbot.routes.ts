@@ -8,6 +8,7 @@ const Controller = new ChatbotController()
 
 const ChatbotRoutes = Router()
 
-ChatbotRoutes.post("/get-response", AuthMiddleware.ensureAuthenticated, Controller.getResponse)
+ChatbotRoutes.post("/get-response", Controller.getResponse)
+ChatbotRoutes.post("/create", Controller.createQuestion)
     
 export { ChatbotRoutes }
