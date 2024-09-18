@@ -11,18 +11,16 @@ import { useLogic } from './Chatbot.logic';
 // Chatbot
 import ChatBot, { Loading } from 'react-simple-chatbot';
 
-// Interfaces
-import { ChatbotCompProps } from './Chatbot.types';
-
 // Components
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 
 // Icons
 import { Box } from '@mui/material';
+import { useUserContext } from 'src/context/User/User.context';
 
-export function ChatbotComp(props: ChatbotCompProps) {
-    const {} = useLogic(props);
+export function ChatbotComp() {
+    const { userDatas } = useUserContext();
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -40,7 +38,7 @@ export function ChatbotComp(props: ChatbotCompProps) {
     const steps = [
         {
             id: '1',
-            message: 'Olá! Como posso ajudar?',
+            message: 'Olá! Qual a sua dúvida?',
             trigger: '2',
             avatar: '/images/chatbot/chatbot-avatar.jpeg',
         },
@@ -91,8 +89,10 @@ export function ChatbotComp(props: ChatbotCompProps) {
                 }}
             >
                 <ChatBot
-                    headerTitle={'Dr. Care'}
+                    headerTitle={'Dra. Care'}
                     enableSmoothScroll={true}
+                    placeholder="Pergunte algo"
+                    userAvatar={userDatas?.utilsInfo?.avatar}
                     steps={steps}
                 />
             </Popover>
@@ -101,7 +101,7 @@ export function ChatbotComp(props: ChatbotCompProps) {
 }
 
 const Response = memo((props: any) => {
-    const { methods } = useLogic({});
+    const { methods } = useLogic();
     const [loading, setLoading] = useState(true);
     const [result, setResult] = useState<string>('');
     const [hasError, setHasError] = useState(false);
@@ -122,6 +122,7 @@ const Response = memo((props: any) => {
         methods
             .handleSubmit(value)
             .then((data: any) => {
+                console.log(data);
                 if (data !== null && data !== undefined) {
                     setLoading(false);
                     setResult(data);
@@ -130,7 +131,7 @@ const Response = memo((props: any) => {
                     setHasError(true);
                     setLoading(false);
                     setResult(
-                        'Erro ao encontrar uma resposta, pesquise por outra resposta !'
+                        'Ops, não consegui encontrar uma resposta para isso. Tente perguntar de outra forma ou escolha um novo tema!'
                     );
                     triggerNext('2');
                 }
@@ -153,6 +154,7 @@ const Response = memo((props: any) => {
 });
 
 const Options = memo((props: any) => {
+    const { methods } = useLogic();
     const [remove, setRemove] = useState<boolean>(false);
     const [userResponse, setUserReponse] = useState<'yes' | 'no' | 'none'>(
         'none'
@@ -164,6 +166,10 @@ const Options = memo((props: any) => {
     };
 
     const handleCreateNewQuestion = () => {
+        const { steps } = props;
+        const search = steps[2].message;
+
+        methods.handleCreateNewQuestion(search);
         setUserReponse('no');
         setRemove(true);
         triggerNext();

@@ -9,10 +9,19 @@ export function ChatbotRepository ({ baseUrl }: IRepositoryRequirements) {
             question: data
         };
 
-        return Fetch.post({ url: `${url}/get-response`, data: payload });
+        return Fetch.post({ url: `${url}/get-response`, data: JSON.stringify(payload) });
+    }
+
+    function createNewQuestion (question: string) {
+        const payload = {
+            question: question
+        };
+        const baseUrl = url + '/create';
+        return Fetch.post({ url: baseUrl, data: JSON.stringify(payload) });
     }
 
     return {
-        getResponse
+        getResponse,
+        createNewQuestion
     };
 }

@@ -1,6 +1,6 @@
 import { useRepository } from '../../../repository';
 
-export const useLogic = (p0: {}) => {
+export const useLogic = () => {
 
     const { chatbotRepository } = useRepository();
 
@@ -9,19 +9,24 @@ export const useLogic = (p0: {}) => {
             chatbotRepository
                 .getResponse(value)
                 .then((data: any) => {
-                    resolve(data.data.response.response);
+                    resolve(data.data.response);
                 })
                 .catch((error: any) => {
-                    console.log(error);
+                    console.error(error);
                     reject(null);
                 });
         });
+    };
+
+    const handleCreateNewQuestion = async (question: string) => {
+        chatbotRepository.createNewQuestion(question);
     };
 
     return {
         data: {},
         methods: {
             handleSubmit,
+            handleCreateNewQuestion
         },
     };
 };

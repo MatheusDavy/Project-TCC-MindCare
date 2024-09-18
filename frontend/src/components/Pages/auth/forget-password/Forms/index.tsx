@@ -13,7 +13,10 @@ export function FormsComp() {
         <>
             <div className="max-w-2xl mx-auto text-center">
                 <S.Title>Recuperar Senha</S.Title>
-                <S.Subtitle>Informe-nos seu email para enviarmos todas as instruções de recuperação de senha!</S.Subtitle>
+                <S.Subtitle>
+                    Informe-nos seu email para enviarmos todas <br />
+                    as instruções de recuperação de senha!
+                </S.Subtitle>
             </div>
             <Forms />
 
@@ -51,7 +54,7 @@ const Forms = () => {
                         <TwInput
                             {...methods.register('email')}
                             type="email"
-                            placeholder="Enter email to get started"
+                            placeholder="Insira seu email"
                             $error={data.errors.email ? true : false}
                         />
 

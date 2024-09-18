@@ -5,6 +5,8 @@ declare module 'react-simple-chatbot' {
         headerTitle: any
         enableSmoothScroll: any
         steps: any
+        placeholder: string
+        userAvatar?: string
     }
     // eslint-disable-next-line @typescript-eslint/no-empty-interface
     export interface LoadingProps {}

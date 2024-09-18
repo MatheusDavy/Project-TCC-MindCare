@@ -75,7 +75,7 @@ const Forms = ({ data, methods }) => {
                             id='login-email'
                             {...methods.register('email')}
                             type="email"
-                            placeholder="Enter email to get started"
+                            placeholder="Insira seu email"
                             $error={data.errors.email ? true : false}
                         />
                     </S.FormInputWrapper>

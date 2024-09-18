@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/auth": "pages/auth.js",
-  "/dashboard/perfil": "pages/dashboard/perfil.js",
+  "/dashboard/usuarios": "pages/dashboard/usuarios.js",
   "/dashboard/aprender": "pages/dashboard/aprender.js"
 }

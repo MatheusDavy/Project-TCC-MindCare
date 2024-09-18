@@ -34,6 +34,7 @@ const Forms = () => {
                     error={data.errors.password}
                     errorMessage={data.errors.password?.message}
                     label={'Senha'}
+                    placeholder={'*********'}
                     name={'password'}
                 />
 
@@ -42,6 +43,7 @@ const Forms = () => {
                     error={data.errors.passwordConfirmation}
                     errorMessage={data.errors.passwordConfirmation?.message}
                     label={'Confirmar senha'}
+                    placeholder={'*********'}
                     name={'passwordConfirmation'}
                 />
 
@@ -62,7 +64,7 @@ const Forms = () => {
     );
 };
 
-const InputPassword = ({ register, label, error, errorMessage, name }) => {
+const InputPassword = ({ register, label, error, errorMessage, name, placeholder }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -89,7 +91,7 @@ const InputPassword = ({ register, label, error, errorMessage, name }) => {
                 <TwInput
                     {...register(name)}
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter email to get started"
+                    placeholder={placeholder}
                     $error={error}
                 />
 
