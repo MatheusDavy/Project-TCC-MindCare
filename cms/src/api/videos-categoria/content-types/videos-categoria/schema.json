@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "videos_categorias",
+  "info": {
+    "singularName": "videos-categoria",
+    "pluralName": "videos-categorias",
+    "displayName": "Videos - Categorias"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Categoria": {
+      "type": "string",
+      "required": true
+    },
+    "categorias": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::video.video",
+      "mappedBy": "videos_categoria"
+    }
+  }
+}
